@@ -1,11 +1,18 @@
 // Base Webpack Configuration
 
 const path = require("path");
+
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
+const { VueLoaderPlugin } = require("vue-loader");
 
 const BASE_DIR = path.resolve(__dirname, "../..");
+
+const loaderConfigs = require("./loaders");
+
+const TS_CONFIG = path.resolve(BASE_DIR, "tsconfig.json");
 
 module.exports = {
   context: BASE_DIR,
@@ -21,30 +28,7 @@ module.exports = {
   },
 
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: "ts-loader",
-            options: {
-              transpileOnly: true,
-              experimentalWatchApi: true,
-              onlyCompileBundledFiles: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      },
-      {
-        test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
-      }
-    ]
+    rules: loaderConfigs.rules
   },
 
   resolve: {
@@ -52,7 +36,11 @@ module.exports = {
       path.resolve(BASE_DIR, "node_modules"),
       path.resolve(BASE_DIR, "app")
     ],
-    extensions: [".tsx", ".ts", ".js"]
+    extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      vue$: "vue/dist/vue.esm.js"
+    },
+    plugins: [new TsconfigPathsPlugin({ configFile: TS_CONFIG })]
   },
 
   plugins: [
@@ -62,6 +50,7 @@ module.exports = {
       workers: 2,
       watch: ["./src"]
     }),
+    new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       inject: "body",
       alwaysWriteToDisk: true,

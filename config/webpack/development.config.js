@@ -10,7 +10,8 @@ const devConfig = {
   devtool: "inline-source-map",
 
   devServer: {
-    contentBase: "./dist"
+    contentBase: "./dist",
+    disableHostCheck: true
   }
 };
 

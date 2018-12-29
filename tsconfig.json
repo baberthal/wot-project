@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "es6",
+    "module": "es2015",
     "outDir": "./dist/",
     "strict": true,
 
@@ -12,9 +12,16 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
 
+    "experimentalDecorators": true,
+
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "allowJs": true
+    "allowJs": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/*"]
+    }
   },
 
   "include": ["./src/**/*"]
