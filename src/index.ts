@@ -5,8 +5,4 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import "./styles.scss";
-
-export function hello(name: string) {
-  console.log(`Hello, ${name}!`);
-}
+import "./app/app.main";
