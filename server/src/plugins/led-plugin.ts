@@ -56,7 +56,7 @@ function ledPlugin(
   }
 
   function simulate() {
-    interval = setTimeout(() => {
+    interval = setInterval(() => {
       // Switch value on a regular basis
       model.value = !model.value;
       showValue();
@@ -90,6 +90,10 @@ function ledPlugin(
   fastify.addHook("onClose", (instance, done) => {
     stop();
     done();
+  });
+
+  fastify.wotPluginManager.onClose(() => {
+    stop();
   });
 
   next();

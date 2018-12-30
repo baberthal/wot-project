@@ -1,11 +1,13 @@
 {
   "extends": "../tsconfig.base.json",
   "files": [
+    "base_plugin.ts",
     "index.ts",
     "led-plugin.ts",
     "links-plugin.ts",
-    "resources-plugin.ts",
     "pir-plugin.ts",
+    "plugin_manager.ts",
+    "resources-plugin.ts",
     "types.d.ts"
   ],
   "include": ["**/*.ts"],

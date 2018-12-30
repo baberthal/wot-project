@@ -9,10 +9,12 @@
 
 import { Resources } from "../resources/resources";
 import { LinksConfig } from "./links-plugin";
+import { PluginManager } from "./plugin_manager";
 
 declare module "fastify" {
   interface FastifyInstance {
     resources: Resources;
+    wotPluginManager: PluginManager;
   }
 
   interface FastifyRequest<HttpRequest> {}
