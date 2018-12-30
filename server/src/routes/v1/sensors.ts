@@ -6,8 +6,8 @@
 //===-----------------------------------------------------------------------===//
 
 import { Router, Request as _Request } from "express";
-import resources from "../resources";
-import { Device } from "../models";
+import resources from "../../resources";
+import { Device } from "../../models";
 
 const router = Router();
 const devicePromise = resources.devices.find("pi");

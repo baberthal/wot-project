@@ -6,8 +6,8 @@
 //===-----------------------------------------------------------------------===//
 
 import { Router, Request as eRequest } from "express";
-import { Device } from "../models";
-import resources from "../resources";
+import { Device } from "../../models";
+import resources from "../../resources";
 
 interface Request extends eRequest {
   device: Device;
