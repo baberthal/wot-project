@@ -12,7 +12,10 @@
     "test": "echo \"No test specified!\" && exit 1",
     "watch": "tsc -w -b src",
     "build": "tsc -b src",
-    "start": "yarn build && node dist",
+    "build:w": "tsc -b src -w",
+    "start": "node dist/index.js",
+    "start:w": "nodemon --watch ./dist -e js dist/index.js",
+    "start:dev": "concurrently \"yarn build:w\" \"yarn start:w\"",
     "clean": "rimraf ./dist"
   },
   "dependencies": {
@@ -34,7 +37,9 @@
     "@types/pino": "^5.8.3",
     "@types/pino-http": "^4.0.0",
     "@types/ws": "^6.0.1",
+    "concurrently": "^4.1.0",
     "jest": "^23.6.0",
+    "nodemon": "^1.18.9",
     "pino-pretty": "^2.5.0",
     "prettier": "^1.15.3",
     "rimraf": "^2.6.2",
@@ -43,6 +48,7 @@
     "tslint-config-prettier": "^1.17.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-plugin-prettier": "^2.0.1",
+    "typedoc": "^0.14.1",
     "typescript": "^3.2.2",
     "vrsource-tslint-rules": "^6.0.0"
   },
