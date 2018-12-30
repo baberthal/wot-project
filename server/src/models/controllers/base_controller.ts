@@ -5,8 +5,8 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Device, Sensor, Actuator, ActuatorGroup } from "../models";
-import { Logger } from "../util/types";
+import { Device, Sensor, Actuator, ActuatorGroup } from "../";
+import { Logger } from "../../util/types";
 
 export interface ControllerBaseInit {
   log: Logger;

@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Actuator } from "../models";
+import { Actuator } from "../actuator";
 
 import { ControllerBase, ControllerBaseInit } from "./base_controller";
 
