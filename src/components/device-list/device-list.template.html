@@ -1,0 +1,14 @@
+<base-panel title="Devices">
+  <a class="panel-block" v-for="(device, index) in devices">
+    <base-icon
+      class="panel-icon"
+      v-if="device.icon != null"
+      :icon="device.icon"
+    ></base-icon>
+    <p class="has-text-justified">
+    <span class="has-text-weight-bold">{{ device.name }}:</span>
+
+    <span class="has-text-weight-light"> {{ device.description }}</span>
+    </p>
+  </a>
+</base-panel>
