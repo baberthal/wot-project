@@ -2,13 +2,11 @@
 
 const path = require("path");
 
-const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 
-const loaderConfigs = require("./loaders");
 const stats = require("./stats.config");
 
 const BASE_DIR = path.resolve(__dirname, "../..");
@@ -29,7 +27,54 @@ module.exports = {
   },
 
   module: {
-    rules: loaderConfigs.rules
+    rules: [
+      {
+        test: /\.css$/,
+        use: ["vue-style-loader", "css-loader"]
+      },
+      {
+        test: /\.scss$/,
+        use: ["vue-style-loader", "css-loader", "sass-loader"]
+      },
+      {
+        test: /\.vue(\.erb)?$/,
+        use: ["vue-loader"]
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "ts-loader",
+            options: {
+              transpileOnly: true,
+              experimentalWatchApi: true,
+              onlyCompileBundledFiles: true,
+              appendTsSuffixTo: [/\.vue$/]
+            }
+          }
+        ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+            options: {
+              minimize: true,
+              removeAttributeQuotes: false,
+              caseSensitive: true,
+              customAttrSurround: [
+                [/#/, /(?:)/],
+                [/\*/, /(?:)/],
+                [/\[?\(?/, /(?:)/]
+              ],
+              customAttrAssign: [/\)?\]?=/]
+            }
+          }
+        ]
+      }
+    ]
   },
 
   stats,
@@ -48,7 +93,6 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin(["dist"]),
     new ForkTsCheckerWebpackPlugin({
       checkSyntacticErrors: true,
       workers: 2,

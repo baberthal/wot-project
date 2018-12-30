@@ -9,6 +9,8 @@
     "start:dev": "webpack-dev-server --open",
     "dev": "yarn start:dev",
     "build": "webpack",
+    "build:dev": "webpack --env.development",
+    "build:prod": "webpack --env.production",
     "clean": "rimraf ./dist"
   },
   "dependencies": {

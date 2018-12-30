@@ -7,8 +7,8 @@
     "allowJs": true,
 
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
 
@@ -24,11 +24,12 @@
 
     "lib": ["es2015", "dom"],
     "types": ["webpack-env", "jest", "core-js"],
+    "typeRoots": ["./node_modules/@types", "../node_modules/@types", "./types"],
 
     "sourceMap": true,
     "outDir": "./dist/"
   },
 
-  "include": ["./src/**/*"],
-  "exclude": []
+  "include": ["./src/**/*", "./types/vue-fusioncharts/**/*"],
+  "exclude": ["node_modules", "../node_modules"]
 }
