@@ -5,9 +5,9 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Base } from "./base";
+import { GpioBase, GpioBaseConfig } from "./base";
 
-export interface ActuatorConfig {
+export interface ActuatorConfig extends GpioBaseConfig {
   name: string;
   description?: string;
   value?: number | string | boolean | undefined;
@@ -15,10 +15,8 @@ export interface ActuatorConfig {
   gpio: number;
 }
 
-export class Actuator extends Base<ActuatorConfig> {
+export class Actuator extends GpioBase {
   readonly description: string;
-
-  readonly gpio: number;
   public value: number | string | boolean | undefined;
 
   constructor(id: string, config: ActuatorConfig) {
@@ -26,7 +24,6 @@ export class Actuator extends Base<ActuatorConfig> {
 
     this.description = config.description || "";
     this.value = config.value;
-    this.gpio = config.gpio;
   }
 }
 

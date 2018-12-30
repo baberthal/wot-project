@@ -9,3 +9,4 @@ export * from "./actuator";
 export * from "./base";
 export * from "./device";
 export * from "./sensor";
+export * from "./resource_collection";

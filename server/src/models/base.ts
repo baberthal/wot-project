@@ -9,12 +9,25 @@ export interface BaseConfig {
   name: string;
 }
 
-export abstract class Base<T extends BaseConfig> {
+export abstract class Base {
   readonly id: string;
   readonly name: string;
 
-  constructor(id: string, config: T) {
+  constructor(id: string, config: BaseConfig) {
     this.id = id;
     this.name = config.name;
+  }
+}
+
+export interface GpioBaseConfig extends BaseConfig {
+  gpio: number;
+}
+
+export class GpioBase extends Base {
+  readonly gpio: number;
+
+  constructor(id: string, config: GpioBaseConfig) {
+    super(id, config);
+    this.gpio = config.gpio;
   }
 }

@@ -5,9 +5,9 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Base } from "./base";
+import { GpioBase, GpioBaseConfig } from "./base";
 
-export interface SensorConfig {
+export interface SensorConfig extends GpioBaseConfig {
   name: string;
   description: string;
   unit?: string;
@@ -16,13 +16,11 @@ export interface SensorConfig {
   gpio: number;
 }
 
-export class Sensor extends Base<SensorConfig> {
+export class Sensor extends GpioBase {
   readonly description: string;
   readonly unit: string;
 
   public value: number | boolean | string | undefined;
-
-  readonly gpio: number;
 
   constructor(id: string, config: SensorConfig) {
     super(id, config);
@@ -30,7 +28,5 @@ export class Sensor extends Base<SensorConfig> {
     this.description = config.description;
     this.unit = config.unit ? config.unit : "";
     this.value = config.value;
-
-    this.gpio = config.gpio;
   }
 }

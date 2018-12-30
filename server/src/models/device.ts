@@ -23,7 +23,7 @@ export interface DeviceConfig {
   };
 }
 
-export class Device extends Base<DeviceConfig> {
+export class Device extends Base {
   public sensors: {
     [id: string]: Sensor;
   };

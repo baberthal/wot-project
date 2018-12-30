@@ -5,18 +5,18 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Device, DeviceConfig } from "../../models";
+import { Device, DeviceConfig, ResourceCollection } from "../../models";
 
 export class Model {
-  private _devices: Map<string, Device> = new Map();
+  readonly devices: ResourceCollection<Device>;
 
   constructor(config: { [id: string]: DeviceConfig }) {
-    Object.keys(config).forEach(key => {
-      this._devices.set(key, new Device(key, config[key]));
-    });
-  }
+    const devMap = new Map<string, Device>();
 
-  device(id: string): Device | undefined {
-    return this._devices.get(id);
+    Object.keys(config).forEach(key => {
+      devMap.set(key, new Device(key, config[key]));
+    });
+
+    this.devices = new ResourceCollection(devMap);
   }
 }
