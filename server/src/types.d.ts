@@ -14,8 +14,4 @@ declare module "express" {
   interface Request {
     log: Logger;
   }
-
-  interface Express {
-    log: Logger;
-  }
 }

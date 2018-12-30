@@ -7,9 +7,21 @@
 
 import app from "./servers/http";
 import logger from "./util/logger";
+import { WebSocketServer } from "./servers/ws_server";
 
-const port = 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-const server = app.listen(port, () => {
-  logger.info(`Listening on ${port}`);
-});
+const options = {
+  app,
+  logger,
+  port
+};
+
+async function main() {
+  const server = app.listen(port, () => {
+    logger.info(`app is up and running on :${port}`);
+    WebSocketServer.listen(server);
+  });
+}
+
+main();
