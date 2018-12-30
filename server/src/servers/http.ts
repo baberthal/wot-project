@@ -26,6 +26,7 @@ export function createApp() {
   app.register(cors);
   app.register(resourcesPlugin);
   app.register(linksPlugin);
+
   app.register(pluginManager);
   app.register(ledPlugin, { params: { simulate, frequency: 2000 } });
   app.register(pirPlugin, { params: { simulate, frequency: 2000 } });

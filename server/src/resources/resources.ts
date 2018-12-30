@@ -28,4 +28,12 @@ export class Resources {
     if (!dev) throw new Error(`Unable to find device with id: '${id}'`);
     return dev;
   }
+
+  toJSON() {
+    let res = Object.create(null);
+    for (const [k, v] of this._devices) {
+      res[k] = v;
+    }
+    return res;
+  }
 }
