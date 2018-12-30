@@ -7,3 +7,6 @@
 
 export * from "./core";
 export * from "./decorators";
+export * from "./dev-mode";
+export { fetchJson } from "./fetch-json";
+export * from "./store_decorators";

@@ -6,21 +6,11 @@
 //===-----------------------------------------------------------------------===//
 
 import Vue from "vue";
-import VueRouter from "vue-router";
+import Router from "vue-router";
 import Vuex from "vuex";
+import createLogger from "vuex/dist/logger";
 
-Vue.use(VueRouter);
+Vue.use(Router);
 Vue.use(Vuex);
 
-export { Vue, VueRouter as Router, Vuex };
-export {
-  Location,
-  NavigationGuard,
-  RawLocation,
-  RedirectOption,
-  Route,
-  RouteConfig,
-  RouteRecord,
-  RouterMode,
-  RouterOptions
-} from "vue-router";
+export { Vue, Router, Vuex, createLogger };

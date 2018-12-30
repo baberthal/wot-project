@@ -14,7 +14,5 @@ import {
   Provide,
   Watch
 } from "vue-property-decorator";
-import { Action, Getter, Mutation, State, namespace as ns } from "vuex-class";
 
 export { Component, Emit, Inject, Mixins, Model, Prop, Provide, Watch };
-export { Action, Getter, Mutation, State, ns };
