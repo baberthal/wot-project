@@ -25,6 +25,7 @@
     "fastify-cors": "^2.0.1",
     "fastify-plugin": "^1.4.0",
     "onoff": "^3.2.2",
+    "rxjs": "^6.3.3",
     "ws": "^6.1.2"
   },
   "devDependencies": {
