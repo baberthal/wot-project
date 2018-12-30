@@ -16,14 +16,32 @@ export interface ActuatorConfig extends GpioBaseConfig {
 }
 
 export class Actuator extends GpioBase {
+  /** Human-readable description of the actuator. */
   readonly description: string;
-  public value: number | string | boolean | undefined;
+
+  private _value: number | string | boolean | undefined;
+
+  public onValueChange?: (value: number | string | boolean | undefined) => void;
+
+  get value(): number | string | boolean | undefined {
+    return this._value;
+  }
+
+  set value(newValue: number | string | boolean | undefined) {
+    this._value = newValue;
+    if (this.onValueChange) this.onValueChange(this._value);
+  }
 
   constructor(id: string, config: ActuatorConfig) {
     super(id, config);
 
     this.description = config.description || "";
-    this.value = config.value;
+    this._value = config.value;
+  }
+
+  toJSON() {
+    const { id, name, description, value, gpio } = this;
+    return { id, name, description, value, gpio };
   }
 }
 
@@ -34,12 +52,9 @@ export class ActuatorGroup {
   constructor(name: string, config: { [id: string]: ActuatorConfig } = {}) {
     this.name = name;
     Object.keys(config).forEach(key => {
-      this.addActuator(key, config[key]);
+      const actuator = new Actuator(key, config[key]);
+      this._actuators.set(key, actuator);
     });
-  }
-
-  addActuator(id: string, config: ActuatorConfig) {
-    this._actuators.set(id, new Actuator(id, config));
   }
 
   find(id: string): Actuator {
@@ -48,5 +63,13 @@ export class ActuatorGroup {
       throw new Error(`Unable to find actuator with id: '${id}'`);
     }
     return actuator;
+  }
+
+  toJSON() {
+    let res = Object.create(null);
+    for (const [k, v] of this._actuators) {
+      res[k] = v;
+    }
+    return res;
   }
 }
