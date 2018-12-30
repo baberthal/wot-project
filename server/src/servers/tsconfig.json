@@ -1,6 +1,10 @@
 {
   "extends": "../tsconfig.base.json",
-  "files": ["index.ts", "../types.d.ts"],
+  "files": ["../types.d.ts", "http.ts"],
   "include": ["**/*.ts"],
-  "references": [{ "path": "../routes" }, { "path": "../util" }]
+  "references": [
+    { "path": "../routes" },
+    { "path": "../util" },
+    { "path": "../plugins" }
+  ]
 }

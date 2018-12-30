@@ -8,12 +8,24 @@
 import * as fastify from "fastify";
 import * as cors from "fastify-cors";
 
-import v1Routes from "../routes/v1";
+import ledPlugin from "../plugins/led-plugin";
+import linksPlugin from "../plugins/links-plugin";
+import resourcesPlugin from "../plugins/resources-plugin";
+
+import routes from "../routes";
 import logger from "../util/logger";
 
-const app = fastify({ logger });
+export function createApp() {
+  const app = fastify({ logger });
 
-app.register(cors);
-app.register(v1Routes, { prefix: "v1" });
+  app.register(cors);
+  app.register(resourcesPlugin);
+  app.register(linksPlugin);
+  app.register(ledPlugin, { params: { simulate: true, frequency: 2000 } });
 
-export default app;
+  app.register(routes);
+
+  return app;
+}
+
+export default createApp;
