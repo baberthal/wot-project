@@ -36,6 +36,7 @@ module.exports = {
   resolve: {
     modules: [
       path.resolve(BASE_DIR, "node_modules"),
+      path.resolve(BASE_DIR, "../node_modules"),
       path.resolve(BASE_DIR, "app")
     ],
     extensions: [".tsx", ".ts", ".js"],
