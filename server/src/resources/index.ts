@@ -5,5 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import v1 from "./v1";
-export default v1;
+import { Resources } from "./resources";
+import * as data from "./v1/resources.json";
+
+export default new Resources(data);
