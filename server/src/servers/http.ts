@@ -16,16 +16,19 @@ import resourcesPlugin from "../plugins/resources-plugin";
 
 import routes from "../routes";
 import logger from "../util/logger";
+import isDevMode from "../util/dev-mode";
 
 export function createApp() {
   const app = fastify({ logger });
+
+  const simulate = isDevMode();
 
   app.register(cors);
   app.register(resourcesPlugin);
   app.register(linksPlugin);
   app.register(pluginManager);
-  app.register(ledPlugin, { params: { simulate: true, frequency: 2000 } });
-  app.register(pirPlugin, { params: { simulate: true, frequency: 2000 } });
+  app.register(ledPlugin, { params: { simulate, frequency: 2000 } });
+  app.register(pirPlugin, { params: { simulate, frequency: 2000 } });
 
   app.register(routes);
 
