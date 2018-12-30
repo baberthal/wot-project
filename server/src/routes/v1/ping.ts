@@ -5,12 +5,11 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Router } from "express";
+import { FastifyInstance } from "fastify";
 
-const router = Router();
-
-router.route("/").get((req, res, next) => {
-  res.send("pong");
-});
-
-export default router;
+export default function routes(fastify: FastifyInstance, opts: any, next: any) {
+  fastify.get("/", (req, res) => {
+    res.send("pong");
+  });
+  next();
+}

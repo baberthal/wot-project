@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.base.json",
-  "files": ["v1.ts", "default.ts"],
+  "files": ["v1.ts", "default.ts", "types.d.ts"],
   "include": ["**/*.ts"],
   "references": [{ "path": "../resources" }]
 }

@@ -5,16 +5,26 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Router } from "express";
+import { FastifyInstance, RegisterOptions } from "fastify";
+import * as fp from "fastify-plugin";
+
+import { Device } from "../models";
+import resources from "../resources";
 
 import actuatorRoutes from "./v1/actuators";
 import pingRoutes from "./v1/ping";
 import sensorRoutes from "./v1/sensors";
 
-const router = Router();
+function plugin(fastify: FastifyInstance, opts: any, next: any) {
+  resources.devices.find("pi").then(device => {
+    fastify.decorateRequest("device", device);
 
-router.use("/pi/actuators", actuatorRoutes);
-router.use("/pi/sensors", sensorRoutes);
-router.use("/ping", pingRoutes);
+    fastify.register(actuatorRoutes, { prefix: "/pi/actuators" });
+    fastify.register(pingRoutes, { prefix: "/ping" });
+    fastify.register(sensorRoutes, { prefix: "/pi/sensors" });
 
-export default router;
+    next();
+  });
+}
+
+export default plugin;

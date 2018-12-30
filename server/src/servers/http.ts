@@ -5,21 +5,15 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import * as cors from "cors";
-import * as express from "express";
-import * as pino from "pino-http";
-
-import logger from "../util/logger";
+import * as fastify from "fastify";
+import * as cors from "fastify-cors";
 
 import v1Routes from "../routes/v1";
-import defaultRoutes from "../routes/default";
+import logger from "../util/logger";
 
-const app = express();
+const app = fastify({ logger });
 
-app.use(cors());
-app.use(pino({ logger }));
-
-app.use("/", defaultRoutes);
-app.use("/v1", v1Routes);
+app.register(cors);
+app.register(v1Routes, { prefix: "v1" });
 
 export default app;

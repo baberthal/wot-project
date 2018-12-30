@@ -5,38 +5,27 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Router, Request as _Request } from "express";
+import { FastifyInstance } from "fastify";
+
 import resources from "../../resources";
 import { Device } from "../../models";
 
-const router = Router();
-const devicePromise = resources.devices.find("pi");
-
-interface Request extends _Request {
-  device: Device;
-}
-
-router.use((req, res, next) => {
-  devicePromise.then(device => {
-    (req as Request).device = device;
-    next();
+export default function routes(fastify: FastifyInstance, opts: any, next: any) {
+  fastify.get("/", (req, res) => {
+    res.send(req.device.sensors);
   });
-});
 
-router.route("/").get((req, res, next) => {
-  res.send((req as Request).device.sensors);
-});
+  fastify.get("/pir", (req, res) => {
+    res.send(req.device.sensors.pir);
+  });
 
-router.route("/pir").get((req, res, next) => {
-  res.send((req as Request).device.sensors.pir);
-});
+  fastify.get("/temperature", (req, res) => {
+    res.send(req.device.sensors.temperature);
+  });
 
-router.route("/temperature").get((req, res, next) => {
-  res.send((req as Request).device.sensors.temperature);
-});
+  fastify.get("/humidity", (req, res) => {
+    res.send(req.device.sensors.humidity);
+  });
 
-router.route("/humidity").get((req, res, next) => {
-  res.send((req as Request).device.sensors.humidity);
-});
-
-export default router;
+  next();
+}
