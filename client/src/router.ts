@@ -14,6 +14,29 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/devices",
+      component: () => import("@/views/master-detail/master-detail.view"),
+      children: [
+        {
+          path: ":id",
+          name: "device",
+          components: {
+            detail: () => import("@/components/device-info/device-info.view")
+          },
+          children: [
+            {
+              path: ":resourceID",
+              name: "deviceResource",
+              components: {
+                detail: () =>
+                  import("@/views/device-resource/device-resource.view")
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 });
