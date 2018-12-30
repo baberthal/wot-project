@@ -1,0 +1,14 @@
+<div>
+  <section class="section">
+    <!-- <device-list></device-list> -->
+    <div class="columns">
+      <div class="column is-one-third">
+        <device-menu :allDevices="allDevices"></device-menu>
+      </div>
+      <div class="column" v-if="currentDevice">
+        <router-view name="detail"></router-view>
+        <!-- <device-info :currentDevice="currentDevice"></device-info> -->
+      </div>
+    </div>
+  </section>
+</div>
