@@ -5,25 +5,25 @@
 //
 //===-----------------------------------------------------------------------===//
 
-export interface BaseConfig {
+export interface ModelBaseConfig {
   name: string;
 }
 
-export abstract class Base {
+export abstract class ModelBase {
   readonly id: string;
   readonly name: string;
 
-  constructor(id: string, config: BaseConfig) {
+  constructor(id: string, config: ModelBaseConfig) {
     this.id = id;
     this.name = config.name;
   }
 }
 
-export interface GpioBaseConfig extends BaseConfig {
+export interface GpioBaseConfig extends ModelBaseConfig {
   gpio: number;
 }
 
-export class GpioBase extends Base {
+export class GpioBase extends ModelBase {
   readonly gpio: number;
 
   constructor(id: string, config: GpioBaseConfig) {

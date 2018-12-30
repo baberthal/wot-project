@@ -5,9 +5,9 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Base } from "./base";
+import { ModelBase } from "./base";
 
-export class ResourceCollection<T extends Base> {
+export class ResourceCollection<T extends ModelBase> {
   private _resources: Map<string, T>;
 
   constructor(resources: Map<string, T>) {

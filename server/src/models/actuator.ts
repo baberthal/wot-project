@@ -10,7 +10,7 @@ import { GpioBase, GpioBaseConfig } from "./base";
 export interface ActuatorConfig extends GpioBaseConfig {
   name: string;
   description?: string;
-  value?: number | string | boolean | undefined;
+  value?: number | string | boolean;
 
   gpio: number;
 }
@@ -19,17 +19,22 @@ export class Actuator extends GpioBase {
   /** Human-readable description of the actuator. */
   readonly description: string;
 
-  private _value: number | string | boolean | undefined;
+  private _value?: number | string | boolean;
 
-  public onValueChange?: (value: number | string | boolean | undefined) => void;
+  private _onValueChange: ((val: number | string | boolean) => void)[] = [];
 
-  get value(): number | string | boolean | undefined {
-    return this._value;
+  // public onValueChange?: (value: number | string | boolean | undefined) => void;
+
+  /** The value of the actuator. */
+  get value(): number | string | boolean {
+    return this._value!;
   }
 
-  set value(newValue: number | string | boolean | undefined) {
+  set value(newValue: number | string | boolean) {
     this._value = newValue;
-    if (this.onValueChange) this.onValueChange(this._value);
+    this._onValueChange.forEach(cb => {
+      cb(newValue);
+    });
   }
 
   constructor(id: string, config: ActuatorConfig) {
@@ -42,6 +47,10 @@ export class Actuator extends GpioBase {
   toJSON() {
     const { id, name, description, value, gpio } = this;
     return { id, name, description, value, gpio };
+  }
+
+  onValueChange(cb: (val: number | string | boolean) => void): void {
+    this._onValueChange.push(cb);
   }
 }
 
@@ -63,6 +72,12 @@ export class ActuatorGroup {
       throw new Error(`Unable to find actuator with id: '${id}'`);
     }
     return actuator;
+  }
+
+  forEach(cb: (actuator: Actuator, id: string, group: ActuatorGroup) => void) {
+    this._actuators.forEach((value, key) => {
+      cb(value, key, this);
+    });
   }
 
   toJSON() {

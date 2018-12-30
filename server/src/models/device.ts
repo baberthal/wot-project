@@ -6,7 +6,7 @@
 //===-----------------------------------------------------------------------===//
 
 import { ActuatorConfig, Actuator, ActuatorGroup } from "./actuator";
-import { Base } from "./base";
+import { ModelBase } from "./base";
 import { SensorConfig, Sensor } from "./sensor";
 
 export interface DeviceConfig {
@@ -23,7 +23,7 @@ export interface DeviceConfig {
   };
 }
 
-export class Device extends Base {
+export class Device extends ModelBase {
   public sensors: {
     [id: string]: Sensor;
   };
@@ -44,5 +44,15 @@ export class Device extends Base {
     Object.keys(config.actuators).forEach(key => {
       this.actuators[key] = new ActuatorGroup(key, config.actuators[key]);
     });
+  }
+
+  findProperty(id: string): Sensor | ActuatorGroup {
+    let found: Sensor | ActuatorGroup = this.sensors[id];
+    if (found) return found;
+
+    found = this.actuators[id];
+    if (found) return found;
+
+    throw new Error(`Unable to find sensor or actuator group with id: ${id}`);
   }
 }
