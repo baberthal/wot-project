@@ -28,6 +28,6 @@
     "outDir": "../dist",
     "resolveJsonModule": true,
 
-    "types": []
+    "types": ["node"]
   }
 }
