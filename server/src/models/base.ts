@@ -5,6 +5,8 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import { Subject } from "rxjs";
+
 export interface ModelBaseConfig {
   name: string;
 }
@@ -26,8 +28,14 @@ export interface GpioBaseConfig extends ModelBaseConfig {
 export class GpioBase extends ModelBase {
   readonly gpio: number;
 
+  protected _data: DataArray = new DataArray();
+
   constructor(id: string, config: GpioBaseConfig) {
     super(id, config);
     this.gpio = config.gpio;
   }
+}
+
+export class DataArray<T = object> extends Subject<T> {
+  private _data: T[] = [];
 }
