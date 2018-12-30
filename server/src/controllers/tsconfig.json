@@ -4,7 +4,10 @@
   "include": ["**/*.ts"],
   "references": [
     {
-      "path": "../resources"
+      "path": "../models"
+    },
+    {
+      "path": "../util"
     }
   ]
 }

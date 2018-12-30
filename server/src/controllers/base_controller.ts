@@ -5,14 +5,11 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Gpio } from "onoff";
-
 import { Device, Sensor, Actuator, ActuatorGroup } from "../models";
 import { Logger } from "../util/types";
 
 export interface ControllerBaseInit {
   log: Logger;
-  device: Device;
 
   params: {
     simulate: boolean;
@@ -21,7 +18,7 @@ export interface ControllerBaseInit {
 }
 
 export interface ControllerConstructor {
-  new (init: ControllerBaseInit): ControllerBase;
+  new (model: Sensor | Actuator, init: ControllerBaseInit): ControllerBase;
 }
 
 export abstract class ControllerBase {
@@ -35,14 +32,16 @@ export abstract class ControllerBase {
   public readonly frequency: number;
 
   protected log: Logger;
-  protected device: Device;
+  /** The model that the controller is controlling. */
+  protected model: Sensor | Actuator;
 
   protected interval!: NodeJS.Timeout;
-  protected conn!: Gpio;
+  protected conn!: import("onoff").Gpio;
 
-  constructor(init: ControllerBaseInit) {
+  constructor(model: Sensor | Actuator, init: ControllerBaseInit) {
+    this.model = model;
+
     this.log = init.log;
-    this.device = init.device;
 
     const params = init.params || {
       simulate: false,
@@ -70,9 +69,6 @@ export abstract class ControllerBase {
    * Performs a simulation of the hardware.
    */
   abstract performSimulation(): void;
-
-  /** The model that the controller is controlling. */
-  protected abstract get model(): Sensor | Actuator;
 
   /**
    * Starts the plugin, either as a simulation or by connecting hardware,

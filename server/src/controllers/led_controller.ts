@@ -5,27 +5,22 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Gpio } from "onoff";
-
 import { Actuator } from "../models";
-import resources from "../resources";
 
 import { ControllerBase, ControllerBaseInit } from "./base_controller";
 
 export class LedController extends ControllerBase {
   static readonly propertyId: string = "leds";
 
-  public get model(): Actuator {
-    return this.device.actuators.leds.find("1");
-  }
-
-  connectHardware(): void {
+  async connectHardware() {
     if (this.conn != null) {
       throw new Error("Hardware already connected!");
     }
 
-    this.conn = new Gpio(this.model.gpio, "out");
-    this.log.info("Hardware %s actuator started!", this.name);
+    return import("onoff").then(onoff => {
+      this.conn = new onoff.Gpio(this.model.gpio, "out");
+      this.log.info("Hardware %s actuator started!", this.name);
+    });
   }
 
   onStop(): void {
