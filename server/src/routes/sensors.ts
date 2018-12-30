@@ -5,26 +5,29 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { FastifyInstance } from "fastify";
+import { FastifyInstance, RegisterOptions, NextCallback } from "../util/types";
 
-import resources from "../../resources";
-import { Device } from "../../models";
+export default function routes(
+  fastify: FastifyInstance,
+  opts: RegisterOptions,
+  next: NextCallback
+) {
+  const device = fastify.resources.device("pi");
 
-export default function routes(fastify: FastifyInstance, opts: any, next: any) {
   fastify.get("/", (req, res) => {
-    res.send(req.device.sensors);
+    res.send(device.sensors);
   });
 
   fastify.get("/pir", (req, res) => {
-    res.send(req.device.sensors.pir);
+    res.send(device.sensors.pir);
   });
 
   fastify.get("/temperature", (req, res) => {
-    res.send(req.device.sensors.temperature);
+    res.send(device.sensors.temperature);
   });
 
   fastify.get("/humidity", (req, res) => {
-    res.send(req.device.sensors.humidity);
+    res.send(device.sensors.humidity);
   });
 
   next();
