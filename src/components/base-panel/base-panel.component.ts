@@ -21,3 +21,5 @@ export class BasePanel extends Vue {
     { icon: "developer-board", content: "My Raspberry Pi" }
   ];
 }
+
+export default BasePanel;

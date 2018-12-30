@@ -1,8 +1,8 @@
-//===- core/http/src/request.ts - HTTP Request Class -----------------------===//
+//===- store/modules/index.ts - Export Bucket for Modules ------------------===//
 //
 // Copyright (c) 2018 J. Morgan Lieberthal
 // Licensed under the MIT License
 //
 //===-----------------------------------------------------------------------===//
 
-export class HttpRequest {}
+export { DeviceModule } from "./device_module";

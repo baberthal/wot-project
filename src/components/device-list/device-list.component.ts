@@ -6,10 +6,11 @@
 //===-----------------------------------------------------------------------===//
 
 import { Component, Vue, getModule } from "@app/core";
-import { getDevices, BaseDeviceInfo } from "@app/api/devices";
+import { BaseDeviceInfo } from "@app/api/devices";
 import { DeviceModule } from "@app/store/modules";
 
-import { BaseIcon, BasePanel } from "../base";
+import BaseIcon from "../base-icon";
+import BasePanel from "../base-panel";
 import template from "./device-list.template.html";
 
 export interface DeviceConfig {

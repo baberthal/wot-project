@@ -62,3 +62,5 @@ export class BaseIcon extends Vue {
     }
   }
 }
+
+export default BaseIcon;
