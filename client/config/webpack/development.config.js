@@ -8,9 +8,14 @@ const stats = require("./stats.config");
 const devConfig = {
   mode: "development",
 
-  devtool: "inline-source-map",
+  devtool: "#eval-source-map",
 
   devServer: {
+    historyApiFallback: true,
+    noInfo: true,
+    overlay: true,
+    host: "0.0.0.0",
+    port: 8080,
     contentBase: "./dist",
     disableHostCheck: true,
     stats

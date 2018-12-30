@@ -24,6 +24,7 @@ module.exports = {
 
   output: {
     path: path.resolve(BASE_DIR, "dist"),
+    publicPath: "/dist/",
     filename: "[name].bundle.js"
   },
 
@@ -56,7 +57,7 @@ module.exports = {
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       inject: "body",
-      alwaysWriteToDisk: true,
+      alwaysWriteToDisk: false,
       filename: "index.html",
       template: path.resolve(BASE_DIR, "src/index.html")
     })
