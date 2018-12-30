@@ -5,9 +5,5 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import * as V1 from "./v1";
-import * as V2 from "./v2";
-
-export { V1 };
-
-export default V1.model;
+import v1 from "./v1";
+export default v1;

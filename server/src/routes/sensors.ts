@@ -9,21 +9,22 @@ import { Router } from "express";
 import resources from "../resources";
 
 const router = Router();
+const device = resources.device("pi")!;
 
 router.route("/").get((req, res, next) => {
-  res.send(resources.pi.sensors);
+  res.send(device.sensors);
 });
 
 router.route("/pir").get((req, res, next) => {
-  res.send(resources.pi.sensors.pir);
+  res.send(device.sensors.pir);
 });
 
 router.route("/temperature").get((req, res, next) => {
-  res.send(resources.pi.sensors.temperature);
+  res.send(device.sensors.temperature);
 });
 
 router.route("/humidity").get((req, res, next) => {
-  res.send(resources.pi.sensors.humidity);
+  res.send(device.sensors.humidity);
 });
 
 export default router;

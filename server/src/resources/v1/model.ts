@@ -5,39 +5,18 @@
 //
 //===-----------------------------------------------------------------------===//
 
-export interface WebThingBase {
-  name: string;
-  description?: string;
+import { Device, DeviceConfig } from "../../models";
+
+export class Model {
+  private _devices: Map<string, Device> = new Map();
+
+  constructor(config: { [id: string]: DeviceConfig }) {
+    Object.keys(config).forEach(key => {
+      this._devices.set(key, new Device(key, config[key]));
+    });
+  }
+
+  device(id: string): Device | undefined {
+    return this._devices.get(id);
+  }
 }
-
-export interface WebThing extends WebThingBase {
-  description: string;
-  port: number;
-  sensors: {
-    [key: string]: WebThingSensor;
-  };
-  actuators: {
-    [key: string]: {
-      [key: string]: WebThingActuator;
-    };
-  };
-}
-
-export interface WebThingSensor extends GpioWebThing {
-  unit?: string;
-}
-
-export interface WebThingActuator extends GpioWebThing {}
-
-export interface GpioWebThing extends WebThingBase {
-  gpio: number;
-  value: number | string | boolean;
-}
-
-export interface WebThingCollection {
-  [id: string]: WebThing;
-}
-
-import * as resources from "./resources.json";
-
-export const model: WebThingCollection = resources;

@@ -5,40 +5,59 @@
 //
 //===-----------------------------------------------------------------------===//
 
-export interface WebThingResource {
-  url: string;
-  name: string;
+export interface WebThingBase {
+  /** REQUIRED */
+  id: string;
+  tags?: string[];
 }
 
-export interface WebThingLink {
-  rel: string;
+export interface WebThingCommonBase {
+  name: string;
+  description?: string;
+}
+
+export interface WebThingCommon extends WebThingBase, WebThingCommonBase {
+  name: string;
+  description: string;
+  tags: string[];
+  customFields: {
+    [key: string]: number | string | boolean;
+  };
+  links: WebThingLinksObject;
+}
+
+export interface WebThingLinkBase {
+  link: string;
   title: string;
 }
 
-export interface WebThingLinks {
-  meta: WebThingLink;
-  doc: WebThingLink;
-  ui: WebThingLink;
+export interface WebThingLinksObject {
+  [relType: string]: WebThingLinkBase | undefined;
 
-  [rel: string]: WebThingLink;
+  model?: WebThingLinkBase;
+  properties?: WebThingLinkBase;
+  actions?: WebThingLinkBase;
+  things?: WebThingLinkBase;
+  subscriptions?: WebThingLinkBase;
+  type?: WebThingLinkBase;
+  product?: WebThingLinkBase;
+  help?: WebThingLinkBase;
+  ui?: WebThingLinkBase;
 }
 
-export interface WebThingCommon {
-  id: string;
+export interface WebThingValuesObject {
+  [valueName: string]: WebThingValue;
+}
+
+export interface WebThingValue {
   name: string;
   description: string;
-  url: string;
-  version: string;
-  tags: string[];
-  resources: {
-    [rel: string]: WebThingResource;
-  };
 }
 
-// export interface LinkBase {
-//   link: string;
-//   title: string;
-// }
+export interface Timestamps {
+  createdAt?: string;
+  updatedAt?: string;
+}
 
 // export interface WebThingLinks {
 //   model: LinkBase;

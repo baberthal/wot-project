@@ -5,4 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-export * from "./model";
+import * as resources from "./resources.json";
+import { Model } from "./model";
+
+export default new Model(resources);

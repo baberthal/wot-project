@@ -8,23 +8,25 @@
 import { Router } from "express";
 import resources from "../resources";
 
+const device = resources.device("pi")!;
+
 const router = Router();
 
 router.route("/").get((req, res, next) => {
-  res.send(resources.pi.actuators);
+  res.send(device.actuators);
 });
 
 router.route("/leds").get((req, res, next) => {
-  res.send(resources.pi.actuators.leds);
+  res.send(device.actuators.leds);
 });
 
 router
   .route("/leds/:id")
   .get((req, res, next) => {
-    res.send(resources.pi.actuators.leds[req.params.id]);
+    res.send(device.actuators.leds.find(req.params.id));
   })
   .put((req, res, next) => {
-    const selectedLED = resources.pi.actuators.leds[req.params.id];
+    const selectedLED = device.actuators.leds.find(req.params.id);
     selectedLED.value = req.body.value;
     res.send(selectedLED);
   });
