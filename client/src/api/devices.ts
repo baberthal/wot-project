@@ -21,3 +21,7 @@ export function getDevices(): Promise<{ [key: string]: BaseDeviceInfo }> {
 export function getDevice(slug: string): Promise<BaseDeviceInfo> {
   return fetchJson(`${GATEWAY_URL}/${slug}`); // TODO: Sanitize the slug
 }
+
+export function getResource(device: string, resource: string) {
+  return fetchJson(`${GATEWAY_URL}/${device}/${resource}`);
+}
