@@ -6,20 +6,17 @@
 //===-----------------------------------------------------------------------===//
 
 import app from "./servers/http";
-import logger from "./util/logger";
+// import logger from "./util/logger";
 // import { WebSocketServer } from "./servers/ws_server";
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-const options = {
-  app,
-  logger,
-  port
-};
-
 async function main() {
-  const server = app.listen(port, () => {
-    logger.info(`app is up and running on: ${port}`);
+  app.listen(port, "0.0.0.0", (err, address) => {
+    if (err) {
+      app.log.error(err);
+    }
+    app.log.info(`app is up and running on ${address}`);
   });
 }
 
