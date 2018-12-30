@@ -5,6 +5,7 @@
     "led-plugin.ts",
     "links-plugin.ts",
     "resources-plugin.ts",
+    "pir-plugin.ts",
     "types.d.ts"
   ],
   "include": ["**/*.ts"],

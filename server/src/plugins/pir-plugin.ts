@@ -1,4 +1,4 @@
-//===- plugins/led_plugin.ts - LED Plugin ----------------------------------===//
+//===- plugins/pir-plugin.ts - PIR Plugin ----------------------------------===//
 //
 // Copyright (c) 2019 J. Morgan Lieberthal
 // Licensed under the MIT License
@@ -7,7 +7,6 @@
 
 import * as fp from "fastify-plugin";
 
-// import { LedController } from "../controllers/led_controller";
 import resources from "../resources";
 import { FastifyInstance, RegisterOptions, NextCallback } from "../util/types";
 
@@ -18,10 +17,10 @@ interface PluginOptions extends RegisterOptions {
   };
 }
 
-const model = resources.device("pi").actuators["leds"].find("1");
+const model = resources.device("pi").sensors.pir;
 const pluginName = model.name;
 
-function ledPlugin(
+function pirPlugin(
   fastify: FastifyInstance,
   options: PluginOptions,
   next: NextCallback
@@ -31,11 +30,6 @@ function ledPlugin(
   let conn: import("onoff").Gpio;
 
   async function start() {
-    model.onValueChange(val => {
-      fastify.log.info("Value changed for %s: %s", pluginName, val);
-      toggleLED(val as boolean);
-    });
-
     if (params.simulate) {
       simulate();
     } else {
@@ -56,31 +50,25 @@ function ledPlugin(
   }
 
   function simulate() {
-    interval = setTimeout(() => {
-      // Switch value on a regular basis
+    interval = setInterval(() => {
       model.value = !model.value;
       showValue();
     }, params.frequency);
-
-    fastify.log.info("Simulated %s actuator started!", pluginName);
   }
 
   async function connectHardware() {
     const onoff = await import("onoff");
-    conn = new onoff.Gpio(model.gpio, "out");
-    fastify.log.info("Hardware %s actuator started!", pluginName);
-  }
-
-  function toggleLED(value: boolean) {
-    if (!params.simulate) {
-      conn.write(value === true ? 1 : 0, () => {
-        fastify.log.info("Changed value of %s to %s", pluginName, value);
-      });
-    }
+    conn = new onoff.Gpio(model.gpio, "in", "both");
+    conn.watch((err, value) => {
+      if (err) throw err;
+      model.value = !!value;
+      showValue();
+    });
+    fastify.log.info("Hardware %s sensor started!", pluginName);
   }
 
   function showValue() {
-    fastify.log.info("%s current value: %s", pluginName, model.value);
+    fastify.log.info(model.value ? "there is someone!" : "not anymore!");
   }
 
   fastify.ready(async () => {
@@ -95,4 +83,4 @@ function ledPlugin(
   next();
 }
 
-export default fp(ledPlugin);
+export default fp(pirPlugin);
