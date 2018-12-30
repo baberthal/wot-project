@@ -5,26 +5,38 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Router } from "express";
+import { Router, Request as _Request } from "express";
 import resources from "../resources";
+import { Device } from "../models";
 
 const router = Router();
-const device = resources.device("pi")!;
+const devicePromise = resources.devices.find("pi");
+
+interface Request extends _Request {
+  device: Device;
+}
+
+router.use((req, res, next) => {
+  devicePromise.then(device => {
+    (req as Request).device = device;
+    next();
+  });
+});
 
 router.route("/").get((req, res, next) => {
-  res.send(device.sensors);
+  res.send((req as Request).device.sensors);
 });
 
 router.route("/pir").get((req, res, next) => {
-  res.send(device.sensors.pir);
+  res.send((req as Request).device.sensors.pir);
 });
 
 router.route("/temperature").get((req, res, next) => {
-  res.send(device.sensors.temperature);
+  res.send((req as Request).device.sensors.temperature);
 });
 
 router.route("/humidity").get((req, res, next) => {
-  res.send(device.sensors.humidity);
+  res.send((req as Request).device.sensors.humidity);
 });
 
 export default router;
