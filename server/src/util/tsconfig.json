@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.base.json",
-  "files": ["index.ts"],
+  "files": ["index.ts", "logger.ts", "types.ts"],
   "include": ["**/*.ts"],
   "references": []
 }
