@@ -11,17 +11,15 @@ import * as pino from "pino-http";
 
 import logger from "../util/logger";
 
-import actuatorRoutes from "../routes/actuators";
-import pingRoutes from "../routes/ping";
-import sensorRoutes from "../routes/sensors";
+import v1Routes from "../routes/v1";
+import defaultRoutes from "../routes/default";
 
 const app = express();
 
 app.use(cors());
 app.use(pino({ logger }));
 
-app.use("/ping", pingRoutes);
-app.use("/pi/sensors", sensorRoutes);
-app.use("/pi/actuators", actuatorRoutes);
+app.use("/", defaultRoutes);
+app.use("/v1", v1Routes);
 
 export default app;
