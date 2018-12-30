@@ -19,12 +19,14 @@
     "no-unused-variable": [true, { "ignore-pattern": "^_" }],
     "no-var-keyword": true,
     "object-literal-shorthand": true,
-    "ordered-imports": {
-      "options": {
+    "ordered-imports": [
+      true,
+      {
         "import-sources-order": "case-insensitive",
-        "named-imports-order": "lowercase-last"
+        "named-imports-order": "lowercase-last",
+        "grouped-imports": true
       }
-    },
+    ],
     "prefer-const": true,
     "prettier": [true, "."],
     "quotemark": [true, "double", "avoid-escape"],
