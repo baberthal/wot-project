@@ -2,27 +2,32 @@
   "compilerOptions": {
     "target": "es5",
     "module": "es2015",
-    "outDir": "./dist/",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowJs": true,
+
     "strict": true,
-
-    "sourceMap": true,
-
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
 
     "experimentalDecorators": true,
-
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowJs": true,
+    "importHelpers": true,
 
     "baseUrl": ".",
     "paths": {
-      "@app/*": ["src/*"]
-    }
+      "@app/*": ["src/*"],
+      "@/*": ["src/*"]
+    },
+
+    "lib": ["es2015", "dom"],
+    "types": [],
+
+    "sourceMap": true,
+    "outDir": "./dist/"
   },
 
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
 }

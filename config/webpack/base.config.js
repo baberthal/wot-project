@@ -8,10 +8,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 
-const BASE_DIR = path.resolve(__dirname, "../..");
-
 const loaderConfigs = require("./loaders");
+const stats = require("./stats.config");
 
+const BASE_DIR = path.resolve(__dirname, "../..");
 const TS_CONFIG = path.resolve(BASE_DIR, "tsconfig.json");
 
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
 
   entry: {
     polyfills: "./src/polyfills.ts",
-    index: "./src/index.ts"
+    main: "./src/main.ts"
   },
 
   output: {
@@ -30,6 +30,8 @@ module.exports = {
   module: {
     rules: loaderConfigs.rules
   },
+
+  stats,
 
   resolve: {
     modules: [

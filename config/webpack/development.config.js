@@ -3,6 +3,7 @@
 const merge = require("webpack-merge");
 
 const baseConfig = require("./base.config");
+const stats = require("./stats.config");
 
 const devConfig = {
   mode: "development",
@@ -11,7 +12,8 @@ const devConfig = {
 
   devServer: {
     contentBase: "./dist",
-    disableHostCheck: true
+    disableHostCheck: true,
+    stats
   }
 };
 

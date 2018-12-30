@@ -9,7 +9,8 @@ module.exports = {
       options: {
         transpileOnly: true,
         experimentalWatchApi: true,
-        onlyCompileBundledFiles: true
+        onlyCompileBundledFiles: true,
+        appendTsSuffixTo: [/\.vue$/]
       }
     }
   ]

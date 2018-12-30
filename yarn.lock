@@ -8132,10 +8132,10 @@ vue@^2.5.21:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.21.tgz#3d33dcd03bb813912ce894a8303ab553699c4a85"
   integrity sha512-Aejvyyfhn0zjVeLvXd70h4hrE4zZDx1wfZqia6ekkobLmUZ+vNFQer53B4fu0EjWBSiqApxPejzkO1Znt3joxQ==
 
-vuex-class@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/vuex-class/-/vuex-class-0.3.1.tgz#3c0b946bcff4cf2be1904de5b0cab1a3dd5c41d5"
-  integrity sha512-d7Hc+ItQx6p9E/2mEWiyrvyEuo7Uj0mq4VNImd7dmxTelnkhOavKPMEG1Xdypug2RlPEYv0920IOa3hdVZ+4AA==
+vuex-module-decorators@^0.9.7:
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/vuex-module-decorators/-/vuex-module-decorators-0.9.7.tgz#044350b183aec064c5c60626b0ab030d8ea68812"
+  integrity sha512-wgd76R3XVP/3HkQihcN/OPkC9efe2lXmVodCxxdPE9YpDdaeDCYYEjLv4dStwz7XmuIoKP/tJKvyj0TX7jNpJg==
 
 vuex@^3.0.1:
   version "3.0.1"
