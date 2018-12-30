@@ -5,9 +5,9 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Component, Vue } from "@app/core";
-import devices from "@/store/modules/devices";
+import { Component, Vue, Prop } from "@app/core";
 import { BaseDeviceInfo } from "@/store/models";
+import devices from "@/store/modules/devices";
 
 import template from "./device-menu.template.html";
 
@@ -15,12 +15,16 @@ import template from "./device-menu.template.html";
   template
 })
 export class DeviceMenu extends Vue {
-  get allDevices(): { [slug: string]: BaseDeviceInfo } {
-    return devices.all;
+  @Prop() allDevices!: { [slug: string]: BaseDeviceInfo };
+
+  @Prop() currentDevice!: BaseDeviceInfo;
+
+  setCurrentDevice(slug: string) {
+    devices.setCurrentDevice(slug);
   }
 
-  created() {
-    return devices.fetchDevices();
+  get currentSlug(): string {
+    return (this.currentDevice && this.currentDevice.id) || "";
   }
 }
 

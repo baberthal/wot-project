@@ -1,0 +1,53 @@
+<div>
+  <section class="hero is-light">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">Device - Root Page</h1>
+
+        <table class="table is-fullwidth is-light" style="background-color: inherit;">
+          <thead>
+            <h2 class="subtitle">Device Information</h2>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <td>{{ currentDevice.name }}</td>
+            </tr>
+            <tr>
+              <th>URL</th>
+              <td>{{ currentDevice.url }}</td>
+            </tr>
+            <tr>
+              <th>Description</th>
+              <td>{{ currentDevice.description }}</td>
+            </tr>
+            <tr>
+              <th>Tags</th>
+              <td>
+                <div class="tags">
+                  <span class="tag is-info"
+                        v-for="(tag, idx) in currentDevice.tags">
+                    {{ tag }}
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="content">
+      <h2 class="subtitle">Resources</h2>
+      <p>Sub-elements of this device:</p>
+      <ul>
+        <li v-for="(resource, idx) in currentDevice.resources">
+          See <router-link :to="{ name: 'deviceResource', params: { resourceID: resource.url.substr(0, resource.url.length - 1) } }">{{ resource.name }}</router-link>
+        </li>
+        <!-- <li>See the list of sensors</li> -->
+        <!-- <li>See the list of actuators</li> -->
+      </ul>
+    </div>
+  </section>
+</div>

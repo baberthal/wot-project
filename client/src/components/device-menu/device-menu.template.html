@@ -4,7 +4,11 @@
   </p>
   <ul class="menu-list">
     <li v-for="(device, slug) in allDevices">
-      <a>{{ device.name }}</a>
+      <router-link :to="{ name: 'device', params: { id: slug } }"
+        :class="{ 'is-active': slug == $route.params.id }">
+        {{ device.name }}
+      </router-link>
+      <!-- <a @click="setCurrentDevice(slug)" :class="{ 'is-active': slug == $route.params.id }">{{ device.name }} - {{ slug == $route.params.id }}</a> -->
     </li>
   </ul>
 </aside>
