@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./main" },
+    { "path": "./middleware" },
+    { "path": "./plugins" },
+    { "path": "./resources" },
+    { "path": "./routes" },
+    { "path": "./servers" },
+    { "path": "./types" },
+    { "path": "./util" }
+  ]
+}
