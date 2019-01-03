@@ -1,8 +1,14 @@
 {
   "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
-  },
-  "files": ["index.ts", "resources.json", "model.ts"]
+  "files": [
+    "index.ts",
+    "pi.json",
+    "resources.json",
+    "types.ts",
+    "v1/index.ts",
+    "v1/model.ts",
+    "v2/index.ts",
+    "v2/model.ts"
+  ],
+  "references": []
 }

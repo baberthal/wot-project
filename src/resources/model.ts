@@ -5,7 +5,6 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import resources from "./resources.json";
-
-export { resources };
-export default resources;
+export interface Named {
+  name?: string;
+}
