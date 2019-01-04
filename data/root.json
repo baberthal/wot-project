@@ -1,0 +1,44 @@
+{
+  "pi": {
+    "id": "1",
+    "name": "My WoT Raspberry Pi",
+    "description": "A simple WoT-connected Raspberry Pi for the WoT book.",
+    "url": "http://devices.webofthings.io/pi/",
+    "currentStatus": "Live",
+    "version": "v0.1",
+    "tags": ["raspberry", "pi", "WoT"],
+    "resources": {
+      "sensors": { "url": "sensors/", "name": "The list of sensors" },
+      "actuators": { "url": "actuators/", "name": "The list of actuators" }
+    },
+    "links": {
+      "meta": { "rel": "http://book.webofthings.io", "title": "Metadata" },
+      "doc": {
+        "rel": "https://www.raspberrypi.org/products/raspberry-pi-2-model-b/",
+        "title": "Documentation"
+      },
+      "ui": { "rel": ".", "title": "User Interface" }
+    }
+  },
+  "camera": {
+    "id": "2",
+    "name": "My WoT Camera",
+    "description": "A simple WoT-connected camera.",
+    "url": "http://devices.webofthings.io/camera/",
+    "currentStatus": "live",
+    "version": "v0.1",
+    "tags": ["camera", "WoT"],
+    "resources": {
+      "sensors": { "url": "sensors/", "name": "The list of sensors" },
+      "actuators": { "url": "actuators/", "name": "The list of actuators" }
+    },
+    "links": {
+      "meta": { "rel": "http://www.foscam.com/", "title": "Metadata" },
+      "doc": {
+        "rel": "http://www.foscam.com/FI9821P.html",
+        "title": "Documentation"
+      },
+      "ui": { "rel": ".", "title": "User Interface" }
+    }
+  }
+}
