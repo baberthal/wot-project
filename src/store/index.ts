@@ -7,12 +7,10 @@
 
 import { Vuex, createLogger, isDevMode } from "@app/core";
 
-import devices from "./modules/device_module";
-
 export default new Vuex.Store({
-  modules: {
-    devices
-  },
+  state: {},
+  mutations: {},
+  actions: {},
   strict: isDevMode(),
   plugins: isDevMode() ? [createLogger({})] : []
 });

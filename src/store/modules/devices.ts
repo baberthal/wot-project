@@ -1,52 +1,36 @@
-//===- store/modules/devices.ts - Devices Store Module ---------------------===//
+//===- store/modules/device_module.ts - Device Store Module ----------------===//
 //
 // Copyright (c) 2018 J. Morgan Lieberthal
 // Licensed under the MIT License
 //
 //===-----------------------------------------------------------------------===//
 
-import {
-  BaseDeviceInfo,
-  DeviceInfoResponse,
-  getDevices
-} from "@app/api/devices";
+import { Module, VuexModule, getModule, MutationAction } from "@app/core";
+import { getDevices, getDevice } from "@app/api";
+import { DeviceInfo, DeviceInfoDict } from "@/store/models";
+import store from "@/store";
 
-export interface DevicesState {
-  all: BaseDeviceInfo[];
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store,
+  name: "devices"
+})
+export class DeviceModule extends VuexModule {
+  all: DeviceInfoDict = {};
+  currentDevice: DeviceInfo | null = null;
+
+  @MutationAction
+  async fetchDevices() {
+    const all = await getDevices();
+    return { all };
+  }
+
+  @MutationAction
+  async setCurrentDevice(slug: string) {
+    const currentDevice = await getDevice(slug);
+    return { currentDevice };
+  }
 }
 
-// Initial State
-const state = {
-  all: []
-};
-
-// getters
-const getters = {};
-
-// actions
-const actions = {
-  getAllDevices({ commit }: any) {
-    getDevices().then(devices => {
-      console.log(devices);
-      return commit("setDevices", devices);
-    });
-  }
-};
-
-const mutations = {
-  setDevices(theState: DevicesState, response: DeviceInfoResponse) {
-    const infoArray = [];
-    for (const key in response) {
-      infoArray.push(response[key]);
-    }
-    theState.all = infoArray;
-  }
-};
-
-export default {
-  namespaced: true,
-  state,
-  getters,
-  actions,
-  mutations
-};
+export default getModule(DeviceModule);
