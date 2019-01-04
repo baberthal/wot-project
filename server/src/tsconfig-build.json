@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.base.json",
+
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": false,
+    "stripInternal": true,
+    "inlineSources": true,
+    "removeComments": true
+  },
+
+  "include": [],
+  "files": ["index.ts", "types.d.ts"],
+
+  "references": [
+    { "path": "./models" },
+    { "path": "./routes" },
+    { "path": "./resources" },
+    { "path": "./servers" },
+    { "path": "./util" }
+  ]
+}

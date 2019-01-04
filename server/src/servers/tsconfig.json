@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.base.json",
+  "files": ["index.ts", "../types.d.ts"],
+  "include": ["**/*.ts"],
+  "references": [{ "path": "../routes" }, { "path": "../util" }]
+}
