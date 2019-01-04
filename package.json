@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "build": "",
+    "clean": ""
+  },
+  "devDependencies": {
+    "lerna": "^3.8.4"
+  },
+  "name": "project"
+}
