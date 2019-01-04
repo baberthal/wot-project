@@ -16,14 +16,28 @@ export interface WebThing extends WebThingBase {
   sensors: {
     [key: string]: WebThingSensor;
   };
+  actuators: {
+    [key: string]: {
+      [key: string]: WebThingActuator;
+    };
+  };
 }
 
-export interface WebThingSensor extends WebThingBase {
+export interface WebThingSensor extends GpioWebThing {
   unit?: string;
+}
+
+export interface WebThingActuator extends GpioWebThing {}
+
+export interface GpioWebThing extends WebThingBase {
+  gpio: number;
   value: number | string | boolean;
-  gpio?: number;
 }
 
 export interface WebThingCollection {
   [id: string]: WebThing;
 }
+
+import * as resources from "./resources.json";
+
+export const model: WebThingCollection = resources;

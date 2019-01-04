@@ -8,8 +8,6 @@
 import * as V1 from "./v1";
 import * as V2 from "./v2";
 
-import * as resources from "./resources.json";
+export { V1 };
 
-export const v1Resources: V1.WebThingCollection = resources;
-
-export default v1Resources;
+export default V1.model;

@@ -3,10 +3,10 @@
   "files": [
     "index.ts",
     "pi.json",
-    "resources.json",
     "types.ts",
     "v1/index.ts",
     "v1/model.ts",
+    "v1/resources.json",
     "v2/index.ts",
     "v2/model.ts"
   ],
