@@ -4,7 +4,9 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@types/core-js": "^2.5.0",
     "@types/jest": "^23.3.10",
+    "@types/webpack-env": "^1.13.6",
     "@vue/test-utils": "^1.0.0-beta.28",
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^2.0.2",
@@ -41,6 +43,7 @@
   },
   "dependencies": {
     "bulma": "^0.7.2",
+    "core-js": "^2.6.1",
     "vue": "^2.5.21",
     "vue-class-component": "^6.3.2",
     "vue-property-decorator": "^7.2.0",

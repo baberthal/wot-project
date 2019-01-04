@@ -18,11 +18,12 @@
     "baseUrl": ".",
     "paths": {
       "@app/*": ["src/*"],
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@lib/*": ["lib/*"]
     },
 
     "lib": ["es2015", "dom"],
-    "types": [],
+    "types": ["webpack-env", "jest", "core-js"],
 
     "sourceMap": true,
     "outDir": "./dist/"
