@@ -5,9 +5,9 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Component, Vue, getModule } from "@app/core";
-import { BaseDeviceInfo } from "@app/api/devices";
-import { DeviceModule } from "@app/store/modules";
+import { Component, Vue } from "@app/core";
+import { BaseDeviceInfo } from "@/store/models";
+import devices from "@/store/modules/devices";
 
 import BaseIcon from "../base-icon";
 import BasePanel from "../base-panel";
@@ -26,23 +26,12 @@ export interface DeviceConfig {
   template
 })
 export class DeviceList extends Vue {
-  devices: BaseDeviceInfo[] | null = null;
+  get devices(): { [key: string]: BaseDeviceInfo } {
+    return devices.all;
+  }
 
-  mounted() {
-    const mod = getModule(DeviceModule);
-    console.log(mod);
-    console.log(this.$store.state);
-    // getDevices().then(response => {
-    //   console.log("response:", response);
-
-    //   const infoArray = [];
-    //   for (const key in response) {
-    //     infoArray.push(response[key]);
-    //   }
-
-    //   console.log("infoArray:", infoArray);
-    //   this.devices = infoArray;
-    // });
+  created() {
+    return devices.fetchDevices();
   }
 }
 
