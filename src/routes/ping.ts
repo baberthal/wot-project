@@ -5,8 +5,12 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Server } from "../types";
+import { Router } from "express";
 
-export const pingRoute = (instance: FastifyServer, opts, next) => {
-  instance.get("/ping")
-};
+const router = Router();
+
+router.route("/").get((req, res, next) => {
+  res.send("pong");
+});
+
+export default router;
