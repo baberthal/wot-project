@@ -1,24 +1,41 @@
 {
-  "name": "wot-pi",
+  "name": "wot-server",
   "version": "0.1.0",
   "description": "WoT Server for Pi",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "private": true,
+  "bin": {
+    "wot-server": "dist/index.js"
+  },
   "scripts": {
     "test": "echo \"No test specified!\" && exit 1",
     "watch": "tsc -w -b src",
     "build": "tsc -b src",
-    "start": "yarn build && node dist/main",
+    "start": "yarn build && node dist",
     "clean": "rimraf ./dist"
   },
   "dependencies": {
-    "fastify": "^1.13.3"
+    "body-parser": "^1.18.3",
+    "coap": "^0.22.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-pino-logger": "^4.0.0",
+    "rxjs": "^6.3.3",
+    "ws": "^6.1.2"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/cors": "^2.8.4",
+    "@types/express": "^4.16.0",
     "@types/jest": "^23.3.10",
     "@types/node": "^10.12.18",
+    "@types/onoff": "^3.2.1",
+    "@types/pino": "^5.8.3",
+    "@types/pino-http": "^4.0.0",
+    "@types/ws": "^6.0.1",
     "jest": "^23.6.0",
+    "pino-pretty": "^2.5.0",
     "prettier": "^1.15.3",
     "rimraf": "^2.6.2",
     "ts-jest": "^23.10.5",
@@ -28,5 +45,8 @@
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.2.2",
     "vrsource-tslint-rules": "^6.0.0"
+  },
+  "optionalDependencies": {
+    "redis": "^2.8.0"
   }
 }
