@@ -12,10 +12,7 @@ import { AppNavbar } from "@/components/navbar";
   template: `
     <div id="app-main">
       <AppNavbar></AppNavbar>
-
-      <div class="columns">
-        <div class="column is-10 is-offset-1"><router-view></router-view></div>
-      </div>
+      <router-view></router-view>
     </div>
   `,
 
