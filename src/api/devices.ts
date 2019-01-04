@@ -6,44 +6,18 @@
 //===-----------------------------------------------------------------------===//
 
 import { fetchJson } from "./fetch-json";
+import { BaseDeviceInfo } from "@/store/models";
 
-export interface DeviceInfoLink {
-  rel: string;
-  title: string;
-}
-
-export interface DeviceInfoLinks {
-  meta: DeviceInfoLink;
-  doc: DeviceInfoLink;
-  ui: DeviceInfoLink;
-}
-
-export interface DeviceInfoResource {
-  url: string;
-  name: string;
-}
-
-export interface DeviceInfoResources {
-  sensors: DeviceInfoResource;
-  actuators: DeviceInfoResource;
-}
-
-export interface BaseDeviceInfo {
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  currentStatus: string;
-  version: string;
-  tags: string[];
-  resources: DeviceInfoResources;
-  links: DeviceInfoLinks;
-}
+const GATEWAY_URL = "http://devices.webofthings.io";
 
 export interface DeviceInfoResponse {
   [key: string]: BaseDeviceInfo;
 }
 
-export function getDevices(): Promise<DeviceInfoResponse> {
-  return fetchJson("http://devices.webofthings.io");
+export function getDevices(): Promise<{ [key: string]: BaseDeviceInfo }> {
+  return fetchJson(GATEWAY_URL);
+}
+
+export function getDevice(slug: string): Promise<BaseDeviceInfo> {
+  return fetchJson(`${GATEWAY_URL}/${slug}`); // TODO: Sanitize the slug
 }
