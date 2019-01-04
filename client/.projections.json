@@ -1,0 +1,6 @@
+{
+  "src/*.component.ts": {
+    "alternate": "src/{}.spec.ts",
+    "skeleton": "component"
+  }
+}
