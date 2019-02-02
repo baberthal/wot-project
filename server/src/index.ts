@@ -6,7 +6,7 @@
 //===-----------------------------------------------------------------------===//
 
 import createApp from "./servers/http";
-import { isDevMode } from "./util/dev-mode";
+import { isDevMode } from "@wot/core";
 // import logger from "./util/logger";
 // import { WebSocketServer } from "./servers/ws_server";
 

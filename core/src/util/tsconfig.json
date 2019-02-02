@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.base.json",
+  "files": ["index.ts", "dev-mode.ts"],
+  "include": ["**/*.ts"],
+  "references": []
+}
