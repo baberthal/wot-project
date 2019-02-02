@@ -1,0 +1,8 @@
+{
+  "name": "@wot/tools",
+  "version": "0.1.0",
+  "description": "Tools for the WoT monorepo",
+  "author": "J. Morgan Lieberthal <j.morgan.lieberthal@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
