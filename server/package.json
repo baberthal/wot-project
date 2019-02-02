@@ -4,7 +4,6 @@
   "description": "WoT Server Libraries",
   "main": "dist/index.js",
   "license": "MIT",
-  "private": true,
   "bin": {
     "wot-server": "dist/index.js"
   },

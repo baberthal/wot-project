@@ -2,7 +2,6 @@
   "name": "@wot/client",
   "version": "0.1.0",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "test": "jest --config=\"./config/jest.config.js\"",
     "watch": "webpack --watch",
