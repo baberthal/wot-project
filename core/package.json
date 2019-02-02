@@ -8,19 +8,21 @@
   "main": "dist/index.js",
   "files": [
     "README.md",
-    "dist/"
+    "dist/index.js",
+    "dist/util/*"
   ],
   "scripts": {
     "test": "echo \"No test specified!\" && exit 1",
     "build": "tsc -b src",
     "build:w": "tsc -b src -w",
+    "lint": "tslint -c tslint.json -p src/tsconfig.json",
     "clean": "rimraf ./dist"
   },
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "^23.3.10",
     "@types/node": "^10.12.18",
-    "jest": "23",
+    "jest": "^23.6.0",
     "prettier": "^1.15.3",
     "rimraf": "^2.6.2",
     "ts-jest": "^23.10.5",
