@@ -8,10 +8,10 @@
 import * as fp from "fastify-plugin";
 
 import {
-  FastifyReply,
   FastifyInstance,
-  RegisterOptions,
-  NextCallback as Next
+  FastifyReply,
+  NextCallback as Next,
+  RegisterOptions
 } from "../util/types";
 
 export interface PluginOptions extends RegisterOptions {}

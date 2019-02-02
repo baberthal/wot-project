@@ -6,11 +6,11 @@
 //===-----------------------------------------------------------------------===//
 
 import {
-  Table,
+  AutoIncrement,
+  Column,
   Model,
   PrimaryKey,
-  AutoIncrement,
-  Column
+  Table
 } from "sequelize-typescript";
 
 import { BaseAttributes } from "./base";

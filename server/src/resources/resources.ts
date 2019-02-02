@@ -30,7 +30,7 @@ export class Resources {
   }
 
   toJSON() {
-    let res = Object.create(null);
+    const res = Object.create(null);
     for (const [k, v] of this._devices) {
       res[k] = v;
     }

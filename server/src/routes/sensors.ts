@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { FastifyInstance, RegisterOptions, NextCallback } from "../util/types";
+import { FastifyInstance, NextCallback, RegisterOptions } from "../util/types";
 
 export default function routes(
   fastify: FastifyInstance,

@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import * as resources from "./resources.json";
 import { Model } from "./model";
+import * as resources from "./resources.json";
 
 export default new Model(resources);

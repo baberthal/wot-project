@@ -8,6 +8,7 @@
 /// <reference types="fastify" />
 
 import { Resources } from "../resources/resources";
+
 import { LinksConfig } from "./links-plugin";
 import { PluginManager } from "./plugin_manager";
 

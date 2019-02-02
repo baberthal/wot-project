@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { RegisterOptions, Logger, FastifyInstance } from "../util/types";
+import { FastifyInstance, Logger, RegisterOptions } from "../util/types";
 
 export interface PluginParams {
   simulate: boolean;

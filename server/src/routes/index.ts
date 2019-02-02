@@ -9,14 +9,14 @@
 
 import {
   FastifyInstance,
-  RegisterOptions,
-  NextCallback as Next
+  NextCallback as Next,
+  RegisterOptions
 } from "../util/types";
 
 import actuatorRoutes from "./actuators";
-import sensorRoutes from "./sensors";
 import pingRoutes from "./ping";
 import rootRoutes from "./root";
+import sensorRoutes from "./sensors";
 
 function plugin(fastify: FastifyInstance, opts: RegisterOptions, next: Next) {
   fastify.register(rootRoutes);

@@ -7,8 +7,8 @@
 
 import {
   FastifyInstance,
-  RegisterOptions,
-  NextCallback as Next
+  NextCallback as Next,
+  RegisterOptions
 } from "../util/types";
 
 function plugin(fastify: FastifyInstance, opts: RegisterOptions, next: Next) {

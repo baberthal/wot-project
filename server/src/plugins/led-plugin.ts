@@ -9,7 +9,7 @@ import * as fp from "fastify-plugin";
 
 // import { LedController } from "../controllers/led_controller";
 import resources from "../resources";
-import { FastifyInstance, RegisterOptions, NextCallback } from "../util/types";
+import { FastifyInstance, NextCallback, RegisterOptions } from "../util/types";
 
 interface PluginOptions extends RegisterOptions {
   params?: {

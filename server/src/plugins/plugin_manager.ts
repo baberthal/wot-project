@@ -6,11 +6,13 @@
 //===-----------------------------------------------------------------------===//
 
 import * as fp from "fastify-plugin";
+
 import {
   FastifyInstance,
-  RegisterOptions,
-  NextCallback as Next
+  NextCallback as Next,
+  RegisterOptions
 } from "../util/types";
+
 import { BasePlugin } from "./base_plugin";
 
 export class PluginManager {

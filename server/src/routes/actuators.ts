@@ -6,7 +6,7 @@
 //===-----------------------------------------------------------------------===//
 
 import { Device } from "../models";
-import { FastifyInstance, RegisterOptions, NextCallback } from "../util/types";
+import { FastifyInstance, NextCallback, RegisterOptions } from "../util/types";
 
 export default function routes(
   fastify: FastifyInstance,
@@ -32,7 +32,7 @@ export default function routes(
   fastify.put("/leds/:id", (req, res) => {
     const selectedLED = leds.find(req.params.id);
     selectedLED.onValueChange = value => {
-      console.log("Value changed: %s", value);
+      fastify.log.info("Value changed: %s", value);
     };
     selectedLED.value = req.body.value;
     res.send(selectedLED);

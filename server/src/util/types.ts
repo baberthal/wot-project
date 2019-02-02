@@ -5,8 +5,8 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import * as http from "http";
 import * as fastify from "fastify";
+import * as http from "http";
 
 export type HttpRequest = http.IncomingMessage;
 export type HttpResponse = http.ServerResponse;

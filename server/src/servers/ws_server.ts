@@ -8,8 +8,9 @@
 import { Server as HttpServer } from "http";
 import { Server as ws_Server, ServerOptions as ws_ServerOptions } from "ws";
 
-import { BaseServer, BaseServerOptions } from "./base";
 import logger, { Logger } from "../util/logger";
+
+import { BaseServer, BaseServerOptions } from "./base";
 
 export interface ServerOptions extends BaseServerOptions, ws_ServerOptions {}
 

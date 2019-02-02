@@ -6,12 +6,12 @@
 //===-----------------------------------------------------------------------===//
 
 import * as fp from "fastify-plugin";
-import { Sequelize, ISequelizeConfig } from "sequelize-typescript";
+import { ISequelizeConfig, Sequelize } from "sequelize-typescript";
 
 import {
   FastifyInstance,
-  RegisterOptions,
-  NextCallback as Next
+  NextCallback as Next,
+  RegisterOptions
 } from "../util/types";
 
 export interface PluginOptions extends RegisterOptions, ISequelizeConfig {

@@ -5,9 +5,9 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { ActuatorConfig, Actuator, ActuatorGroup } from "./actuator";
+import { Actuator, ActuatorConfig, ActuatorGroup } from "./actuator";
 import { ModelBase } from "./base";
-import { SensorConfig, Sensor } from "./sensor";
+import { Sensor, SensorConfig } from "./sensor";
 
 export interface DeviceConfig {
   name: string;

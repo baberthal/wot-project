@@ -81,7 +81,7 @@ export class ActuatorGroup {
   }
 
   toJSON() {
-    let res = Object.create(null);
+    const res = Object.create(null);
     for (const [k, v] of this._actuators) {
       res[k] = v;
     }
