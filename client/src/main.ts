@@ -5,15 +5,15 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import Vue from "vue";
+import { Vue } from "@app/core";
 import App from "./App";
-import router from "./router";
+
+// import router from "./router";
 import store from "./store";
 
 import "@/assets/main.scss";
 
 new Vue({
-  router,
   store,
   render: h => h(App)
 }).$mount("#app");

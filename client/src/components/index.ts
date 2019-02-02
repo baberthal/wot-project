@@ -13,6 +13,11 @@ import { BasePanelBlock } from "./base-panel-block/base-panel-block.component";
 import { DeviceList } from "./device-list/device-list.component";
 import { TempInfo } from "./temp-info/temp-info.component";
 
+import { DashboardContent } from "./dashboard-content";
+import { DashboardSidebar } from "./dashboard-sidebar";
+
+export { AppNavbar, DashboardContent, DashboardSidebar };
+
 export default {
   AppNavbar,
   BaseIcon,

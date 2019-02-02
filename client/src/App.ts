@@ -6,18 +6,24 @@
 //===-----------------------------------------------------------------------===//
 
 import { Vue, Component } from "@/core";
-import { AppNavbar } from "@/components/navbar";
+import { AppNavbar, DashboardContent, DashboardSidebar } from "@/components";
+import { getTemperatureData, TemperatureData } from "@/api/weather";
+
+import template from "./App.template.html";
 
 @Component({
-  template: `
-    <div id="app-main">
-      <AppNavbar></AppNavbar>
-      <router-view></router-view>
-    </div>
-  `,
+  template,
 
   components: {
-    AppNavbar
+    AppNavbar,
+    DashboardContent,
+    DashboardSidebar
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  weatherData: TemperatureData = null!;
+
+  async beforeCreate() {
+    this.weatherData = await getTemperatureData();
+  }
+}

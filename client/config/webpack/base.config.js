@@ -4,6 +4,7 @@ const path = require("path");
 
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 
@@ -22,7 +23,6 @@ module.exports = {
 
   output: {
     path: path.resolve(BASE_DIR, "dist"),
-    publicPath: "/dist/",
     filename: "[name].bundle.js"
   },
 
@@ -30,11 +30,17 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ["vue-style-loader", "css-loader"]
+        use: ExtractTextPlugin.extract({
+          fallback: "vue-style-loader",
+          use: ["css-loader"]
+        })
       },
       {
         test: /\.scss$/,
-        use: ["vue-style-loader", "css-loader", "sass-loader"]
+        use: ExtractTextPlugin.extract({
+          fallback: "vue-style-loader",
+          use: ["css-loader", "sass-loader"]
+        })
       },
       {
         test: /\.vue(\.erb)?$/,
@@ -93,15 +99,16 @@ module.exports = {
   },
 
   plugins: [
+    new ExtractTextPlugin("main.css"),
     new ForkTsCheckerWebpackPlugin({
-      checkSyntacticErrors: true,
       workers: 2,
-      watch: ["./src"]
+      watch: ["./src"],
+      ignoreDiagnostics: [7006, 2744]
     }),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       inject: "body",
-      alwaysWriteToDisk: false,
+      alwaysWriteToDisk: true,
       filename: "index.html",
       template: path.resolve(BASE_DIR, "src/index.html")
     })

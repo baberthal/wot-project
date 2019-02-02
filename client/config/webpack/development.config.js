@@ -14,9 +14,9 @@ const devConfig = {
     historyApiFallback: true,
     noInfo: true,
     overlay: true,
+    contentBase: "./dist",
     host: "0.0.0.0",
     port: 8080,
-    contentBase: "./dist",
     disableHostCheck: true,
     stats
   }

@@ -6,3 +6,4 @@
 //===-----------------------------------------------------------------------===//
 
 export * from "./devices";
+export { getTemperatureData, TemperatureData } from "./weather";

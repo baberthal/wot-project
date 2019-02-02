@@ -8,29 +8,32 @@
 import { Component, Vue, fetchJson } from "@app/core";
 import template from "./temp-info.template.html";
 
+import { TemperatureData, getTemperatureData } from "@/api";
+
 @Component({
   template
 })
 export class TempInfo extends Vue {
   socket!: WebSocket;
 
-  info: TempInfoConfig | null = null;
+  data: TemperatureData[] = [];
 
   mounted() {
-    if (this.socket !== undefined) {
+    if (this.socket === undefined) {
       this.socket = new WebSocket(
         "ws://devices.webofthings.io/pi/sensors/temperature"
       );
       this.socket.onmessage = event => {
         const result = JSON.parse(event.data);
         console.log(result);
+        this.data.push(result);
       };
     }
-    fetchJson<TempInfoConfig>(
-      "http://devices.webofthings.io/pi/sensors/temperature"
-    )
-      .then(data => (this.info = data))
-      .catch(error => console.error(error));
+  }
+
+  async beforeCreate() {
+    const first = await getTemperatureData();
+    this.data.push(first);
   }
 }
 

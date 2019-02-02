@@ -1,3 +1,5 @@
-<div class="temp-info" v-if="info">
-  Temperature is currently {{ info.value }} {{ info.unit }}
+<div class="temp-info">
+  <ul v-for="(datum, idx) in data">
+    <li>{{ datum.timestamp }} - {{ datum.value }} {{ datum.unit }}</li>
+  </ul>
 </div>

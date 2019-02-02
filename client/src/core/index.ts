@@ -10,3 +10,6 @@ export * from "./decorators";
 export * from "./dev-mode";
 export { fetchJson } from "./fetch-json";
 export * from "./store_decorators";
+
+import { Vue } from "./core";
+export default Vue;
