@@ -1,7 +1,7 @@
 {
-  "name": "wot-server",
+  "name": "@wot/server",
   "version": "0.1.0",
-  "description": "WoT Server for Pi",
+  "description": "WoT Server Libraries",
   "main": "dist/index.js",
   "license": "MIT",
   "private": true,
@@ -19,13 +19,18 @@
     "clean": "rimraf ./dist"
   },
   "dependencies": {
+    "@wot/core": "0.1.0",
     "body-parser": "^1.18.3",
     "coap": "^0.22.0",
     "fastify": "^2.0.0-rc.4",
     "fastify-cors": "^2.0.1",
     "fastify-plugin": "^1.4.0",
     "onoff": "^3.2.2",
+    "reflect-metadata": "^0.1.13",
     "rxjs": "^6.3.3",
+    "sequelize": "^4.42.0",
+    "sequelize-typescript": "^0.6.7",
+    "sqlite3": "^4.0.6",
     "ws": "^6.1.2"
   },
   "devDependencies": {

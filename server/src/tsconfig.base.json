@@ -1,33 +1,8 @@
 {
+  "extends": "../../config/tsconfig-node-composite.base.json",
+
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "lib": ["es2015"],
     "rootDir": ".",
-
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "composite": true,
-    "noEmitOnError": true,
-
-    "strict": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-
-    "experimentalDecorators": true,
-    "importHelpers": true,
-
-    "alwaysStrict": true,
-    "preserveConstEnums": true,
-    "newLine": "lf",
-
-    "outDir": "../dist",
-    "resolveJsonModule": true,
-
-    "types": ["node"]
+    "outDir": "../dist"
   }
 }
