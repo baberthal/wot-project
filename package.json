@@ -2,14 +2,13 @@
   "name": "project",
   "private": true,
   "workspaces": [
-    "client",
-    "server"
+    "core",
+    "server",
+    "client"
   ],
   "scripts": {
     "build": "",
     "clean": ""
   },
-  "devDependencies": {
-    "lerna": "^3.8.4"
-  }
+  "devDependencies": {}
 }
