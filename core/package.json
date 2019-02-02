@@ -1,0 +1,35 @@
+{
+  "name": "@wot/core",
+  "version": "0.1.0",
+  "description": "WoT Core Libraries",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "main": "dist/index.js",
+  "files": [
+    "README.md",
+    "dist/"
+  ],
+  "scripts": {
+    "test": "echo \"No test specified!\" && exit 1",
+    "build": "tsc -b src",
+    "build:w": "tsc -b src -w",
+    "clean": "rimraf ./dist"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^23.3.10",
+    "@types/node": "^10.12.18",
+    "jest": "23",
+    "prettier": "^1.15.3",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.12.0",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typedoc": "^0.14.1",
+    "typescript": "^3.2.2",
+    "vrsource-tslint-rules": "^6.0.0"
+  }
+}
