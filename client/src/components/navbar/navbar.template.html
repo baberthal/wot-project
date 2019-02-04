@@ -1,18 +1,45 @@
-<div class="navbar is-primary" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <!-- <router-link to="/home" class="navbar-item">{{ title }}</router-link> -->
-    <a class="navbar-item" href="/">{{ title }}</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">WoT Project</a>
 
-    <a class="navbar-item" href="#">About</a>
-    <a class="navbar-item" href="https://github.com/baberthal/wot-project" target="_blank">Code</a>
+  <button class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbar-supported-content"
+          aria-controls="#navbar-supported-content"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <a class="navbar-burger" href="#" role="button" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-    <!-- <nav-toggle-button @click.native="toggleMenu" :isActive="menuActive" /> -->
+  <div class="collapse navbar-collapse" id="navbar-supported-content">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/baberthal/wot-project" target="_blank">Code</a>
+      </li>
+    </ul>
   </div>
+</nav>
+
+<!-- <div class="navbar is-primary" role="navigation" aria-label="main navigation"> -->
+<!--   <div class="navbar-brand"> -->
+    <!-- <router-link to="/home" class="navbar-item">{{ title }}</router-link> -->
+    <!-- <a class="navbar-item" href="/">{{ title }}</a> -->
+
+    <!-- <a class="navbar-item" href="#">About</a> -->
+
+    <!-- <a class="navbar-burger" href="#" role="button" aria-label="menu" aria-expanded="false"> -->
+    <!--   <span aria-hidden="true"></span> -->
+    <!--   <span aria-hidden="true"></span> -->
+    <!--   <span aria-hidden="true"></span> -->
+    <!-- </a> -->
+    <!-- <nav-toggle-button @click.native="toggleMenu" :isActive="menuActive" /> -->
+  <!-- </div> -->
 
   <!-- <nav-menu :isActive="menuActive" :items="menuItems" /> -->
-</div>
+<!-- </div> -->
