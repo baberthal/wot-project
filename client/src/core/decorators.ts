@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import Component, { mixins as Mixins } from "vue-class-component";
+import Component, { createDecorator, mixins } from "vue-class-component";
 import {
   Emit,
   Inject,
@@ -15,4 +15,18 @@ import {
   Watch
 } from "vue-property-decorator";
 
-export { Component, Emit, Inject, Mixins, Model, Prop, Provide, Watch };
+export {
+  Component,
+  Emit,
+  Inject,
+  Model,
+  Prop,
+  Provide,
+  Watch,
+  mixins as Mixins
+};
+
+export const TestDecorator = createDecorator((options, key, idx) => {
+  /* tslint:disable-next-line:no-console */
+  console.log("Options:", options, "Key:", key, "Idx:", idx);
+});

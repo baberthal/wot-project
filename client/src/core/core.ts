@@ -5,14 +5,18 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import FusionCharts from "fusioncharts";
+import Charts from "fusioncharts/fusioncharts.charts";
+import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 import Vue from "vue";
-import Router from "vue-router";
+import VueFusionCharts from "vue-fusioncharts";
 import Vuex from "vuex";
 import createLogger from "vuex/dist/logger";
-import { FusionCharts, VueFusionCharts } from "./charts";
 
-Vue.use(Router);
-Vue.use(Vuex);
+Charts(FusionCharts);
+FusionTheme(FusionCharts);
+
 Vue.use(VueFusionCharts, FusionCharts);
+Vue.use(Vuex);
 
-export { Vue, Router, Vuex, createLogger };
+export { Vue, Vuex, createLogger };
