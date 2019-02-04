@@ -2,7 +2,6 @@
 
 @charset "utf-8";
 
-@import "~bulma/sass/utilities/initial-variables";
-@import "scss/util/_all";
-@import "~bulma/bulma";
-@import "scss/app";
+@import "scss/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "scss/sidebar";

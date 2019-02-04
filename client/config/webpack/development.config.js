@@ -12,6 +12,7 @@ const devConfig = {
 
   devServer: {
     historyApiFallback: true,
+    clientLogLevel: "none",
     noInfo: true,
     overlay: true,
     contentBase: "./dist",

@@ -1,0 +1,9 @@
+// Sidebar styles
+
+#sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(-180deg, #80b6db 0%, #7da7e2 100%);
+  height: 200px;
+}
