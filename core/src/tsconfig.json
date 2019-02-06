@@ -3,5 +3,5 @@
 
   "files": ["index.ts"],
   "include": [],
-  "references": [{ "path": "./util" }]
+  "references": [{ "path": "./util" }, { "path": "./models" }]
 }
