@@ -5,57 +5,69 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import { WebSocketSubject, webSocket } from "rxjs/websocket";
+
 import { fetchJson } from "./fetch-json";
 
-export interface TemperatureDataRaw {
+const BASE_URL = "http://devices.webofthings.io";
+const WS_BASE_URL = "ws://devices.webofthings.io/pi/sensors";
+
+export interface SensorData {
   name: string;
   description: string;
+  unit: string;
   type: "float" | "integer";
-  unit: "celsius" | "fahrenheit";
   value: number;
   timestamp: string;
   frequency: number;
 }
 
-export interface TemperatureData {
-  name: string;
-  description: string;
-  type: "float" | "integer";
-  unit: "celsius" | "fahrenheit";
-  value: number;
-  timestamp: Date;
-  frequency: number;
+export interface WeatherData {
+  temperature: SensorData;
+  humidity: SensorData;
 }
 
-function convertRawTempData(raw: TemperatureDataRaw): TemperatureData {
-  return {
-    name: raw.name,
-    description: raw.description,
-    type: raw.type,
-    unit: raw.unit,
-    value: raw.value,
-    frequency: raw.frequency,
-    timestamp: new Date(raw.timestamp)
+export function getSensorData(): Promise<WeatherData>;
+export function getSensorData(): Promise<{ [k: string]: SensorData }>;
+export function getSensorData(sensor: string): Promise<SensorData>;
+export function getSensorData(sensor?: string) {
+  const url = `${BASE_URL}/pi/sensors/${sensor ? sensor + "/" : ""}`;
+  return fetchJson(url);
+}
+
+export interface CurrentConditions {
+  temperature: {
+    t: number;
+    unit: string;
+  };
+  humidity: {
+    h: number;
+    unit: string;
   };
 }
 
-export function getTemperatureData() {
-  return fetchJson<TemperatureDataRaw>(
-    "http://devices.webofthings.io/pi/sensors/temperature"
-  ).then(raw => convertRawTempData(raw));
+export function getCurrentConditions(): Promise<CurrentConditions> {
+  return getSensorData().then(response => {
+    const c = {
+      temperature: {
+        t: response.temperature.value,
+        unit: response.temperature.unit
+      },
+      humidity: {
+        h: response.humidity.value,
+        unit: response.humidity.unit
+      }
+    };
+
+    return c;
+  });
 }
 
-export interface WeatherData {
-  temperature: TemperatureData;
-}
+export function getTemperatureStream(): WebSocketSubject<SensorData> {
+  const deserializer = (e: MessageEvent) => JSON.parse(e.data);
 
-export default getTemperatureData;
-
-function isoTimestamp() {
-  const d = new Date();
-  return d.toISOString();
-}
-
-function randomInt(high = 40, low = -20) {
-  return Math.floor(Math.random() * (high - low + 1) + low);
+  return webSocket({
+    url: `${WS_BASE_URL}/temperature`,
+    deserializer
+  });
 }
