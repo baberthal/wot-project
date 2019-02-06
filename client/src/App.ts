@@ -5,9 +5,15 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Vue, Component } from "@/core";
+import {
+  CurrentConditions,
+  SensorData,
+  getCurrentConditions,
+  getSensorData
+} from "@/api/weather";
 import { AppNavbar, DashboardContent, DashboardSidebar } from "@/components";
-import { getTemperatureData, TemperatureData } from "@/api/weather";
+import { Component, Vue } from "@/core";
+import { WebSocketSubject, webSocket } from "rxjs/websocket";
 
 import template from "./App.template.html";
 
@@ -21,9 +27,17 @@ import template from "./App.template.html";
   }
 })
 export default class App extends Vue {
-  weatherData: TemperatureData = null!;
+  currentConditions: CurrentConditions = null!;
+  weatherData: {
+    temperature: SensorData;
+    humidity: SensorData;
+  } = null!;
 
   async beforeCreate() {
-    this.weatherData = await getTemperatureData();
+    this.currentConditions = await getCurrentConditions();
+    this.weatherData = (await getSensorData()) as {
+      temperature: SensorData;
+      humidity: SensorData;
+    };
   }
 }

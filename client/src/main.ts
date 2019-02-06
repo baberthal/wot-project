@@ -5,15 +5,14 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Vue } from "@app/core";
-import App from "./App";
+import "@/assets/scss/app.scss";
+import { Vue } from "@/core";
 
-// import router from "./router";
+import App from "./App";
 import store from "./store";
 
-import "@/assets/main.scss";
-
 new Vue({
+  el: "#app",
   store,
   render: h => h(App)
-}).$mount("#app");
+});

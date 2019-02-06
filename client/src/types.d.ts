@@ -10,7 +10,11 @@ declare module "*.html" {
   export default content;
 }
 
+interface InjectableCSS {
+  __inject__?(ctx?: any): void;
+}
+
 declare module "*.scss" {
-  const content: string;
-  export default content;
+  const css: InjectableCSS;
+  export default css;
 }

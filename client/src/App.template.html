@@ -1,10 +1,20 @@
 <div id="app-main">
   <app-navbar></app-navbar>
 
-  <section class="section">
-    <div class="container">
-      <dashboard-sidebar></dashboard-sidebar>
-      <dashboard-content :weatherData="weatherData"></dashboard-content>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 col-sm-4 col-xs-12 sidebar-container">
+        <dashboard-sidebar :currentConditions="currentConditions"></dashboard-sidebar>
+      </div>
+      <div class="col-md-9 col-sm-8 col-xs-12 dashboard-container">
+        <dashboard-content :currentConditions="currentConditions" :weatherData="weatherData"></dashboard-content>
+      </div>
     </div>
-  </section>
+  </div>
+
+  <!-- <section class="section"> -->
+  <!--   <div class="container"> -->
+  <!--     <dashboard-content :weatherData="weatherData"></dashboard-content> -->
+  <!--   </div> -->
+  <!-- </section> -->
 </div>
