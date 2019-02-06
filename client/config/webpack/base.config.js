@@ -2,12 +2,7 @@
 
 const path = require("path");
 
-const isDevMode = process.env.NODE_ENV !== "production";
-
-console.log("isDevMode:", isDevMode);
-
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
@@ -15,7 +10,6 @@ const { VueLoaderPlugin } = require("vue-loader");
 const stats = require("./stats.config");
 
 const BASE_DIR = path.resolve(__dirname, "../..");
-const CONFIG_DIR = path.resolve(__dirname, "../");
 const TS_CONFIG = path.resolve(BASE_DIR, "tsconfig.json");
 
 module.exports = {
@@ -27,34 +21,14 @@ module.exports = {
   },
 
   output: {
-    path: path.resolve(BASE_DIR, "dist"),
-    filename: isDevMode ? "[name].bundle.js" : "[name].[hash].bundle.js"
+    path: path.resolve(BASE_DIR, "dist")
   },
 
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [
-          { loader: isDevMode ? "style-loader" : MiniCssExtractPlugin.loader },
-          { loader: "css-loader", options: { importLoaders: 1 } },
-          {
-            loader: "postcss-loader",
-            options: { config: { path: CONFIG_DIR } }
-          }
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          { loader: isDevMode ? "style-loader" : MiniCssExtractPlugin.loader },
-          { loader: "css-loader", options: { importLoaders: 2 } },
-          {
-            loader: "postcss-loader",
-            options: { config: { path: CONFIG_DIR } }
-          },
-          { loader: "sass-loader" }
-        ]
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ["file-loader"]
       },
       {
         test: /\.vue(\.erb)?$/,
@@ -119,17 +93,14 @@ module.exports = {
   },
 
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: isDevMode ? "[name].css" : "[name].[hash].css",
-      chunkFilename: isDevMode ? "[id].css" : "[id].[hash].css"
-    }),
-
     new ForkTsCheckerWebpackPlugin({
       workers: 2,
       watch: ["./src"],
       ignoreDiagnostics: [7006, 2744]
     }),
+
     new VueLoaderPlugin(),
+
     new HtmlWebpackPlugin({
       inject: "body",
       alwaysWriteToDisk: true,
