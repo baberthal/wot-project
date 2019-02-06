@@ -19,4 +19,20 @@ FusionTheme(FusionCharts);
 Vue.use(VueFusionCharts, FusionCharts);
 Vue.use(Vuex);
 
+declare module "vue/types/vue" {
+  interface Vue {
+    $_injectStyles(styles?: InjectableCSS): void;
+  }
+}
+
+Vue.use({
+  install(vue) {
+    vue.prototype.$_injectStyles = function(styles?: InjectableCSS) {
+      if (styles && styles.__inject__) {
+        styles.__inject__(this.$ssrContext);
+      }
+    };
+  }
+});
+
 export { Vue, Vuex, createLogger };
