@@ -5,17 +5,18 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Component, Vue } from "@app/core";
-import devices from "@/store/modules/devices";
-import template from "./device-info.template.html";
 import { BaseDeviceInfo } from "@/store/models";
+import devices from "@/store/modules/devices";
+import { Component, Vue } from "@app/core";
+
+import template from "./device-info.template.html";
 
 @Component({
   template
 })
 export class DeviceInfo extends Vue {
   get currentDevice(): BaseDeviceInfo {
-    return devices.all[this.$route.params.id];
+    return devices.all["pi"];
   }
 
   created() {
