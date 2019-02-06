@@ -16,8 +16,6 @@ import {
   Watch
 } from "vue-property-decorator";
 
-import { VueConstructor } from "./declarations";
-
 export {
   Component,
   Emit,
@@ -51,7 +49,5 @@ export function Filter(name?: string) {
     // Remove the method from opts.methods, and delete opts.methods if its empty
     delete opts.methods[key];
     if (isEmptyObject(opts.methods)) delete opts.methods;
-
-    console.log("final opts:", opts);
   });
 }
