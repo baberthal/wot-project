@@ -1,2 +1,20 @@
-<div id="dashboard-sidebar">
+<div id="sidebar" class="sidebar">
+  <search-box></search-box>
+  <div id="info">
+    <div class="card-group">
+      <div id="current-temperature" class="card" v-if="currentConditions">
+        <div class="card-body">
+          {{ currentConditions.temperature.t }}
+          <span>°{{ currentConditions.temperature.unit | formatUnit }}</span>
+        </div>
+      </div>
+
+      <div id="current-humidity" class="card" v-if="currentConditions">
+        <div class="card-body">
+          {{ currentConditions.humidity.h }}
+          <span>{{ currentConditions.humidity.unit | formatUnit }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

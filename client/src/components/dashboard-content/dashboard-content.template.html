@@ -1,4 +1,16 @@
-<div id="dashboard-content" class="container">
-  {{ weatherData }}
-  <temp-info></temp-info>
+<div id="dashboard-content" class="content">
+  <div class="container">
+    <temperature-table
+      :temperatureData="temperatureData"
+      :humidityData="humidityData">
+    </temperature-table>
+  </div>
+
+  <!-- {{ weatherData }} -->
+  <!-- <temperature-chart -->
+  <!--   :currentConditions="currentConditions" -->
+  <!--   :weatherData="weatherData" -->
+  <!--   :temperatureData="temperatureData" -->
+  <!--   :humidityData="humidityData"> -->
+  <!-- </temperature-chart> -->
 </div>

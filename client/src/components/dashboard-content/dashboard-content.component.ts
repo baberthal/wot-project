@@ -5,22 +5,44 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import { CurrentConditions, SensorData, getTemperatureStream } from "@/api";
 import { Component, Prop, Vue } from "@app/core";
-import { TempInfo } from "../temp-info/temp-info.component";
+import { WebSocketSubject } from "rxjs/websocket";
+
+import { TemperatureChart } from "../temperature-chart";
+import { TemperatureTable } from "../temperature-table";
 
 import template from "./dashboard-content.template.html";
-import "./dashboard-content.style.scss";
-
-import { TemperatureData } from "@/api";
 
 @Component({
   template,
   components: {
-    TempInfo
+    TemperatureChart,
+    TemperatureTable
   }
 })
 export class DashboardContent extends Vue {
-  @Prop() weatherData: TemperatureData = null!;
+  @Prop() weatherData!: {
+    temperature: SensorData;
+    humidity: SensorData;
+  };
+
+  @Prop() currentConditions!: CurrentConditions;
+
+  temperatureData: SensorData[] = [];
+
+  humidityData: SensorData[] = [];
+
+  temperatureStream!: WebSocketSubject<SensorData>;
+
+  mounted() {
+    this.temperatureStream = getTemperatureStream();
+    this.temperatureStream.subscribe(t => this.temperatureData.push(t));
+  }
+
+  destroyed() {
+    this.temperatureStream.unsubscribe();
+  }
 }
 
 export default DashboardContent;
