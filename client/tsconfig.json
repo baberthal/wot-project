@@ -19,7 +19,8 @@
     "paths": {
       "@app/*": ["src/*"],
       "@/*": ["src/*"],
-      "@lib/*": ["lib/*"]
+      "@lib/*": ["lib/*"],
+      "rxjs/*": ["../node_modules/rxjs/*"]
     },
 
     "lib": ["es2015", "dom"],
@@ -29,6 +30,12 @@
     "outDir": "./dist/"
   },
 
-  "include": ["./src/**/*", "./types/vue-fusioncharts/**/*"],
-  "exclude": ["node_modules", "../node_modules"]
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts",
+    "src/types.d.ts",
+    "./types/vue-fusioncharts/index.d.ts",
+    "../node_modules/rxjs/internal/symbol/observable.d.ts"
+  ],
+  "include": ["./src/**/*"]
 }
