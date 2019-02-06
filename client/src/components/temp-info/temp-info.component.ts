@@ -5,10 +5,10 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Component, Vue, fetchJson } from "@app/core";
-import template from "./temp-info.template.html";
+import { SensorData, getSensorData } from "@/api";
+import { Component, Vue, fetchJson } from "@/core";
 
-import { TemperatureData, getTemperatureData } from "@/api";
+import template from "./temp-info.template.html";
 
 @Component({
   template
@@ -16,7 +16,7 @@ import { TemperatureData, getTemperatureData } from "@/api";
 export class TempInfo extends Vue {
   socket!: WebSocket;
 
-  data: TemperatureData[] = [];
+  data: SensorData[] = [];
 
   mounted() {
     if (this.socket === undefined) {
@@ -25,14 +25,13 @@ export class TempInfo extends Vue {
       );
       this.socket.onmessage = event => {
         const result = JSON.parse(event.data);
-        console.log(result);
         this.data.push(result);
       };
     }
   }
 
   async beforeCreate() {
-    const first = await getTemperatureData();
+    const first = await getSensorData("temperature");
     this.data.push(first);
   }
 }
