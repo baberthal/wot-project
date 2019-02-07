@@ -3,6 +3,9 @@
   "files": ["../types.d.ts", "http.ts"],
   "include": ["**/*.ts"],
   "references": [
+    {
+      "path": "../db"
+    },
     { "path": "../routes" },
     { "path": "../util" },
     { "path": "../plugins" },

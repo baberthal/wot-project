@@ -9,8 +9,8 @@ import { isDevMode } from "@wot/core";
 import * as fastify from "fastify";
 import * as cors from "fastify-cors";
 
-import ledPlugin from "../plugins/led-plugin";
-import linksPlugin from "../plugins/links-plugin";
+import db from "../db";
+import dbPlugin from "../db/plugin";
 import pirPlugin from "../plugins/pir-plugin";
 import pluginManager from "../plugins/plugin_manager";
 import resourcesPlugin from "../resources/plugin";
@@ -23,14 +23,21 @@ export function createApp() {
   const simulate = isDevMode();
 
   app.register(cors);
+  app.register(dbPlugin, { instance: db });
   app.register(resourcesPlugin);
-  app.register(linksPlugin);
 
   app.register(pluginManager);
-  app.register(ledPlugin, { params: { simulate, frequency: 2000 } });
-  app.register(pirPlugin, { params: { simulate, frequency: 2000 } });
+  // app.register(pirPlugin, { params: { simulate, frequency: 2000 } });
 
   app.register(routes);
+
+  app.ready(err => {
+    if (err) {
+      app.log.error(err);
+    } else {
+      app.log.info("Ready to go!");
+    }
+  });
 
   return app;
 }
