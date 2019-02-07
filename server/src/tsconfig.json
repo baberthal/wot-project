@@ -5,9 +5,12 @@
   "files": ["index.ts", "types.d.ts"],
 
   "references": [
+    { "path": "./db" },
+    { "path": "./middleware" },
     { "path": "./models" },
-    { "path": "./routes" },
+    { "path": "./plugins" },
     { "path": "./resources" },
+    { "path": "./routes" },
     { "path": "./servers" },
     { "path": "./util" }
   ]
