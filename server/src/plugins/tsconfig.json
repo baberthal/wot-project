@@ -3,7 +3,6 @@
   "files": [
     "base_plugin.ts",
     "index.ts",
-    "led-plugin.ts",
     "links-plugin.ts",
     "pir-plugin.ts",
     "plugin_manager.ts",
