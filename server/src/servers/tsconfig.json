@@ -5,6 +5,7 @@
   "references": [
     { "path": "../routes" },
     { "path": "../util" },
-    { "path": "../plugins" }
+    { "path": "../plugins" },
+    { "path": "../resources" }
   ]
 }

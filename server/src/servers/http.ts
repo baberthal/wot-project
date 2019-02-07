@@ -13,7 +13,7 @@ import ledPlugin from "../plugins/led-plugin";
 import linksPlugin from "../plugins/links-plugin";
 import pirPlugin from "../plugins/pir-plugin";
 import pluginManager from "../plugins/plugin_manager";
-import resourcesPlugin from "../plugins/resources-plugin";
+import resourcesPlugin from "../resources/plugin";
 import routes from "../routes";
 import logger from "../util/logger";
 

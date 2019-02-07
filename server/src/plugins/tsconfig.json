@@ -7,7 +7,6 @@
     "links-plugin.ts",
     "pir-plugin.ts",
     "plugin_manager.ts",
-    "resources-plugin.ts",
     "types.d.ts"
   ],
   "include": ["**/*.ts"],
