@@ -5,9 +5,8 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import { isDevMode } from "@wot/core";
 import * as pino from "pino";
-
-import isDevMode from "./dev-mode";
 
 export type LoggerOptions = pino.LoggerOptions;
 export type Logger = pino.Logger;
