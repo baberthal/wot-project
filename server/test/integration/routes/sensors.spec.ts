@@ -5,9 +5,9 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import createApp from "../../src/servers/http";
-import { FastifyInstance } from "../../src/util/types";
 import { HTTPInjectResponse } from "fastify";
+import createApp from "src/servers/http";
+import { FastifyInstance } from "src/util/types";
 
 describe("sensor routes", () => {
   let app: FastifyInstance;

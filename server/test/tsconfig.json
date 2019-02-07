@@ -28,10 +28,15 @@
     "outDir": "../dist",
     "resolveJsonModule": true,
 
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["../src/*"]
+    },
+
     "types": ["node", "jest"]
   },
 
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "resources/**/*.json"],
 
   "references": [{ "path": "../src" }]
 }
