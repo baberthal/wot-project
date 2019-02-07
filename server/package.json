@@ -8,10 +8,12 @@
     "wot-server": "dist/index.js"
   },
   "scripts": {
-    "test": "echo \"No test specified!\" && exit 1",
-    "watch": "tsc -w -b src",
+    "test": "yarn test:unit",
+    "test:unit": "jest --config=jest.config.js --coverage test/unit/**/*",
+    "test:integration": "",
     "build": "tsc -b src",
     "build:w": "tsc -b src -w",
+    "b": "yarn build",
     "start": "node dist/index.js",
     "start:w": "nodemon --watch ./dist -e js dist/index.js",
     "start:dev": "yarn build && concurrently \"yarn build:w\" \"yarn start:w\"",
@@ -36,7 +38,7 @@
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
     "@types/fastify-cors": "^0.1.0",
-    "@types/jest": "^23.3.10",
+    "@types/jest": "^24.0.0",
     "@types/node": "^10.12.18",
     "@types/onoff": "^3.2.1",
     "@types/pino": "^5.8.3",
@@ -49,6 +51,7 @@
     "pino-pretty": "^2.5.0",
     "prettier": "^1.15.3",
     "rimraf": "^2.6.2",
+    "sequelize-cli": "^5.4.0",
     "superagent": "^4.1.0",
     "supertest": "^3.4.2",
     "ts-jest": "^23.10.5",
