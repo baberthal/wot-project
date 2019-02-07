@@ -9,5 +9,9 @@ import { Sequelize } from "sequelize-typescript";
 
 const sequelize = new Sequelize({
   database: "wot",
-  dialect: "sqlite"
+  dialect: "sqlite",
+  storage: __dirname + "/wot.sqlite",
+  modelPaths: [__dirname + "/models"]
 });
+
+export { sequelize };
