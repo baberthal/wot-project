@@ -25,17 +25,17 @@ export default function routes(
   });
 
   fastify.get("/leds/:id", (req, res) => {
-    const led = leds.find(req.params.id);
-    res.send(led);
+    // const led = leds.find(req.params.id);
+    // res.send(led);
   });
 
   fastify.put("/leds/:id", (req, res) => {
-    const selectedLED = leds.find(req.params.id);
-    selectedLED.onValueChange = value => {
-      fastify.log.info("Value changed: %s", value);
-    };
-    selectedLED.value = req.body.value;
-    res.send(selectedLED);
+    // const selectedLED = leds.find(req.params.id);
+    // selectedLED.onValueChange = value => {
+    //   fastify.log.info("Value changed: %s", value);
+    // };
+    // selectedLED.value = req.body.value;
+    // res.send(selectedLED);
   });
 
   next();
