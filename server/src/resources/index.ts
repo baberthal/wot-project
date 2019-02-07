@@ -5,7 +5,11 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import { ResourcesConfig } from "./config";
 import { Resources } from "./resources";
-import * as data from "./v1/resources.json";
 
-export default new Resources(data);
+export * from "./config";
+export * from "./interfaces";
+export * from "./resources";
+
+export default new Resources(ResourcesConfig.Default);
