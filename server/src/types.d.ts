@@ -4,3 +4,8 @@
 // Licensed under the MIT License
 //
 //===-----------------------------------------------------------------------===//
+
+declare module "pigpio-mock" {
+  import pigpio = require("pigpio");
+  export = pigpio;
+}
