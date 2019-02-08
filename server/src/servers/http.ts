@@ -11,7 +11,6 @@ import * as cors from "fastify-cors";
 
 import db from "../db";
 import dbPlugin from "../db/plugin";
-import pirPlugin from "../plugins/pir-plugin";
 import pluginManager from "../plugins/plugin_manager";
 import resourcesPlugin from "../resources/plugin";
 import routes from "../routes";
