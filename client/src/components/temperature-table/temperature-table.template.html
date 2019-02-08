@@ -1,0 +1,25 @@
+<div id="temperature-table">
+  <div class="card" v-if="temperatureData.length !== 0">
+    <div class="card-header">
+      Temperature History
+    </div>
+    <div class="card-body">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Temperature</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="record in temperatureData">
+            <td scope="row">{{ record.timestamp | extractDate }}</td>
+            <td>{{ record.timestamp | extractTime }}</td>
+            <td>{{ record.value }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

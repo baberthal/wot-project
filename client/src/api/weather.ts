@@ -5,6 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import { CurrentConditions, SensorData } from "@wot/core";
 import { WebSocketSubject, webSocket } from "rxjs/websocket";
 
 import { fetchJson } from "./fetch-json";
@@ -12,15 +13,7 @@ import { fetchJson } from "./fetch-json";
 const BASE_URL = "http://devices.webofthings.io";
 const WS_BASE_URL = "ws://devices.webofthings.io/pi/sensors";
 
-export interface SensorData {
-  name: string;
-  description: string;
-  unit: string;
-  type: "float" | "integer";
-  value: number;
-  timestamp: string;
-  frequency: number;
-}
+export { CurrentConditions, SensorData };
 
 export interface WeatherData {
   temperature: SensorData;
@@ -33,17 +26,6 @@ export function getSensorData(sensor: string): Promise<SensorData>;
 export function getSensorData(sensor?: string) {
   const url = `${BASE_URL}/pi/sensors/${sensor ? sensor + "/" : ""}`;
   return fetchJson(url);
-}
-
-export interface CurrentConditions {
-  temperature: {
-    t: number;
-    unit: string;
-  };
-  humidity: {
-    h: number;
-    unit: string;
-  };
 }
 
 export function getCurrentConditions(): Promise<CurrentConditions> {
