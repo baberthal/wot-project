@@ -12,7 +12,9 @@ import {
   IActuatorConfig,
   IDeviceConfig,
   IResourcesConfig,
-  ISensorConfig
+  ISensorConfig,
+  isActuatorConfig,
+  isSensorConfig
 } from "./interfaces";
 
 export class SensorConfig {
@@ -24,6 +26,9 @@ export class SensorConfig {
 
   /** Human-readable description for this device. */
   readonly description: string;
+
+  /** Optional name of the group the sensor is in. */
+  readonly groupName?: string;
 
   /** Unit of the value returned by this sensor. */
   readonly unit?: string;
@@ -101,7 +106,25 @@ export class DeviceConfig {
     const sensors = config.sensors;
     for (let i = 0, keys = Object.keys(sensors); i < keys.length; i++) {
       const key = keys[i];
-      this.sensors[key] = new SensorConfig(key, config.sensors[key]);
+
+      const sensorOrGroup = config.sensors[key];
+      if (isSensorConfig(sensorOrGroup)) {
+        this.sensors[key] = new SensorConfig(key, sensorOrGroup);
+      } else {
+        // key is now the name of the group
+        const groupName = key;
+        for (
+          let j = 0, groupKeys = Object.keys(sensorOrGroup);
+          j < groupKeys.length;
+          j++
+        ) {
+          const groupKey = groupKeys[i];
+          this.sensors[groupKey] = new SensorConfig(
+            groupKey,
+            sensorOrGroup[groupKey]
+          );
+        }
+      }
     }
 
     const actuators = config.actuators;
@@ -114,7 +137,7 @@ export class DeviceConfig {
       const group = actuators[groupName];
       for (let j = 0, keys2 = Object.keys(group); j < keys2.length; j++) {
         const key = keys2[j];
-        this.actuators[groupName][key] = new ActuatorConfig(key, group[key]);
+        // this.actuators[groupName][key] = new ActuatorConfig(key, group[key]);
       }
     }
   }

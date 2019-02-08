@@ -5,6 +5,14 @@
 //
 //===-----------------------------------------------------------------------===//
 
+export interface StringMap<T> {
+  [key: string]: T;
+}
+
+export interface GroupedStringMap<T> {
+  [groupName: string]: StringMap<T>;
+}
+
 export interface IResourcesConfig {
   [id: string]: IDeviceConfig;
 }
@@ -20,16 +28,10 @@ export interface IDeviceConfig {
   port: number;
 
   /** Configurations for attached sensors, by id. */
-  sensors: {
-    [id: string]: ISensorConfig;
-  };
+  sensors: StringMap<ISensorConfig> | GroupedStringMap<ISensorConfig>;
 
   /** Configurations for attached actuators, by group by id. */
-  actuators: {
-    [groupName: string]: {
-      [id: string]: IActuatorConfig;
-    };
-  };
+  actuators: StringMap<IActuatorConfig> | GroupedStringMap<IActuatorConfig>;
 }
 
 export interface ISensorConfig {
@@ -62,3 +64,11 @@ export interface IActuatorConfig {
   /** The GPIO pin to which this actuator is attached. */
   gpio: number;
 }
+
+export function isSensorConfig(arg: object): arg is ISensorConfig {
+  return typeof (arg as ISensorConfig).gpio !== "undefined";
+}
+
+export const isActuatorConfig: (
+  arg: object
+) => arg is IActuatorConfig = isSensorConfig;

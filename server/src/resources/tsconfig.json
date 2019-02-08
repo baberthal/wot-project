@@ -1,8 +1,11 @@
 {
   "extends": "../tsconfig.base.json",
-  "files": ["index.ts", "default_config.json"],
+  "files": ["index.ts", "default_config.json", "types.d.ts"],
   "include": ["**/*.ts", "v1/*.json"],
   "references": [
+    {
+      "path": "../db"
+    },
     {
       "path": "../models"
     },
