@@ -1,4 +1,4 @@
-//===- db/models/Sensor.ts - Sensor Model ----------------------------------===//
+//===- db/models/Actuator.ts - Actuator Model ------------------------------===//
 //
 // Copyright (c) 2019 J. Morgan Lieberthal
 // Licensed under the MIT License
@@ -19,9 +19,8 @@ import {
 import { Device } from "./Device";
 
 @Table
-export class Sensor extends Model<Sensor> {
+export class Actuator extends Model<Actuator> {
   @PrimaryKey
-  @AllowNull(false)
   @Column
   id!: string;
 
@@ -33,13 +32,6 @@ export class Sensor extends Model<Sensor> {
   @Default("")
   @Column
   description!: string;
-
-  @AllowNull(false)
-  @Default("")
-  @Column
-  unit!: string;
-
-  // @Column value!: number;
 
   @AllowNull(false)
   @Column

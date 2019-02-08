@@ -5,8 +5,16 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { sequelize } from "./instance";
-import dbPlugin from "./plugin";
+import { Sequelize } from "sequelize-typescript";
 
+const env = process.env.NODE_ENV || "development";
+const config = require(__dirname + "/../../config/database.js")[env];
+const db = {};
+
+const sequelize = new Sequelize({
+  ...config,
+  modelPaths: [__dirname + "/models"]
+});
+
+export { sequelize, Sequelize };
 export default sequelize;
-export { dbPlugin };

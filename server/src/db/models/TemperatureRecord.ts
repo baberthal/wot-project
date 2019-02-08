@@ -19,12 +19,10 @@ import {
   order: [["timestamp", "DESC"]],
   limit: 30
 })
-@Table({
-  updatedAt: false
-})
+@Table
 export class TemperatureRecord extends Model<TemperatureRecord> {
   @Column(DataType.FLOAT)
   readonly value!: number;
 
-  @CreatedAt timestamp!: Date;
+  @Column timestamp!: Date;
 }
