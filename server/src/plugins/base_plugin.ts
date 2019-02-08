@@ -26,7 +26,7 @@ export abstract class BasePlugin {
 
   protected log: Logger;
   protected interval!: NodeJS.Timeout;
-  protected conn!: import("onoff").Gpio;
+  // protected conn!: import("onoff").Gpio;
 
   constructor(instance: FastifyInstance, init: PluginOptions) {
     this.params = init.params || DefaultPluginParams;
