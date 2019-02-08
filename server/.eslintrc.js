@@ -1,10 +1,9 @@
 // eslint configuration
 
 module.exports = {
-  extends: ["eslint:recommended", "prettier"],
-  plugins: ["prettier"],
+  extends: ["eslint:recommended"],
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 2018,
     sourceType: "module"
   },
   env: {
@@ -12,7 +11,6 @@ module.exports = {
   },
   rules: {
     "spaced-comment": "off",
-    "no-console": "off",
-    "prettier/prettier": ["warn"]
+    "no-console": "off"
   }
 };
