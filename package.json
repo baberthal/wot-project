@@ -4,13 +4,12 @@
   "workspaces": [
     "core",
     "server",
-    "client"
+    "client",
+    "tools"
   ],
   "scripts": {
     "build": "",
     "clean": ""
   },
-  "devDependencies": {
-    "lerna": "^3.10.7"
-  }
+  "devDependencies": {}
 }
