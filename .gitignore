@@ -88,3 +88,4 @@ typings/
 dist/
 dist/*
 dist-tools/
+testdb.js
