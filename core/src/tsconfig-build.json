@@ -1,6 +1,11 @@
 {
   "extends": "./tsconfig.base.json",
 
+  "compilerOptions": {
+    "sourceMap": false,
+    "declarationMap": false
+  },
+
   "files": ["index.ts"],
   "include": [],
 

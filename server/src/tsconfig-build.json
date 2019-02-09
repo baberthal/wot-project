@@ -2,12 +2,13 @@
   "extends": "./tsconfig.base.json",
 
   "compilerOptions": {
+    "sourceMap": false,
     "declarationMap": false,
     "removeComments": true,
 
     "baseUrl": ".",
     "paths": {
-      "pigpio": ["../../node_modules/pigpio/pigpio"]
+      "pigpio": ["../../node_modules/pigpio"]
     }
   },
 
@@ -15,9 +16,12 @@
   "files": ["index.ts", "types.d.ts"],
 
   "references": [
+    { "path": "./db" },
+    { "path": "./middleware" },
     { "path": "./models" },
-    { "path": "./routes" },
+    { "path": "./plugins" },
     { "path": "./resources" },
+    { "path": "./routes" },
     { "path": "./servers" },
     { "path": "./util" }
   ]
