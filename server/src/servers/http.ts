@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { isDevMode } from "@wot/core";
+import { isDevMode } from "@baberthal/wot-core";
 import * as fastify from "fastify";
 import * as cors from "fastify-cors";
 
