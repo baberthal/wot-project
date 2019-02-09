@@ -1,7 +1,8 @@
 {
-  "name": "@wot/client",
+  "name": "@baberthal/wot-client",
   "version": "0.1.0",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "test": "jest --config=\"./config/jest.config.js\"",
     "start:dev": "webpack-dev-server --open",
@@ -15,7 +16,7 @@
     "clean": "rimraf ./dist"
   },
   "dependencies": {
-    "@wot/core": "0.1.0",
+    "@baberthal/wot-core": "0.1.0",
     "bootstrap": "^4.2.1",
     "core-js": "^2.6.1",
     "fusioncharts": "^3.13.3-sr.1",

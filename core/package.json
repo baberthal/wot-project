@@ -1,18 +1,23 @@
 {
-  "name": "@wot/core",
+  "name": "@baberthal/wot-core",
   "version": "0.1.0",
   "description": "WoT Core Libraries",
   "main": "dist/index.js",
   "license": "MIT",
   "files": [
     "README.md",
-    "dist/index.js",
-    "dist/util/*"
+    "dist"
   ],
   "scripts": {
     "test": "echo \"No test specified!\" && exit 1",
-    "build": "tsc -b src",
+    "test:unit": "echo \"No test specified!\" && exit 1",
+    "test:integration": "",
+    "prepare": "yarn clean && yarn build:prod",
+    "b": "yarn build:dev",
+    "build": "yarn build:dev",
     "build:w": "tsc -b src -w",
+    "build:dev": "tsc -b src",
+    "build:prod": "tsc -b src/tsconfig-build.json",
     "lint": "tslint -c tslint.json -p src/tsconfig.json",
     "clean": "rimraf ./dist"
   },
