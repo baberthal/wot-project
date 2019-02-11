@@ -3,7 +3,7 @@
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
-    "lib": ["es2015", "es2018.promise"],
+    "lib": ["es2018"],
     "rootDir": ".",
 
     "declaration": true,
@@ -25,7 +25,7 @@
     "preserveConstEnums": true,
     "newLine": "lf",
 
-    "outDir": "../dist",
+    "outDir": "../dist-test",
     "resolveJsonModule": true,
 
     "baseUrl": ".",
@@ -36,7 +36,8 @@
     "types": ["node", "jest"]
   },
 
-  "include": ["**/*.ts", "resources/**/*.json"],
+  "include": ["**/*.ts", "unit/resources/test-resources.json"],
+  "exclude": ["node_modules", "../node_modules"],
 
   "references": [{ "path": "../src" }]
 }
