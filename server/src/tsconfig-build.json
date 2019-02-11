@@ -4,16 +4,11 @@
   "compilerOptions": {
     "sourceMap": false,
     "declarationMap": false,
-    "removeComments": true,
-
-    "baseUrl": ".",
-    "paths": {
-      "pigpio": ["../../node_modules/pigpio"]
-    }
+    "removeComments": true
   },
 
   "include": [],
-  "files": ["index.ts", "types.d.ts"],
+  "files": ["index.ts", "types.d.ts", "test-blink.ts"],
 
   "references": [
     { "path": "./db" },
