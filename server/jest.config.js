@@ -6,6 +6,8 @@ const { compilerOptions } = require("./test/tsconfig.json");
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
+  coverage: true,
+  collectCoverageFrom: ["src/**/*.ts", "!**/node_modules/**"],
   globals: {
     "ts-jest": {
       tsConfig: "./test/tsconfig.json",
