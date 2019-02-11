@@ -8,7 +8,7 @@
 /**
  * Compare with Python's `defaultdict`.
  */
-export class DefaultMap<K, V> implements Map<K, V> {
+export class DefaultMap<K, V> {
   private _internal: Map<K, V> = new Map();
 
   private defaultFactory?: () => V;
@@ -36,14 +36,14 @@ export class DefaultMap<K, V> implements Map<K, V> {
     this._internal.forEach(callbackfn, thisArg);
   }
 
-  get(key: K): V | undefined {
+  get(key: K): V {
     let v = this._internal.get(key);
     if (!v && this.defaultFactory) {
       v = this.defaultFactory();
       this._internal.set(key, v);
     }
 
-    return v;
+    return v!;
   }
 
   has(key: K): boolean {
