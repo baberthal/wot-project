@@ -5,12 +5,28 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import { inspect } from "util";
+
 import { PinFixedPull, PinInvalidFunction, PinSetInput } from "../exceptions";
 
 export abstract class Pin {
-  abstract get function(): string;
+  [Symbol.toStringTag]() {
+    return "<Pin>";
+  }
 
-  abstract set function(value: string);
+  [inspect.custom]() {
+    return this[Symbol.toStringTag]();
+  }
+
+  toString() {
+    return this[Symbol.toStringTag]();
+  }
+
+  abstract get mode(): string;
+
+  abstract set mode(value: string);
+
+  abstract get number(): number;
 
   get state(): number {
     return 0;
@@ -67,12 +83,12 @@ export abstract class Pin {
   close() {}
 
   outputWithState(state: number) {
-    this.function = "output";
+    this.mode = "output";
     this.state = state;
   }
 
   inputWithPull(pull: string) {
-    this.function = "input";
+    this.mode = "input";
     this.pull = pull;
   }
 }

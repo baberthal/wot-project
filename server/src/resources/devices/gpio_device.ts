@@ -5,31 +5,37 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Gpio } from "pigpio";
+import { Pin } from "../pins/pin";
 
 import { Device } from "./device";
 
 export class GPIODevice<ValueType = boolean> extends Device<ValueType> {
-  protected _pin: number;
-  protected _conn!: Gpio;
+  protected _pin: Pin;
   protected _activeState: boolean;
   protected _inactiveState: boolean;
 
-  constructor(pin: number, options: {} = {}) {
+  constructor(pin: string | number, options: {} = {}) {
     super(options);
-    this._pin = pin;
-    this._conn = new Gpio(pin);
+    this._pin = this._pinFactory.pin(pin);
     this._activeState = true;
     this._inactiveState = false;
   }
 
   close() {
     super.close();
-    this._conn = null!;
+    this._pin = null!;
   }
 
   get closed(): boolean {
-    return this._conn == null;
+    return this._pin == null;
+  }
+
+  get pin(): Pin {
+    return this._pin;
+  }
+
+  [Symbol.toStringTag]() {
+    return "";
   }
 
   protected _stateToValue(state: any) {
@@ -38,7 +44,7 @@ export class GPIODevice<ValueType = boolean> extends Device<ValueType> {
 
   protected _read() {
     try {
-      return this._stateToValue(this._conn.digitalRead());
+      return this._stateToValue(this._pin.state);
     } catch (e) {
       this._checkOpen();
       throw e;

@@ -49,3 +49,12 @@ export class PinEdgeDetectUnsupported extends PinError {}
 
 /** Error raised when attempting to obtain a pin interface on unsupported pins */
 export class PinUnsupported extends PinError {}
+
+/** Base class for errors specific to the GPIODevice hierarchy. */
+export class GPIODeviceError extends GPIOError {}
+
+/**
+ * Error raised when attempting to use a pin that is already in use by another
+ * device.
+ */
+export class GPIOPinInUse extends GPIODeviceError {}

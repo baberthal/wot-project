@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-export class GPIOBase<T extends GPIOBase<T>> {
+export class GPIOBase {
   constructor(options: {} = {}) {}
 
   get closed(): boolean {

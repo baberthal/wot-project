@@ -5,35 +5,21 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { DefaultMap } from "../../util/default_map";
-import { Lock } from "../../util/lock";
+import { inspect } from "util";
 
-/**
- * Generates pins for devices.
- */
-export abstract class Factory {
-  private _reservations: DefaultMap<number, any[]>;
-  private _resLock: Lock;
+import { PiGPIOFactory as PiGPIOFactory_ } from "./pigpio";
 
+export class PiGPIOFactory extends PiGPIOFactory_ {
   constructor() {
-    this._reservations = new DefaultMap(() => []);
-    this._resLock = new Lock();
+    super(require("pigpio"));
   }
-
-  reservePins(requester: object, ...pins: number[]) {
-    this._resLock.withLock(() => {
-      for (const pin of pins) {
-        for (const reserverRef in this._reservations.get(pin)!) {
-        }
-      }
-    });
-  }
-
-  releasePins(requester: object, ...pins: number[]) {}
-
-  releaseAll(requester: object) {}
-
-  close() {}
-
-  pin(spec: any) {}
 }
+
+export class PiGPIOMockFactory extends PiGPIOFactory_ {
+  constructor() {
+    super(require("pigpio-mock"));
+  }
+}
+
+export { PinFactory } from "./factory";
+export { Pin } from "./pin";

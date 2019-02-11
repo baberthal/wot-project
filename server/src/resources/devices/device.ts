@@ -5,10 +5,15 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import { use } from "typescript-mix";
+
 import { ValuesMixin } from "../mixins";
+import { PiGPIOFactory, PiGPIOMockFactory } from "../pins";
+import { PinFactory } from "../pins/factory";
 
 import { GPIOBase } from "./gpio_base";
 
+export interface Device<T = number> extends ValuesMixin<T>, GPIOBase {}
 /**
  * Represents a single device of any type; GPIO-based, SPI-based, I2C-based, etc.
  *
@@ -16,12 +21,38 @@ import { GPIOBase } from "./gpio_base";
  * applicable to all devices (specifically the `isActive` property, the
  * `value` property, and the `close()` method).
  */
-class _Device<ValueT = number> extends GPIOBase<_Device> {
-  constructor(options: {} = {}) {
-    super(options);
+export class Device<T = number> {
+  @use(ValuesMixin, GPIOBase) this: any;
+
+  static pinFactory: PinFactory;
+
+  static _defaultPinFactory(): PinFactory {
+    if (process.platform === "linux") {
+      if (process.env.NODE_ENV !== "test") {
+        return new PiGPIOFactory();
+      }
+    }
+
+    return new PiGPIOMockFactory();
   }
 
-  get value(): ValueT {
+  protected _pinFactory: PinFactory;
+
+  constructor(options: { pinFactory?: PinFactory } = {}) {
+    const pinFactory = options.pinFactory;
+    delete options.pinFactory;
+
+    if (pinFactory === undefined) {
+      if (Device.pinFactory === undefined) {
+        Device.pinFactory = Device._defaultPinFactory();
+      }
+      this._pinFactory = Device.pinFactory;
+    } else {
+      this._pinFactory = pinFactory;
+    }
+  }
+
+  get value(): T {
     throw new Error("Method not implemented");
   }
 
@@ -29,5 +60,3 @@ class _Device<ValueT = number> extends GPIOBase<_Device> {
     return Boolean(this.value);
   }
 }
-
-export const Device = ValuesMixin(_Device);

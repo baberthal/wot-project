@@ -5,49 +5,26 @@
 //
 //===-----------------------------------------------------------------------===//
 
-export type Constructor<InstanceT = {}> = new (...args: any[]) => InstanceT;
+import { Observable, from } from "rxjs";
 
-export interface HasValue<T> {
-  value: T;
-}
+export type Constructor<InstanceT = {}> = Function & { prototype: InstanceT };
 
-// export abstract class ValuesMixin<ValueType> {
-//   abstract get value(): ValueType;
+export abstract class ValuesMixin<ValueType> {
+  abstract get value(): ValueType;
 
-//   get values() {
-//     return this._values();
-//   }
+  get values(): Observable<ValueType> {
+    return from(this._values());
+  }
 
-//   private *_values() {
-//     while (true) {
-//       try {
-//         yield this.value;
-//       } catch (e) {
-//         break;
-//       }
-//     }
-//   }
-// }
-
-export function ValuesMixin<
-  ValueType,
-  TBase extends Constructor<HasValue<ValueType>>
->(Base: TBase) {
-  return class extends Base {
-    get values(): IterableIterator<ValueType> {
-      return this._values();
-    }
-
-    *_values() {
-      while (true) {
-        try {
-          yield this.value;
-        } catch (e) {
-          break;
-        }
+  private *_values(): IterableIterator<ValueType> {
+    while (true) {
+      try {
+        yield this.value;
+      } catch (e) {
+        break;
       }
     }
-  };
+  }
 }
 
 /**
@@ -58,11 +35,45 @@ export function ValuesMixin<
  *
  * NOTE: Use this mixin *first* in the parent class list.
  */
-export function SourceMixin<TBase extends Constructor>(Base: TBase) {
-  return class extends Base {
-    _source: any = null;
-    _source_delay: number = 0.01;
-  };
+export abstract class SourceMixin<ValueType> {
+  protected _source: IterableIterator<ValueType> = null!;
+  protected _sourceDelay: number = 0.01;
+
+  close() {
+    this._source = undefined!;
+  }
+
+  /**
+   * The iterable to use as a source of values for `value`.
+   */
+  get source(): any /* IterableIterator<ValueType> */ {
+    return this._source;
+  }
+
+  set source(value: any) {
+    if (value instanceof ValuesMixin) {
+      value = value.values;
+    }
+
+    this._source = value;
+  }
+
+  /**
+   * The delay (measured in seconds) in the loop used to read values from
+   * `source`. Defaults to 0.01 seconds, which is generally sufficient to keep
+   * CPU usage to a minimum while providing adequate responsiveness.
+   */
+  get sourceDelay(): number {
+    return this._sourceDelay;
+  }
+
+  set sourceDelay(value: number) {
+    if (value < 0) {
+      throw new Error("sourceDelay must be positive!");
+    }
+
+    this._sourceDelay = value;
+  }
 }
 
 /**
@@ -76,10 +87,10 @@ export function SourceMixin<TBase extends Constructor>(Base: TBase) {
  * When `close` is called, an internal reference counter will be decremented and
  * the instance will only close when it reaches zero.
  */
-export function SharedMixin<TBase extends Constructor>(Base: TBase) {
-  return class extends Base {
-    static _sharedKey(cls: Constructor, ...args: any[]) {
-      return args;
-    }
-  };
-}
+// export function SharedMixin<TBase extends Constructor>(Base: TBase) {
+//   return class extends Base {
+//     static _sharedKey(cls: Constructor, ...args: any[]) {
+//       return args;
+//     }
+//   };
+// }

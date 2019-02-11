@@ -5,28 +5,16 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Gpio } from "pigpio-mock";
-
 import { Lock } from "../../util/lock";
 
-export class LED {
-  /** GPIO pin the sensor is attached to. */
-  readonly pin: number;
+import { GPIODevice } from "./gpio_device";
 
-  private gpio!: Gpio;
-
+export class LED extends GPIODevice<boolean> {
   private _lock: Lock;
 
-  protected _activeState: number = 1;
-
-  protected _inactiveState: number = 0;
-
   constructor(pin: number) {
-    this.pin = pin;
+    super(pin);
     this._lock = new Lock();
-    this.gpio = new Gpio(pin, {
-      mode: Gpio.OUTPUT
-    });
   }
 
   on() {
@@ -63,50 +51,15 @@ export class LED {
     this._write(val);
   }
 
-  get values() {
-    return this._values();
-  }
-
   get closed(): boolean {
-    return this.gpio == null;
-  }
-
-  protected _stateToValue(state: number): boolean {
-    return Boolean(state == this._activeState);
+    return this._pin == null;
   }
 
   protected _valueToState(value: boolean): boolean {
     return Boolean(value ? this._activeState : this._inactiveState);
   }
 
-  private *_values() {
-    while (true) {
-      try {
-        yield this.value;
-      } catch (e) {
-        break;
-      }
-    }
-  }
-
-  private _read() {
-    try {
-      return this._stateToValue(this.gpio.digitalRead());
-    } catch (e) {
-      this._checkOpen();
-      throw e;
-    }
-  }
-
   private _write(value: number | boolean) {
-    this.gpio.digitalWrite(value ? 1 : 0);
-  }
-
-  private _checkOpen() {
-    if (this.closed) {
-      throw new Error(
-        `DeviceClosed: ${this.constructor.name} is closed or uninitialized`
-      );
-    }
+    this._pin.state = value ? 1 : 0;
   }
 }
