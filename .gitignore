@@ -89,3 +89,4 @@ dist/
 dist/*
 dist-tools/
 testdb.js
+dist-test/
