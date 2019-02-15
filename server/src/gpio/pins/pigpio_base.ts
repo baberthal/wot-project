@@ -14,10 +14,8 @@ type GpioClass = pigpio_t["Gpio"];
 type GpioConnection = InstanceType<GpioClass>;
 
 //  PiGPIOFactory {{{ //
-export class PiGPIOFactory extends PinFactory {
-  constructor(readonly _m: pigpio_t) {
-    super();
-  }
+export abstract class PiGPIOFactoryBase extends PinFactory {
+  abstract get _m(): pigpio_t;
 
   ticks(): number {
     return this._m.getTick();
@@ -63,7 +61,7 @@ export class PiGPIOPin extends Pin {
   readonly GPIO_EDGE_NAMES: NameMap<GPIOEdgeMap>;
   readonly GPIO_PULL_UP_NAMES: NameMap<GPIOPullDirectionMap>;
 
-  constructor(factory: PiGPIOFactory, num: number) {
+  constructor(factory: PiGPIOFactoryBase, num: number) {
     super(factory, num);
 
     this.GPIO_MODES = makeModeMap(factory.Gpio);
