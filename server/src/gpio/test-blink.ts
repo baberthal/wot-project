@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { LED } from "./gpio";
+import { LED } from "./output_devices";
 
 const PIN = 4;
 

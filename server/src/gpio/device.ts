@@ -10,6 +10,10 @@ import { EventEmitter } from "events";
 import { ValuesMixin } from "./mixins";
 import { Pin, PinFactory } from "./pins";
 
+export interface DeviceOptions {
+  pinFactory?: PinFactory;
+}
+
 /**
  * Represents a single device of any type; GPIO-based, SPI-based, I2C-based, etc.
  *
@@ -34,7 +38,7 @@ export abstract class Device<T> extends ValuesMixin<T> {
 
   protected _pinFactory: PinFactory;
 
-  constructor(options: { pinFactory?: PinFactory } = {}) {
+  constructor(options: DeviceOptions = {}) {
     super();
 
     const pinFactory = options.pinFactory;
