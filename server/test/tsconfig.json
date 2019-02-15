@@ -36,7 +36,7 @@
     "types": ["node", "jest"]
   },
 
-  "include": ["**/*.ts", "unit/resources/test-resources.json"],
+  "include": ["**/*.ts", "resources/test-resources.json"],
   "exclude": ["node_modules", "../node_modules"],
 
   "references": [{ "path": "../src" }]

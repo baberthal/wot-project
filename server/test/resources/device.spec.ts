@@ -17,15 +17,12 @@ describe("Device", () => {
   let device: GPIODevice;
   const pin: PiGPIOPin = mockFactory.pin(2) as PiGPIOPin;
 
-  beforeEach(() => {
-    device = new GPIODevice(2);
-  });
-
   describe(".pinFactory", () => {
     let oldFactory: PinFactory;
 
     beforeEach(() => {
       oldFactory = Device.pinFactory;
+      device = new GPIODevice(2);
     });
 
     afterEach(() => {
@@ -62,15 +59,39 @@ describe("Device", () => {
   describe("#constructor", () => {
     beforeEach(() => {
       Device.pinFactory = mockFactory;
+      device = new GPIODevice(2);
     });
 
-    it("is not closed", () => {
+    it("constructs an open device on the right pin", () => {
       expect(device.closed).toBe(false);
-    });
-
-    it("has the right pin", () => {
       expect(device.pin.number).toEqual(2);
       expect(Object.is(device.pin, pin)).toBeTruthy();
+    });
+  });
+
+  describe("#close()", () => {
+    beforeEach(() => {
+      Device.pinFactory = mockFactory;
+      device = new GPIODevice(2);
+    });
+
+    it("properly closes the device", () => {
+      device.close();
+      expect(device.closed).toEqual(true);
+      expect(device.pin).toEqual(null);
+    });
+  });
+
+  describe("#toString()", () => {
+    beforeEach(() => {
+      Device.pinFactory = mockFactory;
+      device = new GPIODevice(2);
+    });
+
+    it("returns a string", () => {
+      expect(device.toString()).toEqual(
+        "<GPIODevice object on pin GPIO2, isActive=true>"
+      );
     });
   });
 });
