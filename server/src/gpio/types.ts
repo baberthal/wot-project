@@ -17,4 +17,4 @@ export type GPIOPinMode =
 
 export type GPIOPinEdge = "both" | "rising" | "falling";
 
-export type GPIOPinPullDirection = "up" | "down" | "floating" | "off";
+export type GPIOPinPullUp = "up" | "down" | "floating" | "off";

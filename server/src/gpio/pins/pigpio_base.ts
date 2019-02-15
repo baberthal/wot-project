@@ -5,82 +5,31 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { GPIOPinEdge, GPIOPinMode, GPIOPinPullDirection } from "../types";
+import { GPIOPinEdge, GPIOPinMode, GPIOPinPullUp } from "../types";
 
-import { Pin, PinFactory } from "./pin";
+import { Pin, PinCallback, PinFactory } from "./pin";
 
-type pigpio_t = typeof import("pigpio");
-type GpioClass = pigpio_t["Gpio"];
+type GpioClass = typeof import("pigpio").Gpio;
 type GpioConnection = InstanceType<GpioClass>;
-
-//  PiGPIOFactory {{{ //
-export abstract class PiGPIOFactoryBase extends PinFactory {
-  abstract get _m(): pigpio_t;
-
-  ticks(): number {
-    return this._m.getTick();
-  }
-
-  ticksDiff(later: number, earlier: number): number {
-    return this._m.tickDiff(earlier, later);
-  }
-
-  /** @internal */
-  _getRevision(): string | number {
-    return this._m.hardwareRevision();
-  }
-
-  get pinConstructor() {
-    return PiGPIOPin;
-  }
-
-  /** @internal */
-  get Gpio(): GpioClass {
-    return this._m.Gpio;
-  }
-}
-
-//  }}} PiGPIOFactory //
 
 //  PiGPIOPin {{{ //
 
-export class PiGPIOPin extends Pin {
-  private _pull: GPIOPinPullDirection;
-  private _pwm: boolean;
-  private _bounce?: number;
-  private _callback?: () => void;
-  private _edges: number;
+export abstract class PiGPIOPinBase extends Pin {
+  protected _pull: GPIOPinPullUp;
+  protected _pwm: boolean;
+  protected _bounce?: number;
+  protected _edges: number;
 
-  private connection: GpioConnection;
+  abstract get connection(): GpioConnection;
 
-  readonly GPIO_MODES: GPIOModeMap;
-  readonly GPIO_EDGES: GPIOEdgeMap;
-  readonly GPIO_PULL_UPS: GPIOPullDirectionMap;
-
-  readonly GPIO_MODE_NAMES: NameMap<GPIOModeMap>;
-  readonly GPIO_EDGE_NAMES: NameMap<GPIOEdgeMap>;
-  readonly GPIO_PULL_UP_NAMES: NameMap<GPIOPullDirectionMap>;
-
-  constructor(factory: PiGPIOFactoryBase, num: number) {
+  constructor(factory: PinFactory, num: number) {
     super(factory, num);
-
-    this.GPIO_MODES = makeModeMap(factory.Gpio);
-    this.GPIO_EDGES = makeEdgeMap(factory.Gpio);
-    this.GPIO_PULL_UPS = makePullDirectionmap(factory.Gpio);
-
-    this.GPIO_MODE_NAMES = reverse(this.GPIO_MODES);
-    this.GPIO_EDGE_NAMES = reverse(this.GPIO_EDGES);
-    this.GPIO_PULL_UP_NAMES = reverse(this.GPIO_PULL_UPS);
 
     this._pull = factory.piInfo.isPulledUp(this) ? "up" : "floating";
     this._pwm = false;
     this._bounce = null!;
-    this._edges = factory.Gpio.EITHER_EDGE;
-
-    this.connection = new factory.Gpio(num);
-    this.connection.mode(factory.Gpio.INPUT);
-    this.connection.pullUpDown(this.GPIO_PULL_UPS[this._pull]);
-    this.connection.glitchFilter(0);
+    this._callback = null;
+    this._edges = this._gpioEdge("both");
   }
 
   close() {
@@ -93,14 +42,14 @@ export class PiGPIOPin extends Pin {
   }
 
   get mode(): GPIOPinMode {
-    return this.GPIO_MODE_NAMES[this.connection.getMode()];
+    return this._gpioModeName(this.connection.getMode());
   }
 
   set mode(value: GPIOPinMode) {
     if (value !== "input") {
       this._pull = "floating";
     }
-    const mode = this.GPIO_MODES[value];
+    const mode = this._gpioMode(value);
     if (!mode) {
       throw new Error(`Invalid function "${value}" for ${this}`);
     }
@@ -132,11 +81,11 @@ export class PiGPIOPin extends Pin {
     }
   }
 
-  get pull(): GPIOPinPullDirection {
+  get pull(): GPIOPinPullUp {
     return this._pull;
   }
 
-  set pull(value: GPIOPinPullDirection) {
+  set pull(value: GPIOPinPullUp) {
     if (this.mode !== "input") {
       throw new Error("Can't set pull on non-input pin");
     }
@@ -145,7 +94,7 @@ export class PiGPIOPin extends Pin {
       throw new Error(`${this} has a physical pull-up resistor`);
     }
 
-    const pull = this.GPIO_PULL_UPS[value];
+    const pull = this._gpioPullUp(value);
     if (!pull) throw new Error(`invalid pull "${value}" for ${this}`);
     this.connection.pullUpDown(pull);
     this._pull = value;
@@ -194,75 +143,32 @@ export class PiGPIOPin extends Pin {
   }
 
   get edges(): GPIOPinEdge {
-    return this.GPIO_EDGE_NAMES[this._edges];
+    return this._gpioEdgeName(this._edges);
   }
 
   set edges(value: GPIOPinEdge) {
-    this._edges = this.GPIO_EDGES[value];
+    const f = this.callback;
+    this.callback = null;
+    try {
+      this._edges = this._gpioEdge(value);
+    } finally {
+      this._callback = f;
+    }
   }
 
-  protected enableEventDetect(): void {
-    throw new Error("Method not implemented.");
+  protected _invokeCallback(gpio: number, level: number, ticks: number) {
+    super._invokeCallback(ticks, level);
   }
 
-  protected disableEventDetect(): void {
-    throw new Error("Method not implemented.");
-  }
+  abstract _gpioModeName(value: number): GPIOPinMode;
+
+  abstract _gpioMode(name: GPIOPinMode): number;
+
+  abstract _gpioEdgeName(value: number): GPIOPinEdge;
+
+  abstract _gpioEdge(name: GPIOPinEdge): number;
+
+  abstract _gpioPullUp(name: GPIOPinPullUp): number;
 }
 
 //  }}} PiGPIOPin //
-
-//  Misc. Helpers {{{ //
-
-type ConstantMap<T extends string> = { [K in T]: number };
-type NameMap<T> = { [k: number]: keyof T };
-
-type GPIOModeMap = ConstantMap<GPIOPinMode>;
-type GPIOEdgeMap = ConstantMap<GPIOPinEdge>;
-type GPIOPullDirectionMap = ConstantMap<GPIOPinPullDirection>;
-
-function makeModeMap(Gpio: GpioClass): GPIOModeMap {
-  return {
-    input: Gpio.INPUT,
-    output: Gpio.OUTPUT,
-    alt0: Gpio.ALT0,
-    alt1: Gpio.ALT1,
-    alt2: Gpio.ALT2,
-    alt3: Gpio.ALT3,
-    alt4: Gpio.ALT4,
-    alt5: Gpio.ALT5
-  };
-}
-
-function makeEdgeMap(Gpio: GpioClass): GPIOEdgeMap {
-  return {
-    both: Gpio.EITHER_EDGE,
-    rising: Gpio.RISING_EDGE,
-    falling: Gpio.FALLING_EDGE
-  };
-}
-
-function makePullDirectionmap(Gpio: GpioClass): GPIOPullDirectionMap {
-  return {
-    up: Gpio.PUD_UP,
-    down: Gpio.PUD_DOWN,
-    floating: Gpio.PUD_OFF,
-    off: Gpio.PUD_OFF
-  };
-}
-
-function reverse<
-  K extends string | number | symbol,
-  V extends string | number | symbol
->(obj: Record<K, V>): Record<V, K> {
-  const result: any = {};
-  for (const key in obj) {
-    const val = obj[key];
-    result[val] = key;
-  }
-  return result;
-}
-
-type Reversed<T> = ReturnType<typeof reverse>;
-
-//  }}} Misc. Helpers //

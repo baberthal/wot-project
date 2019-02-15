@@ -8,7 +8,7 @@
 import { EventEmitter } from "events";
 import { use } from "typescript-mix";
 
-import { GPIOPinEdge, GPIOPinMode, GPIOPinPullDirection } from "../types";
+import { GPIOPinEdge, GPIOPinMode, GPIOPinPullUp } from "../types";
 
 import { PiInfo, piInfo } from "./info";
 
@@ -73,14 +73,22 @@ export abstract class PinFactory {
   abstract _getRevision(): string | number;
 }
 
-export interface Pin extends EventEmitter {
-  on(event: "change", cb: (tick: number, state: number) => void): this;
-}
-export abstract class Pin {
-  @use(EventEmitter) this: any;
+// export interface Pin extends EventEmitter {
+//   on(event: "change", cb: (tick: number, state: number) => void): this;
+//   on(event: "newListener", cb: (evt: string, listener: Function) => void): this;
+//   on(
+//     event: "removeListener",
+//     cb: (evt: string, listener: Function) => void
+//   ): this;
+//   on(event: string, cb: (...args: any[]) => void): this;
+// }
 
+export type PinCallback = (ticks: number, state: number) => void;
+
+export abstract class Pin {
   protected _factory: PinFactory;
   protected _number: number;
+  protected _callback: PinCallback | null;
 
   get factory(): PinFactory {
     return this._factory;
@@ -91,8 +99,8 @@ export abstract class Pin {
   }
 
   constructor(factory: PinFactory, num: number) {
-    EventEmitter.call(this);
     this._factory = factory;
+    this._callback = null;
     this._number = num;
   }
 
@@ -101,7 +109,7 @@ export abstract class Pin {
     this.state = state;
   }
 
-  inputWithPull(pull: GPIOPinPullDirection) {
+  inputWithPull(pull: GPIOPinPullUp) {
     this.mode = "input";
     this.pull = pull;
   }
@@ -114,11 +122,35 @@ export abstract class Pin {
 
   abstract set state(value: number);
 
-  get pull(): GPIOPinPullDirection {
+  get callback(): PinCallback | null {
+    if (this._callback == null) {
+      return null;
+    }
+
+    return this._callback;
+  }
+
+  set callback(value: PinCallback | null) {
+    if (value == null) {
+      if (this._callback != null) {
+        this.disableEventDetect();
+      }
+
+      this._callback = null;
+    } else {
+      const enabled = this._callback == null;
+      this._callback = value;
+      if (!enabled) {
+        this.enableEventDetect();
+      }
+    }
+  }
+
+  get pull(): GPIOPinPullUp {
     return "floating";
   }
 
-  set pull(value: GPIOPinPullDirection) {
+  set pull(value: GPIOPinPullUp) {
     throw new Error(`Cannot change pull-up on pin ${this}`);
   }
 
@@ -143,16 +175,16 @@ export abstract class Pin {
   }
 
   get edges(): GPIOPinEdge {
-    return "none";
+    return "both";
   }
 
   set edges(value: GPIOPinEdge) {
     throw new Error(`Edge detection is not supported on pin ${this}`);
   }
 
-  protected abstract enableEventDetect(): void;
+  abstract enableEventDetect(): void;
 
-  protected abstract disableEventDetect(): void;
+  abstract disableEventDetect(): void;
 
   close() {}
 
@@ -162,5 +194,15 @@ export abstract class Pin {
 
   get __repr__(): string {
     return this[Symbol.toStringTag];
+  }
+
+  protected _invokeCallback(...args: any[]): void;
+  protected _invokeCallback(ticks: number, state: number) {
+    const cb = this._callback;
+    if (cb == null) {
+      this.callback = null;
+    } else {
+      cb(ticks, state);
+    }
   }
 }
