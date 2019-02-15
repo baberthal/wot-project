@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.base.json",
-  "files": ["index.ts", "types.d.ts"],
+  "files": ["plugin.ts", "types.d.ts"],
   "include": ["**/*.ts"],
   "references": [{ "path": "../util" }]
 }

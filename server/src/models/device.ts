@@ -1,58 +1,51 @@
-//===- models/device.ts - Represents a device ------------------------------===//
+//===- db/models/Device.ts - Device Model ----------------------------------===//
 //
 // Copyright (c) 2019 J. Morgan Lieberthal
 // Licensed under the MIT License
 //
 //===-----------------------------------------------------------------------===//
 
-import { Actuator, ActuatorConfig, ActuatorGroup } from "./actuator";
-import { ModelBase } from "./base";
-import { Sensor, SensorConfig } from "./sensor";
+import {
+  AllowNull,
+  Column,
+  DataType,
+  Default,
+  DefaultScope,
+  HasMany,
+  Max,
+  Min,
+  Model,
+  PrimaryKey,
+  Table
+} from "sequelize-typescript";
 
-export interface DeviceConfig {
-  name: string;
-  description: string;
-  port: number;
-  sensors: {
-    [id: string]: SensorConfig;
-  };
-  actuators: {
-    [groupName: string]: {
-      [id: string]: ActuatorConfig;
-    };
-  };
-}
+import { Value } from "./Value";
 
-export class Device extends ModelBase {
-  public sensors: {
-    [id: string]: Sensor;
-  };
+@DefaultScope({
+  attributes: ["id", "name", "description", "pin"],
+  include: []
+})
+@Table
+export class Device extends Model<Device> {
+  @PrimaryKey
+  @Column(DataType.STRING)
+  id!: string;
 
-  public actuators: {
-    [groupName: string]: ActuatorGroup;
-  };
+  @AllowNull(false)
+  @Column(DataType.STRING)
+  name!: string;
 
-  constructor(id: string, config: DeviceConfig) {
-    super(id, config);
+  @AllowNull(false)
+  @Default("")
+  @Column(DataType.STRING)
+  description!: string;
 
-    this.sensors = {};
-    Object.keys(config.sensors).forEach(key => {
-      this.sensors[key] = new Sensor(key, config.sensors[key]);
-    });
+  @AllowNull(false)
+  @Min(0)
+  @Max(54)
+  @Column(DataType.INTEGER)
+  pin!: number;
 
-    this.actuators = {};
-    Object.keys(config.actuators).forEach(key => {
-      this.actuators[key] = new ActuatorGroup(key, config.actuators[key]);
-    });
-  }
-
-  findProperty(id: string): Sensor | ActuatorGroup {
-    let found: Sensor | ActuatorGroup = this.sensors[id];
-    if (found) return found;
-
-    found = this.actuators[id];
-    if (found) return found;
-
-    throw new Error(`Unable to find sensor or actuator group with id: ${id}`);
-  }
+  @HasMany(() => Value)
+  values!: Value[];
 }

@@ -1,32 +1,55 @@
-//===- models/sensor.ts - Sensor Class -------------------------------------===//
+//===- db/models/Sensor.ts - Sensor Model ----------------------------------===//
 //
 // Copyright (c) 2019 J. Morgan Lieberthal
 // Licensed under the MIT License
 //
 //===-----------------------------------------------------------------------===//
 
-import { GpioBase, GpioBaseConfig } from "./base";
+import {
+  AllowNull,
+  BelongsTo,
+  Column,
+  DataType,
+  Default,
+  ForeignKey,
+  Model,
+  PrimaryKey,
+  Table
+} from "sequelize-typescript";
 
-export interface SensorConfig extends GpioBaseConfig {
-  name: string;
-  description: string;
-  unit?: string;
-  value?: number | boolean | string;
+import { Device } from "./Device";
 
-  gpio: number;
-}
+@Table
+export class Sensor extends Model<Sensor> {
+  @PrimaryKey
+  @AllowNull(false)
+  @Column(DataType.STRING)
+  id!: string;
 
-export class Sensor extends GpioBase {
-  readonly description: string;
-  readonly unit: string;
+  @AllowNull(false)
+  @Column(DataType.STRING)
+  name!: string;
 
-  public value: number | boolean | string | undefined;
+  @AllowNull(false)
+  @Default("")
+  @Column(DataType.STRING)
+  description!: string;
 
-  constructor(id: string, config: SensorConfig) {
-    super(id, config);
+  @AllowNull(false)
+  @Default("")
+  @Column(DataType.STRING)
+  unit!: string;
 
-    this.description = config.description;
-    this.unit = config.unit ? config.unit : "";
-    this.value = config.value;
-  }
+  // @Column value!: number;
+
+  @AllowNull(false)
+  @Column(DataType.INTEGER)
+  gpio!: number;
+
+  @ForeignKey(() => Device)
+  @Column(DataType.STRING)
+  deviceId!: string;
+
+  @BelongsTo(() => Device)
+  device!: Device;
 }

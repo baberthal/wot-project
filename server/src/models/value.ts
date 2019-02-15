@@ -1,4 +1,4 @@
-//===- models/value.ts - Value Model ---------------------------------------===//
+//===- db/models/Value.ts - Value model ------------------------------------===//
 //
 // Copyright (c) 2019 J. Morgan Lieberthal
 // Licensed under the MIT License
@@ -6,35 +6,53 @@
 //===-----------------------------------------------------------------------===//
 
 import {
-  AutoIncrement,
+  AllowNull,
+  BelongsTo,
   Column,
+  DataType,
+  Default,
+  ForeignKey,
   Model,
   PrimaryKey,
   Table
 } from "sequelize-typescript";
 
-import { BaseAttributes } from "./base";
-
-export interface ValueAttributes extends BaseAttributes {
-  name?: string;
-  description?: string;
-  type?: "integer" | "float" | "boolean" | "string";
-  unit?: string;
-  required?: boolean;
-  minValue?: number;
-  maxValue?: number;
-}
+import { Device } from "./Device";
 
 @Table
 export class Value extends Model<Value> {
   @PrimaryKey
-  @AutoIncrement
-  @Column
-  id!: number;
+  @Column(DataType.STRING)
+  id!: string;
 
-  @Column
+  @AllowNull(false)
+  @Column(DataType.STRING)
   name!: string;
 
-  @Column
+  @AllowNull(false)
+  @Default("")
+  @Column(DataType.STRING)
   description!: string;
+
+  @AllowNull(false)
+  @Default("boolean")
+  @Column(DataType.STRING)
+  type!: "integer" | "float" | "boolean" | "string";
+
+  @AllowNull(false)
+  @Default("")
+  @Column(DataType.STRING)
+  unit!: string;
+
+  @AllowNull(false)
+  @Default(true)
+  @Column(DataType.BOOLEAN)
+  required!: boolean;
+
+  @ForeignKey(() => Device)
+  @Column(DataType.STRING)
+  deviceId!: string;
+
+  @BelongsTo(() => Device)
+  device!: Device;
 }

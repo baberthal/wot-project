@@ -1,12 +1,15 @@
-//===- models/index.ts - Model exports -------------------------------------===//
+//===- models/index.ts - DB Models Entry Point -----------------------------===//
 //
 // Copyright (c) 2019 J. Morgan Lieberthal
 // Licensed under the MIT License
 //
 //===-----------------------------------------------------------------------===//
 
-export * from "./actuator";
-export * from "./base";
-export * from "./device";
-export * from "./sensor";
-export * from "./resource_collection";
+import { Sequelize, sequelize } from "../db";
+
+export * from "./Actuator";
+export * from "./Device";
+export * from "./Sensor";
+export * from "./Value";
+
+export { Sequelize, sequelize };

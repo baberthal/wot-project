@@ -5,6 +5,9 @@
   "references": [
     {
       "path": "../util"
+    },
+    {
+      "path": "../db"
     }
   ]
 }
