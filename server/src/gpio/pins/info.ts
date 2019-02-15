@@ -441,9 +441,10 @@ export class PiInfo {
    * @param fn The pin function you wish to determine pull-up for. Usually this
    * is something like "GPIO9" for Broadcom GPIO pin 9.
    */
-  isPulledUp(fn: string): boolean {
+  isPulledUp(fn: string | { [Symbol.toStringTag]: string }): boolean {
+    const mode = typeof fn === "string" ? fn : fn[Symbol.toStringTag];
     try {
-      const [header, pinno] = this.physicalPin(fn);
+      const [header, pinno] = this.physicalPin(mode);
       return this.headers[header].pins[pinno].pullUp;
     } catch (e) {
       return false;

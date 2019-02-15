@@ -15,6 +15,6 @@ export type GPIOPinMode =
   | "alt4"
   | "alt5";
 
-export type GPIOPinEdge = "both" | "rising" | "falling" | "none";
+export type GPIOPinEdge = "both" | "rising" | "falling";
 
 export type GPIOPinPullDirection = "up" | "down" | "floating" | "off";

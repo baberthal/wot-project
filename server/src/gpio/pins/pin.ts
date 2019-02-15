@@ -12,6 +12,14 @@ import { GPIOPinEdge, GPIOPinMode, GPIOPinPullDirection } from "../types";
 
 import { PiInfo, piInfo } from "./info";
 
+interface Constructor<T> extends Function {
+  new (...args: any[]): T;
+}
+
+export type FactoryFn<T> = {
+  <U extends T>(t: Constructor<U>): U;
+};
+
 /**
  * Generates pins and SPI interfaces for devices. This is an abstract
  * base class for pin factories. Descendents *must* override the following
@@ -20,8 +28,8 @@ import { PiInfo, piInfo } from "./info";
  *   * `ticks`
  *   * `ticksDiff`
  */
-export abstract class PinFactory<T extends Pin<any>> {
-  protected pins: Map<number, T>;
+export abstract class PinFactory {
+  protected pins: Map<number, Pin>;
   protected _info: PiInfo;
 
   get piInfo(): PiInfo {
@@ -44,19 +52,17 @@ export abstract class PinFactory<T extends Pin<any>> {
   }
 
   /** */
-  pin(spec: string | number): T {
+  pin(spec: string | number): Pin {
     const n = this.piInfo.toGPIO(spec);
     let pin = this.pins.get(n);
     if (!pin) {
-      pin = new this.pinClass(this, n);
+      pin = new this.pinConstructor(this, n);
       this.pins.set(n, pin);
     }
     return pin;
   }
 
-  abstract get pinClass(): {
-    new (factory: PinFactory<T>, num: number): T;
-  };
+  abstract get pinConstructor(): Constructor<Pin>;
 
   /** */
   abstract ticks(): number;
@@ -67,16 +73,16 @@ export abstract class PinFactory<T extends Pin<any>> {
   abstract _getRevision(): string | number;
 }
 
-export interface Pin<F extends PinFactory<any>> extends EventEmitter {
+export interface Pin extends EventEmitter {
   on(event: "change", cb: (tick: number, state: number) => void): this;
 }
-export abstract class Pin<F extends PinFactory<any>> {
+export abstract class Pin {
   @use(EventEmitter) this: any;
 
-  protected _factory: F;
+  protected _factory: PinFactory;
   protected _number: number;
 
-  get factory(): F {
+  get factory(): PinFactory {
     return this._factory;
   }
 
@@ -84,7 +90,7 @@ export abstract class Pin<F extends PinFactory<any>> {
     return this._number;
   }
 
-  constructor(factory: F, num: number) {
+  constructor(factory: PinFactory, num: number) {
     EventEmitter.call(this);
     this._factory = factory;
     this._number = num;
