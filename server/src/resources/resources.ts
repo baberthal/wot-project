@@ -5,29 +5,29 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { DeviceConfig, ResourcesConfig } from "./config";
+// import { DeviceConfig, ResourcesConfig } from "./config";
 
-export class Resources {
-  private _devicesById: Map<string, DeviceConfig> = new Map();
+// export class Resources {
+//   private _devicesById: Map<string, DeviceConfig> = new Map();
 
-  constructor({ devices }: ResourcesConfig) {
-    for (let i = 0, keys = Object.keys(devices); i < keys.length; i++) {
-      const key = keys[i];
-      this._devicesById.set(key, devices[key]);
-    }
-  }
+//   constructor({ devices }: ResourcesConfig) {
+//     for (let i = 0, keys = Object.keys(devices); i < keys.length; i++) {
+//       const key = keys[i];
+//       this._devicesById.set(key, devices[key]);
+//     }
+//   }
 
-  device(id: string): DeviceConfig {
-    const dev = this._devicesById.get(id);
-    if (!dev) throw new Error(`Unable to find device with id: '${id}'`);
-    return dev;
-  }
+//   device(id: string): DeviceConfig {
+//     const dev = this._devicesById.get(id);
+//     if (!dev) throw new Error(`Unable to find device with id: '${id}'`);
+//     return dev;
+//   }
 
-  toJSON() {
-    const res = Object.create(null);
-    for (const [k, v] of this._devicesById) {
-      res[k] = v;
-    }
-    return res;
-  }
-}
+//   toJSON() {
+//     const res = Object.create(null);
+//     for (const [k, v] of this._devicesById) {
+//       res[k] = v;
+//     }
+//     return res;
+//   }
+// }

@@ -7,7 +7,7 @@
 
 import * as fp from "fastify-plugin";
 
-import { Resources, ResourcesConfig } from "../resources";
+// import { Resources, ResourcesConfig } from "../resources";
 import {
   FastifyInstance,
   NextCallback as Next,
@@ -15,18 +15,18 @@ import {
 } from "../util/types";
 
 export interface PluginOptions extends RegisterOptions {
-  resources?: Resources;
-  resourcesConfig?: ResourcesConfig;
+  // resources?: Resources;
+  // resourcesConfig?: ResourcesConfig;
 }
 
 function plugin(fastify: FastifyInstance, opts: PluginOptions, next: Next) {
-  const resourcesConfig = opts.resourcesConfig || ResourcesConfig.Default;
-  const resources = opts.resources || new Resources(resourcesConfig);
+  // const resourcesConfig = opts.resourcesConfig || ResourcesConfig.Default;
+  // const resources = opts.resources || new Resources(resourcesConfig);
 
-  delete opts.resourcesConfig;
-  delete opts.resources;
+  // delete opts.resourcesConfig;
+  // delete opts.resources;
 
-  fastify.decorate("resources", resources);
+  // fastify.decorate("resources", resources);
   next();
 }
 

@@ -5,11 +5,13 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { ResourcesConfig } from "./config";
-import { Resources } from "./resources";
-
 export * from "./config";
-export * from "./interfaces";
-export * from "./resources";
 
-export default new Resources(ResourcesConfig.Default);
+// import { ResourcesConfig } from "./config";
+// import { Resources } from "./resources";
+
+// export * from "./config";
+// export * from "./interfaces";
+// export * from "./resources";
+
+// export default new Resources(ResourcesConfig.Default);

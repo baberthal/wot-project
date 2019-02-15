@@ -1,6 +1,11 @@
 {
   "extends": "../tsconfig.base.json",
-  "files": ["index.ts", "default_config.json", "types.d.ts"],
+  "files": [
+    "index.ts",
+    "default_config.json",
+    "types.d.ts",
+    "host-config.json"
+  ],
   "include": ["**/*.ts", "v1/*.json"],
   "references": [
     {
