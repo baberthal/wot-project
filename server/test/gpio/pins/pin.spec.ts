@@ -5,10 +5,11 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { PiGPIOMockFactory, Pin } from "src/resources/pins";
+import { Pin } from "src/gpio/pins";
+import { PiGPIOMockFactory as PiGPIOFactory } from "src/gpio/pins/pigpio_mock";
 
 describe("Pin", () => {
-  const factory = new PiGPIOMockFactory();
+  const factory = new PiGPIOFactory();
   let pin: Pin;
 
   beforeEach(() => {

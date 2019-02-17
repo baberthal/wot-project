@@ -5,13 +5,15 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Device } from "src/resources/devices/device";
-import { GPIODevice } from "src/resources/devices/gpio_device";
-import { PiGPIOMockFactory, Pin, PinFactory } from "src/resources/pins";
-import { PiGPIOPin } from "src/resources/pins/pigpio";
+import { Device, GPIODevice } from "src/gpio/device";
+import { Pin, PinFactory } from "src/gpio/pins";
+import {
+  PiGPIOMockFactory as PiGPIOFactory,
+  PiGPIOMockPin as PiGPIOPin
+} from "src/gpio/pins/pigpio_mock";
 
 describe("Device", () => {
-  const mockFactory = new PiGPIOMockFactory();
+  const mockFactory = new PiGPIOFactory();
   // Device.pinFactory = mockFactory;
 
   let device: GPIODevice;
@@ -32,7 +34,7 @@ describe("Device", () => {
     it("defaults to the mock factory when NODE_ENV=test", () => {
       const oldenv = process.env.NODE_ENV;
       process.env.NODE_ENV = "test";
-      expect(Device.pinFactory).toBeInstanceOf(PiGPIOMockFactory);
+      expect(Device.pinFactory).toBeInstanceOf(PiGPIOFactory);
       process.env.NODE_ENV = oldenv;
     });
 
@@ -90,7 +92,7 @@ describe("Device", () => {
 
     it("returns a string", () => {
       expect(device.toString()).toEqual(
-        "<GPIODevice object on pin GPIO2, isActive=true>"
+        "[object gpio.GPIODevice on pin GPIO2, isActive=false]"
       );
     });
   });

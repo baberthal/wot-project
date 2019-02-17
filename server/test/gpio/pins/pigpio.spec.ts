@@ -5,13 +5,15 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import * as pigpio from "pigpio-mock";
-import { PiGPIOFactory, PiGPIOPin } from "src/resources/pins/pigpio";
+import {
+  PiGPIOMockFactory as PiGPIOFactory,
+  PiGPIOMockPin as PiGPIOPin
+} from "src/gpio/pins/pigpio_mock";
 
 describe("PiGPIOPin", () => {
   let factory: PiGPIOFactory;
   beforeEach(() => {
-    factory = new PiGPIOFactory(pigpio);
+    factory = new PiGPIOFactory();
   });
 
   describe("#pin", () => {
