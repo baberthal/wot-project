@@ -8,6 +8,7 @@
 import { Lock } from "../util/lock";
 
 import { DeviceOptions, GPIODevice } from "./device";
+import log from "./logger";
 
 export interface OutputDeviceOptions extends DeviceOptions {
   activeHigh?: boolean;
@@ -17,14 +18,21 @@ export interface OutputDeviceOptions extends DeviceOptions {
 export class OutputDevice extends GPIODevice {
   private _lock: Lock;
 
-  constructor(pin: string | number, options: OutputDeviceOptions = {}) {
-    super(pin, options);
+  constructor(
+    pin: string | number,
+    {
+      initialValue = false,
+      activeHigh = true,
+      ...rest
+    }: OutputDeviceOptions = {}
+  ) {
+    super(pin, rest);
     this._lock = new Lock();
-    this.activeHigh = options.activeHigh == null ? true : options.activeHigh;
-    if (options.initialValue == null) {
+    this.activeHigh = activeHigh;
+    if (initialValue == null) {
       this.pin.mode = "output";
     } else {
-      this.pin.outputWithState(this._valueToState(options.initialValue));
+      this.pin.outputWithState(this._valueToState(initialValue));
     }
   }
 
@@ -42,10 +50,12 @@ export class OutputDevice extends GPIODevice {
   }
 
   on() {
+    log.debug("LED#on");
     this._write(true);
   }
 
   off() {
+    log.debug("LED#off");
     this._write(false);
   }
 

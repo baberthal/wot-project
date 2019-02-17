@@ -29,9 +29,9 @@ export abstract class ValuesMixin<ValueType> {
 
 /**
  * Adds a `source` property to the class which, given an iterable or
- * a `ValuesMixin` descendent, sets :attr:`value` to each member of that iterable
- * until it is exhausted. This mixin is generally included in novel output
- * devices to allow their state to be driven from another device.
+ * a `ValuesMixin` descendent, sets `value` to each member of that iterable until
+ * it is exhausted. This mixin is generally included in novel output devices to
+ * allow their state to be driven from another device.
  *
  * NOTE: Use this mixin *first* in the parent class list.
  */

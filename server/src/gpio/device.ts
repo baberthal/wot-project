@@ -7,6 +7,7 @@
 
 import { EventEmitter } from "events";
 
+import log from "./logger";
 import { ValuesMixin } from "./mixins";
 import { Pin, PinFactory } from "./pins";
 
@@ -25,14 +26,21 @@ export abstract class Device<T> extends ValuesMixin<T> {
   static pinFactory: PinFactory;
 
   static _defaultPinFactory(): PinFactory {
+    log.debug("---> Device._defaultPinFactory()");
+    log.debug("   > Platform: %s", process.platform);
     if (process.platform === "linux") {
+      log.debug("   > NODE_ENV: %s", process.env.NODE_ENV);
       if (process.env.NODE_ENV !== "test") {
+        log.debug("   > Using real pins!");
+        log.debug("<--- Device._defaultPinFactory()");
         const mod = require("./pins/pigpio");
         return new mod.PiGPIOFactory();
       }
     }
 
+    log.debug("   > Using fake pins!");
     const mod = require("./pins/pigpio_mock");
+    log.debug("<--- Device._defaultPinFactory()");
     return new mod.PiGPIOMockFactory();
   }
 
@@ -73,11 +81,11 @@ export abstract class Device<T> extends ValuesMixin<T> {
   }
 
   toString(): string {
-    return this[Symbol.toStringTag];
+    return `[object gpio.${this[Symbol.toStringTag]}]`;
   }
 
   get [Symbol.toStringTag]() {
-    return `<gpio.${this.constructor.name} object>`;
+    return this.constructor.name;
   }
 }
 
@@ -115,18 +123,18 @@ export class GPIODevice extends Device<number> {
   }
 
   get [Symbol.toStringTag]() {
-    return `<${this.constructor.name} object on pin ${this.pin}, isActive=${
+    return `${this.constructor.name} on pin ${this.pin}, isActive=${
       this.isActive
-    }>`;
+    }`;
   }
 
-  protected _stateToValue(state: number): number {
-    return Number(state == this.pin.state);
+  protected _stateToValue(state: boolean): number {
+    return Number(state == this._activeState);
   }
 
   protected _read() {
     try {
-      return this._stateToValue(this._pin.state);
+      return this._stateToValue(Boolean(this._pin.state));
     } catch (e) {
       this._checkOpen();
       throw e;

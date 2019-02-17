@@ -5,15 +5,24 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import log from "./logger";
 import { LED } from "./output_devices";
 
 const PIN = 4;
 
 const led = new LED(PIN);
+let i: NodeJS.Timer;
+
+log.debug(">>> Adding signal handler");
+process.on("SIGINT", () => {
+  led.off();
+  clearInterval(i);
+  log.info("Terminating...");
+});
 
 led.off();
 
-setInterval(() => {
+i = setInterval(() => {
   led.toggle();
 }, 3000);
 

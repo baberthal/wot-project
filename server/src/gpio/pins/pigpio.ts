@@ -13,10 +13,16 @@ import {
   tickDiff
 } from "pigpio";
 
+import log from "../logger";
 import { GPIOPinEdge, GPIOPinMode, GPIOPinPullUp } from "../types";
 
 import { PiGPIOPinBase } from "./pigpio_base";
 import { PinFactory } from "./pin";
+
+// Make sure we initialize the library before any signal handlers are started
+log.debug(">>> pigpio.initialize()");
+pigpio_init();
+log.debug("<<< pigpio.initialize()");
 
 interface pigpio_native {
   gpioSetISRFunc(
@@ -38,7 +44,6 @@ export class PiGPIOFactory extends PinFactory {
 
   constructor() {
     super();
-    pigpio_init();
   }
 
   ticks(): number {
@@ -61,6 +66,7 @@ export class PiGPIOPin extends PiGPIOPinBase {
 
   constructor(factory: PiGPIOFactory, num: number) {
     super(factory, num);
+    log.debug("PiGPIOPin#constructor()");
     this.connection = new Gpio(this.number);
     this.connection.mode(Gpio.INPUT);
     this.connection.pullUpDown(GPIO_PULL_UPS[this._pull]);
@@ -88,6 +94,7 @@ export class PiGPIOPin extends PiGPIOPinBase {
   }
 
   enableEventDetect(): void {
+    log.debug("PiGPIOPin#enableEventDetect()");
     const handler = (gpio: number, level: number, ticks: number) => {
       this._invokeCallback(gpio, level, ticks);
     };
@@ -96,6 +103,7 @@ export class PiGPIOPin extends PiGPIOPinBase {
   }
 
   disableEventDetect(): void {
+    log.debug("PiGPIOPin#disableEventDetect()");
     if (this._handler != null) {
       pigpio_native.gpioSetISRFunc(this._number, this._edges, 0);
       this._handler = undefined;

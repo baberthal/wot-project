@@ -8,6 +8,7 @@
 import { EventEmitter } from "events";
 import { use } from "typescript-mix";
 
+import log from "../logger";
 import { GPIOPinEdge, GPIOPinMode, GPIOPinPullUp } from "../types";
 
 import { PiInfo, piInfo } from "./info";
@@ -33,32 +34,40 @@ export abstract class PinFactory {
   protected _info: PiInfo;
 
   get piInfo(): PiInfo {
+    log.debug("---> PinFactory#piInfo()");
     if (this._info === null) {
       this._info = piInfo(this._getRevision());
     }
+    log.debug("<--- PinFactory#piInfo()");
     return this._info;
   }
 
   constructor() {
+    log.debug("---> PinFactory#constructor()");
     this._info = null!;
     this.pins = new Map();
+    log.debug("<--- PinFactory#constructor()");
   }
 
   close() {
+    log.debug("---> PinFactory#close()");
     for (const pin of this.pins.values()) {
       pin.close();
     }
     this.pins.clear();
+    log.debug("<--- PinFactory#close()");
   }
 
   /** */
   pin(spec: string | number): Pin {
+    log.debug(`---> PinFactory#pin(${spec})`);
     const n = this.piInfo.toGPIO(spec);
     let pin = this.pins.get(n);
     if (!pin) {
       pin = new this.pinConstructor(this, n);
       this.pins.set(n, pin);
     }
+    log.debug(`<--- PinFactory#pin(${spec})`);
     return pin;
   }
 
@@ -105,13 +114,17 @@ export abstract class Pin {
   }
 
   outputWithState(state: number) {
+    log.debug(`---> Pin#outputWithState(${state})`);
     this.mode = "output";
     this.state = state;
+    log.debug(`<--- Pin#outputWithState(${state})`);
   }
 
   inputWithPull(pull: GPIOPinPullUp) {
+    log.debug(`---> Pin#inputWithPull(${pull})`);
     this.mode = "input";
     this.pull = pull;
+    log.debug(`<--- Pin#inputWithPull(${pull})`);
   }
 
   abstract get mode(): GPIOPinMode;
@@ -123,6 +136,7 @@ export abstract class Pin {
   abstract set state(value: number);
 
   get callback(): PinCallback | null {
+    log.debug("Pin#callback{ get }");
     if (this._callback == null) {
       return null;
     }
@@ -131,6 +145,7 @@ export abstract class Pin {
   }
 
   set callback(value: PinCallback | null) {
+    log.debug("Pin#callback{ set }");
     if (value == null) {
       if (this._callback != null) {
         this.disableEventDetect();
@@ -188,6 +203,10 @@ export abstract class Pin {
 
   close() {}
 
+  toString() {
+    return this[Symbol.toStringTag];
+  }
+
   get [Symbol.toStringTag]() {
     return `GPIO${this._number}`;
   }
@@ -198,6 +217,7 @@ export abstract class Pin {
 
   protected _invokeCallback(...args: any[]): void;
   protected _invokeCallback(ticks: number, state: number) {
+    log.debug(`Pin#_invokeCallback(${ticks}, ${state})`);
     const cb = this._callback;
     if (cb == null) {
       this.callback = null;

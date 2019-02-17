@@ -5,12 +5,15 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import logger from "../logger";
 import { GPIOPinEdge, GPIOPinMode, GPIOPinPullUp } from "../types";
 
 import { Pin, PinCallback, PinFactory } from "./pin";
 
 type GpioClass = typeof import("pigpio").Gpio;
 type GpioConnection = InstanceType<GpioClass>;
+
+const log = logger.child({ file: __filename });
 
 //  PiGPIOPin {{{ //
 
@@ -23,6 +26,7 @@ export abstract class PiGPIOPinBase extends Pin {
   abstract get connection(): GpioConnection;
 
   constructor(factory: PinFactory, num: number) {
+    log.debug(`PiGPIOPinBase#constructor(${factory}, ${num})`);
     super(factory, num);
 
     this._pull = factory.piInfo.isPulledUp(this) ? "up" : "floating";
@@ -33,6 +37,7 @@ export abstract class PiGPIOPinBase extends Pin {
   }
 
   close() {
+    log.debug("PiGPIOPinBase#close()");
     if (this.connection) {
       this.frequency = null;
       // this.whenChanged = null;
@@ -42,21 +47,24 @@ export abstract class PiGPIOPinBase extends Pin {
   }
 
   get mode(): GPIOPinMode {
+    log.debug("PiGPIOPinBase#mode{ get }");
     return this._gpioModeName(this.connection.getMode());
   }
 
   set mode(value: GPIOPinMode) {
+    log.debug(`PiGPIOPinBase#mode{ set(${value}) }`);
     if (value !== "input") {
       this._pull = "floating";
     }
     const mode = this._gpioMode(value);
-    if (!mode) {
+    if (mode == null) {
       throw new Error(`Invalid function "${value}" for ${this}`);
     }
     this.connection.mode(mode);
   }
 
   get state(): number {
+    log.debug("PiGPIOPinBase#state{ get }");
     if (this._pwm) {
       return this.connection.getPwmDutyCycle() / this.connection.getPwmRange();
     }
@@ -65,6 +73,7 @@ export abstract class PiGPIOPinBase extends Pin {
   }
 
   set state(value: number) {
+    log.debug(`PiGPIOPinBase#state{ set(${value}) }`);
     if (this._pwm) {
       try {
         value = value * this.connection.getPwmRange();
@@ -82,10 +91,12 @@ export abstract class PiGPIOPinBase extends Pin {
   }
 
   get pull(): GPIOPinPullUp {
+    log.debug("PiGPIOPinBase#pull{ get }");
     return this._pull;
   }
 
   set pull(value: GPIOPinPullUp) {
+    log.debug(`PiGPIOPinBase#pull{ set(${value}) }`);
     if (this.mode !== "input") {
       throw new Error("Can't set pull on non-input pin");
     }
@@ -95,7 +106,7 @@ export abstract class PiGPIOPinBase extends Pin {
     }
 
     const pull = this._gpioPullUp(value);
-    if (!pull) throw new Error(`invalid pull "${value}" for ${this}`);
+    if (pull == null) throw new Error(`invalid pull "${value}" for ${this}`);
     this.connection.pullUpDown(pull);
     this._pull = value;
   }
@@ -143,10 +154,12 @@ export abstract class PiGPIOPinBase extends Pin {
   }
 
   get edges(): GPIOPinEdge {
+    log.debug("PiGPIOPinBase#edges{ get }");
     return this._gpioEdgeName(this._edges);
   }
 
   set edges(value: GPIOPinEdge) {
+    log.debug(`PiGPIOPinBase#_edges{ set(${value}) }`);
     const f = this.callback;
     this.callback = null;
     try {
