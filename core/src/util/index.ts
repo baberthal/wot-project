@@ -6,4 +6,5 @@
 //===-----------------------------------------------------------------------===//
 
 export { isDevMode } from "./dev-mode";
+export { isTestMode } from "./test-mode";
 export { isEmptyObject } from "./is-empty-object";
