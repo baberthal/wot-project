@@ -5,16 +5,32 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { isDevMode } from "@baberthal/wot-core";
+import { isDevMode, isTestMode } from "@baberthal/wot-core";
+import { join, resolve } from "path";
 import * as pino from "pino";
 
-export type LoggerOptions = pino.LoggerOptions;
+export type DestinationStream = pino.DestinationStream;
 export type Logger = pino.Logger;
+export type LoggerOptions = pino.LoggerOptions;
 
-const prettyPrint = isDevMode();
+export const DEFAULT_LOG_DIR = resolve(__dirname, "../../log");
 
-export function createLogger(options: LoggerOptions): Logger {
-  return pino(options);
+const prettyPrint = isDevMode() && !isTestMode();
+
+export function createLogger(
+  options: LoggerOptions,
+  destination?: DestinationStream
+): Logger {
+  const opts = Object.assign({}, { prettyPrint }, options);
+
+  if (isTestMode()) {
+    destination = pino.destination(join(DEFAULT_LOG_DIR, "test.log"));
+  }
+
+  if (destination) {
+    return pino(opts, destination);
+  }
+  return pino(opts);
 }
 
 export default createLogger({
