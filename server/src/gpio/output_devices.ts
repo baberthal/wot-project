@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Lock } from "../util/lock";
+import { Lock } from "../util/threading/lock";
 
 import { DeviceOptions, GPIODevice } from "./device";
 import log from "./logger";

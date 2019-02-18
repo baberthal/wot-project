@@ -5,15 +5,23 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Observable, from } from "rxjs";
+// import { Observable, from } from "rxjs";
+import { EventEmitter } from "events";
+// import { use } from "typescript-mix";
 
-export type Constructor<InstanceT = {}> = Function & { prototype: InstanceT };
+import { Concrete, Constructor } from "../util/ctor_types";
+import { include } from "../util/mixins";
+
+import { Device } from "./device";
+import { PinFactory } from "./pins";
+
+export type ConcreteDeviceType<T> = Constructor<T> & Concrete<typeof Device>;
 
 export abstract class ValuesMixin<ValueType> {
   abstract get value(): ValueType;
 
-  get values(): Observable<ValueType> {
-    return from(this._values());
+  get values(): IterableIterator<ValueType> {
+    return this._values();
   }
 
   private *_values(): IterableIterator<ValueType> {
@@ -36,21 +44,30 @@ export abstract class ValuesMixin<ValueType> {
  * NOTE: Use this mixin *first* in the parent class list.
  */
 export abstract class SourceMixin<ValueType> {
-  protected _source: IterableIterator<ValueType> = null!;
-  protected _sourceDelay: number = 0.01;
+  protected _source: IterableIterator<ValueType>;
+  protected _sourceDelay: number;
+
+  constructor() {
+    this._source = null!;
+    this._sourceDelay = 0.01;
+  }
 
   close() {
-    this._source = undefined!;
+    this._source = null!;
   }
 
   /**
    * The iterable to use as a source of values for `value`.
    */
-  get source(): any /* IterableIterator<ValueType> */ {
+  get source(): IterableIterator<ValueType> {
     return this._source;
   }
 
-  set source(value: any) {
+  set source(value: IterableIterator<ValueType>) {
+    this.setSource(value);
+  }
+
+  setSource(value: IterableIterator<ValueType> | ValuesMixin<ValueType>) {
     if (value instanceof ValuesMixin) {
       value = value.values;
     }

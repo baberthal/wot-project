@@ -70,9 +70,13 @@ export abstract class Device<T> extends ValuesMixin<T> {
     return Boolean(this.value);
   }
 
+  get pinFactory(): PinFactory {
+    return this._pinFactory;
+  }
+
   close() {}
 
-  _checkOpen() {
+  protected _checkOpen() {
     if (this.closed) {
       throw new Error(
         `DeviceClosed: ${this.constructor.name} is closed or uninitialized`
@@ -88,6 +92,8 @@ export abstract class Device<T> extends ValuesMixin<T> {
     return this.constructor.name;
   }
 }
+
+export interface GPIODeviceOptions extends DeviceOptions {}
 
 export class GPIODevice extends Device<number> {
   protected _pin: Pin;
