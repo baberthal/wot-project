@@ -9,17 +9,17 @@ import * as fp from "fastify-plugin";
 
 import { FastifyInstance, NextCallback, RegisterOptions } from "../util/types";
 
-import { WotManager, WotManagerInit } from "./wot_manager";
+// import { WotManager, WotManagerInit } from "./wot_manager";
 
-export interface PluginOptions extends RegisterOptions {
-  wot?: WotManagerInit;
-}
+// export interface PluginOptions extends RegisterOptions {
+//   wot?: WotManagerInit;
+// }
 
-function wotPlugin(
-  fastify: FastifyInstance,
-  options: PluginOptions,
-  next: NextCallback
-) {
-  const manager = new WotManager(options.wot);
-  fastify.decorate("wotManager", manager);
-}
+// function wotPlugin(
+//   fastify: FastifyInstance,
+//   options: PluginOptions,
+//   next: NextCallback
+// ) {
+//   const manager = new WotManager(options.wot);
+//   fastify.decorate("wotManager", manager);
+// }

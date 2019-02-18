@@ -7,7 +7,7 @@
 
 import * as fp from "fastify-plugin";
 
-import resources from "../resources";
+// import resources from "../resources";
 import { FastifyInstance, NextCallback, RegisterOptions } from "../util/types";
 
 interface PluginOptions extends RegisterOptions {

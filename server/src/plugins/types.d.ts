@@ -7,14 +7,14 @@
 
 /// <reference types="fastify" />
 
-import { Resources } from "../resources/resources";
+// import { Resources } from "../resources/resources";
 
 import { LinksConfig } from "./links-plugin";
 import { PluginManager } from "./plugin_manager";
 
 declare module "fastify" {
   interface FastifyInstance {
-    resources: Resources;
+    // resources: Resources;
     wotPluginManager: PluginManager;
   }
 
