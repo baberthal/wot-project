@@ -12,23 +12,23 @@ export default function routes(
   opts: RegisterOptions,
   next: NextCallback
 ) {
-  const device = fastify.resources.device("pi");
+  // const device = fastify.resources.device("pi");
 
-  fastify.get("/", (req, res) => {
-    res.send(device.sensors);
-  });
+  // fastify.get("/", (req, res) => {
+  //   res.send(device.sensors);
+  // });
 
-  fastify.get("/pir", (req, res) => {
-    res.send(device.sensors.pir);
-  });
+  // fastify.get("/pir", (req, res) => {
+  //   res.send(device.sensors.pir);
+  // });
 
-  fastify.get("/temperature", (req, res) => {
-    res.send(device.sensors.temperature);
-  });
+  // fastify.get("/temperature", (req, res) => {
+  //   res.send(device.sensors.temperature);
+  // });
 
-  fastify.get("/humidity", (req, res) => {
-    res.send(device.sensors.humidity);
-  });
+  // fastify.get("/humidity", (req, res) => {
+  //   res.send(device.sensors.humidity);
+  // });
 
   next();
 }

@@ -12,13 +12,13 @@ import {
 } from "../util/types";
 
 function plugin(fastify: FastifyInstance, opts: RegisterOptions, next: Next) {
-  fastify.get("/", (req, res) => {
-    res.send(fastify.resources);
-  });
+  // fastify.get("/", (req, res) => {
+  //   res.send(fastify.resources);
+  // });
 
-  fastify.get("/pi", (req, res) => {
-    res.send(fastify.resources.device("pi"));
-  });
+  // fastify.get("/pi", (req, res) => {
+  //   res.send(fastify.resources.device("pi"));
+  // });
 
   next();
 }

@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Device } from "../models";
+// import { Device } from "../models";
 import { FastifyInstance, NextCallback, RegisterOptions } from "../util/types";
 
 export default function routes(
@@ -13,30 +13,30 @@ export default function routes(
   opts: RegisterOptions,
   next: NextCallback
 ) {
-  const device = fastify.resources.device("pi");
-  const leds = device.actuators.leds;
+  // const device = fastify.resources.device("pi");
+  // const leds = device.actuators.leds;
 
-  fastify.get("/", (req, res) => {
-    res.send(device.actuators);
-  });
+  // fastify.get("/", (req, res) => {
+  //   res.send(device.actuators);
+  // });
 
-  fastify.get("/leds", (req, res) => {
-    res.send(leds);
-  });
+  // fastify.get("/leds", (req, res) => {
+  //   res.send(leds);
+  // });
 
-  fastify.get("/leds/:id", (req, res) => {
-    // const led = leds.find(req.params.id);
-    // res.send(led);
-  });
+  // fastify.get("/leds/:id", (req, res) => {
+  //   // const led = leds.find(req.params.id);
+  //   // res.send(led);
+  // });
 
-  fastify.put("/leds/:id", (req, res) => {
-    // const selectedLED = leds.find(req.params.id);
-    // selectedLED.onValueChange = value => {
-    //   fastify.log.info("Value changed: %s", value);
-    // };
-    // selectedLED.value = req.body.value;
-    // res.send(selectedLED);
-  });
+  // fastify.put("/leds/:id", (req, res) => {
+  //   // const selectedLED = leds.find(req.params.id);
+  //   // selectedLED.onValueChange = value => {
+  //   //   fastify.log.info("Value changed: %s", value);
+  //   // };
+  //   // selectedLED.value = req.body.value;
+  //   // res.send(selectedLED);
+  // });
 
   next();
 }
