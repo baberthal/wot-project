@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { Lock } from "src/util/lock";
+import { Lock } from "src/util/threading/lock";
 
 describe("Lock", () => {
   let lock: Lock;

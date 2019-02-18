@@ -14,7 +14,7 @@ import {
 
 describe("Device", () => {
   const mockFactory = new PiGPIOFactory();
-  // Device.pinFactory = mockFactory;
+  Device.pinFactory = mockFactory;
 
   let device: GPIODevice;
   const pin: PiGPIOPin = mockFactory.pin(2) as PiGPIOPin;
