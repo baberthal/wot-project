@@ -3,7 +3,7 @@
 
   "include": [],
   "exclude": ["node_modules", "../node_modules"],
-  "files": ["index.ts", "types.d.ts", "dht-dbg.ts"],
+  "files": ["index.ts", "types.d.ts"],
 
   "references": [
     { "path": "./db" },
