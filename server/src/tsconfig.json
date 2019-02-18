@@ -3,10 +3,11 @@
 
   "include": [],
   "exclude": ["node_modules", "../node_modules"],
-  "files": ["index.ts", "types.d.ts", "test-blink.ts"],
+  "files": ["index.ts", "types.d.ts", "dht-dbg.ts"],
 
   "references": [
     { "path": "./db" },
+    { "path": "./gpio" },
     { "path": "./middleware" },
     { "path": "./models" },
     { "path": "./plugins" },
