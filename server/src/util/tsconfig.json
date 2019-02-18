@@ -1,6 +1,14 @@
 {
   "extends": "../tsconfig.base.json",
-  "files": ["index.ts", "logger.ts", "default_map.ts", "lock.ts", "types.ts"],
+  "files": [
+    "index.ts",
+    "logger.ts",
+    "default_map.ts",
+    "types.ts",
+    "threading/index.ts",
+    "threading/lock.ts",
+    "threading/mutex.ts"
+  ],
   "include": ["**/*.ts"],
   "references": []
 }

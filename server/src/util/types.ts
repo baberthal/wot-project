@@ -29,3 +29,7 @@ export {
   Logger,
   RouteShorthandOptions
 } from "fastify";
+
+export type NonAbstract<T> = { [P in keyof T]: T[P] };
+
+export type NonAbstractConstructorOf<T, U> = { new (): T } & NonAbstract<U>;
