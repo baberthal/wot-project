@@ -6,8 +6,11 @@ const { compilerOptions } = require("./test/tsconfig.json");
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
-  coverage: true,
-  collectCoverageFrom: ["src/**/*.ts", "!**/node_modules/**"],
+  testMatch: ["**/?(*.)+(spec|test).ts?(x)"],
+  testPathIgnorePatterns: ["test/integration"],
+  // collectCoverage: true,
+  // collectCoverageFrom: ["src/**/*.ts"],
+  coverageReporters: ["lcov", "html"],
   globals: {
     "ts-jest": {
       tsConfig: "./test/tsconfig.json",
