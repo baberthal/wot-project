@@ -1,0 +1,10 @@
+{
+  "mode": "modules",
+  "out": "docs",
+
+  "name": "WoT Server",
+  "tsconfig": "src/tsconfig.json",
+  "target": "es6",
+  "excludePrivate": true,
+  "excludeProtected": true
+}
