@@ -2,9 +2,7 @@
   "name": "project",
   "private": true,
   "workspaces": [
-    "core",
-    "server",
-    "client",
+    "packages/*",
     "tools"
   ],
   "scripts": {
