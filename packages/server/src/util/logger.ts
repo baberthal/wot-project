@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { isDevMode, isTestMode } from "@baberthal/wot-core";
+import { isDevMode, isTestMode } from "@wot/core";
 import { join, resolve } from "path";
 import * as pino from "pino";
 
