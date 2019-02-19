@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.base.json",
+
+  "files": ["src/index.ts"],
+  "include": [],
+
+  "references": [
+    {
+      "path": "./src/util"
+    },
+    {
+      "path": "./src/models"
+    }
+  ]
+}

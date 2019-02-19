@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "../../../tsconfig.base.json",
   "files": ["plugin.ts", "types.d.ts"],
   "include": ["**/*.ts"],
   "references": [{ "path": "../util" }]

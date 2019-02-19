@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.base.json",
+
+  "files": [],
+  "include": [],
+
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@wot/*": ["./*"]
+    }
+  },
+
+  "references": [
+    { "path": "./clock" },
+    { "path": "./core" },
+    { "path": "./server" }
+  ]
+}

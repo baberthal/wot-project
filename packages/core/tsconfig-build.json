@@ -6,15 +6,15 @@
     "declarationMap": false
   },
 
-  "files": ["index.ts"],
+  "files": ["src/index.ts"],
   "include": [],
 
   "references": [
     {
-      "path": "./util"
+      "path": "./src/util"
     },
     {
-      "path": "./models"
+      "path": "./src/models"
     }
   ]
 }

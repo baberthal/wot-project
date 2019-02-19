@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.base.json",
+
+  "include": [],
+  "exclude": ["node_modules"],
+  "files": ["src/index.ts", "src/types.d.ts"],
+
+  "references": [
+    { "path": "./src/db" },
+    { "path": "./src/gpio" },
+    { "path": "./src/middleware" },
+    { "path": "./src/models" },
+    { "path": "./src/plugins" },
+    { "path": "./src/resources" },
+    { "path": "./src/routes" },
+    { "path": "./src/servers" },
+    { "path": "./src/util" }
+  ]
+}
