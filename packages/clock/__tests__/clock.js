@@ -47,4 +47,11 @@ describe("clock", () => {
       expect(typeof res).toBe("bigint");
     });
   });
+
+  describe(".monotonic", () => {
+    test("is an alias for gettime.bigint(MONOTONIC)", () => {
+      const res = clock.monotonic();
+      expect(typeof res).toBe("bigint");
+    });
+  });
 });

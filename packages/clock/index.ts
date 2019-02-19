@@ -37,3 +37,7 @@ export function getres(clockid: number = REALTIME): number {
 getres.bigint = function(clockid: number = REALTIME): bigint {
   return native.clock_getres_bigint(clockid);
 };
+
+export function monotonic(): bigint {
+  return gettime.bigint(MONOTONIC);
+}
