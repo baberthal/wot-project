@@ -10,5 +10,5 @@
     "threading/mutex.ts"
   ],
   "include": ["**/*.ts"],
-  "references": []
+  "references": [{ "path": "../../../core" }]
 }

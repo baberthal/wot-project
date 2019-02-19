@@ -3,14 +3,9 @@
   "files": ["index.ts", "default_config.json", "host-config.json"],
   "include": ["**/*.ts", "v1/*.json"],
   "references": [
-    {
-      "path": "../db"
-    },
-    {
-      "path": "../models"
-    },
-    {
-      "path": "../util"
-    }
+    { "path": "../db" },
+    { "path": "../gpio" },
+    { "path": "../models" },
+    { "path": "../util" }
   ]
 }

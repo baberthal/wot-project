@@ -5,7 +5,7 @@
 //
 //===-----------------------------------------------------------------------===//
 
-import { isDevMode } from "@baberthal/wot-core";
+import { isDevMode } from "@wot/core";
 
 import { loadConfig } from "./resources/config";
 import createApp from "./servers/http";

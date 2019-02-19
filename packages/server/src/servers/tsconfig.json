@@ -3,12 +3,12 @@
   "files": ["../types.d.ts", "http.ts"],
   "include": ["**/*.ts"],
   "references": [
-    {
-      "path": "../db"
-    },
+    { "path": "../db" },
+    { "path": "../models" },
     { "path": "../routes" },
     { "path": "../util" },
     { "path": "../plugins" },
-    { "path": "../resources" }
+    { "path": "../resources" },
+    { "path": "../../../core" }
   ]
 }
