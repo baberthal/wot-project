@@ -1,5 +1,5 @@
 {
-  "name": "@baberthal/wot-server",
+  "name": "@wot/server",
   "version": "0.1.0",
   "description": "WoT Server Libraries",
   "main": "dist/index.js",
@@ -35,7 +35,6 @@
     "clean": "rimraf ./dist"
   },
   "dependencies": {
-    "@baberthal/wot-core": "0.1.0",
     "@types/weak": "^1.0.0",
     "body-parser": "^1.18.3",
     "coap": "^0.22.0",

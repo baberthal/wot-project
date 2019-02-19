@@ -1,6 +1,10 @@
 {
   "extends": "../tsconfig.base.json",
 
+  "compilerOptions": {
+    "outDir": "../../dist/server"
+  },
+
   "include": [],
   "exclude": ["node_modules"],
   "files": ["src/index.ts", "src/types.d.ts"],
@@ -14,6 +18,8 @@
     { "path": "./src/resources" },
     { "path": "./src/routes" },
     { "path": "./src/servers" },
-    { "path": "./src/util" }
+    { "path": "./src/util" },
+    { "path": "../core" },
+    { "path": "../clock" }
   ]
 }

@@ -1,0 +1,23 @@
+{
+  "id": "pi",
+  "name": "My RaspberryPi",
+  "description": "A RaspberryPi",
+  "host": "127.0.0.1",
+  "port": 3000,
+  "devices": [
+    {
+      "id": "outdoor",
+      "name": "dht-outdoor",
+      "description": "An outdoor dht22 sensor",
+      "pin": 4,
+      "values": {}
+    },
+    {
+      "id": "indoor",
+      "name": "dht-indoor",
+      "description": "An indoor dht22 sensor",
+      "pin": 12,
+      "values": {}
+    }
+  ]
+}
