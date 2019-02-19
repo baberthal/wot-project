@@ -4,6 +4,15 @@
   "author": "J. Morgan Lieberthal <j.morgan.lieberthal@gmail.com>",
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "__tests__",
+    "ext",
+    "src",
+    "binding.gyp",
+    "jest.config.js",
+    "tsconfig.json",
+    "yarn.lock"
+  ],
   "license": "MIT",
   "scripts": {
     "configure": "node-gyp configure",
