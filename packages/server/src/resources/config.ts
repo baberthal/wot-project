@@ -5,6 +5,12 @@
 //
 //===-----------------------------------------------------------------------===//
 
+import * as fs from "fs";
+
+import logger from "../util/logger";
+
+const log = logger.child({ name: "config" });
+
 export interface WoTHostConfig {
   /**
    * Name of the host.
@@ -15,6 +21,11 @@ export interface WoTHostConfig {
    * Human-readable description for this host.
    */
   description: string;
+
+  /**
+   * Interface the server is listening on.
+   */
+  host: string;
 
   /**
    * Port on which this host is listening.
@@ -28,6 +39,11 @@ export interface WoTHostConfig {
 }
 
 export interface DeviceConfig {
+  /**
+   * ID of the device. If not provided, will be randomly generated.
+   */
+  id: string;
+
   /**
    * Human-readable name of this device.
    */
@@ -93,4 +109,68 @@ export interface ValueConfig {
    * Optional maximum valid value.
    */
   maxValue?: number;
+}
+
+/**
+ * Loads a config from a file.
+ */
+export function loadConfig(path: string): Promise<WoTHostConfig> {
+  return new Promise((resolve, reject) => {
+    fs.access(path, fs.constants.R_OK, err => {
+      if (err) return reject(err);
+      fs.readFile(path, "utf8", (err, data) => {
+        if (err) return reject(err);
+
+        try {
+          const json = JSON.parse(data);
+          if (isHostConfig(json)) {
+            return json;
+          } else {
+            return reject(
+              new Error("loaded object is not a properly-formatted host config")
+            );
+          }
+        } catch (e) {
+          log.error(e);
+          return reject(e);
+        }
+      });
+    });
+  });
+}
+
+/**
+ * Resolves the argument `filename` if file exists and is readable, otherwise
+ * rejects with the error.
+ */
+function checkReadable(filename: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    fs.access(filename, fs.constants.R_OK, err => {
+      if (err) reject(err);
+      resolve(filename);
+    });
+  });
+}
+
+/**
+ * Reads and returns the contents of `filename`. Rejects with the error if there
+ * was one.
+ */
+function readFile(filename: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filename, "utf8", (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  });
+}
+
+function isHostConfig(obj: any): obj is WoTHostConfig {
+  return (
+    typeof obj.name === "string" &&
+    typeof obj.description === "string" &&
+    typeof obj.host === "string" &&
+    typeof obj.port === "number" &&
+    Array.isArray(obj.devices)
+  );
 }

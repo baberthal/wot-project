@@ -2,6 +2,7 @@
   "id": "pi",
   "name": "My RaspberryPi",
   "description": "A RaspberryPi",
+  "host": "127.0.0.1",
   "port": 3000,
   "devices": [
     {

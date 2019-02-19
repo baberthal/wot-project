@@ -7,6 +7,7 @@
 
 import { isDevMode } from "@baberthal/wot-core";
 
+import { loadConfig } from "./resources/config";
 import createApp from "./servers/http";
 // import logger from "./util/logger";
 // import { WebSocketServer } from "./servers/ws_server";
@@ -14,7 +15,8 @@ import createApp from "./servers/http";
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 async function main() {
-  const app = createApp();
+  const config = await loadConfig("host-config.json");
+  const app = createApp(config);
 
   app.listen(port, "0.0.0.0", (err, address) => {
     if (err) {
