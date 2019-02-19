@@ -1,15 +1,12 @@
 {
   "extends": "./tsconfig.base.json",
 
+  "compilerOptions": {
+    "outDir": "../dist"
+  },
+
   "files": [],
   "include": [],
-
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@wot/*": ["./*"]
-    }
-  },
 
   "references": [
     { "path": "./clock" },
